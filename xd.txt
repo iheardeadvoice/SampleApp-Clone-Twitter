@@ -1,0 +1,497 @@
+Ок, давай чётко: я сейчас сделаю тебе конечный вариант кода для заданий 1–4, чтобы:
+
+валидация работала,
+
+была модель Role + её репозиторий/контроллер/валидатор,
+
+CreateUser возвращал 201 Created,
+
+репозиторий пользователей был асинхронным, как в методичке.
+
+Ты просто подставляешь мой код в свои файлы.
+
+Я буду писать только то, что нужно, без лишних библиотек и сказок.
+
+0. Какой у тебя должен быть Program.cs
+
+Program.cs оставляем простым, как по методичке + DI:
+
+using SampleApp.API.Interfaces;
+using SampleApp.API.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
+// DI – регистрируем репозитории
+builder.Services.AddSingleton<IUserRepository, UsersMemoryRepository>();
+builder.Services.AddSingleton<IRoleRepository, RoleMemoryRepository>();
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MapControllers();
+
+app.Run();
+
+
+Важно: класс репозитория называется UsersMemoryRepository (с буквой s в начале), чтобы совпадало с кодом ниже.
+
+1. Задание 1 + 3: User, валидатор, контроллер с 201 Created
+1.1. Entities/User.cs
+namespace SampleApp.API.Entities
+{
+    public class User
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
+}
+
+1.2. Validations/UserValidator.cs
+using FluentValidation;
+using SampleApp.API.Entities;
+
+namespace SampleApp.API.Validations
+{
+    public class UserValidator : AbstractValidator<User>
+    {
+        public UserValidator()
+        {
+            RuleFor(u => u.Name)
+                .NotEmpty().WithMessage("Имя обязательно")
+                .Length(2, 50).WithMessage("Имя должно быть от 2 до 50 символов")
+                .Must(StartsWithCapitalLetter).WithMessage("Имя должно начинаться с заглавной буквы");
+            
+            RuleFor(u => u.Id)
+                .GreaterThan(0).WithMessage("ID должен быть положительным числом");
+        }
+
+        private bool StartsWithCapitalLetter(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            return char.IsUpper(name[0]);
+        }
+    }
+}
+
+
+Это точно как в методичке.
+
+1.3. Задание 4 требует UserRequestOption (для async)
+
+Сразу создаём заглушку, чтобы всё компилировалось.
+
+Entities/UserRequestOption.cs
+
+namespace SampleApp.API.Entities
+{
+    public class UserRequestOption
+    {
+        // тут можно будет сделать фильтр, пока пусто
+    }
+}
+
+1.4. Интерфейс репозитория (Задание 4 – асинхронный вариант)
+
+‼️ Важно: по методичке асинхронная версия выглядит так.
+Мы заменяем твой старый IUserRepository на этот.
+
+Interfaces/IUserRepository.cs
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using SampleApp.API.Entities;
+
+namespace SampleApp.API.Interfaces
+{
+    public interface IUserRepository
+    {
+        Task<User> CreateUserAsync(User user);
+        Task<List<User>> GetUsersAsync(UserRequestOption option);
+        Task<User> EditUserAsync(User user, int id);
+        Task<bool> DeleteUserAsync(int id);
+        Task<User> FindUserByIdAsync(int id);
+        Task<User> FindUserByLoginAsync(string login);
+    }
+}
+
+1.5. Реализация async-репозитория (UsersMemoryRepository)
+
+Repositories/UsersMemoryRepository.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using SampleApp.API.Entities;
+using SampleApp.API.Interfaces;
+
+namespace SampleApp.API.Repositories
+{
+    public class UsersMemoryRepository : IUserRepository
+    {
+        private readonly List<User> _users = new();
+
+        public Task<User> CreateUserAsync(User user)
+        {
+            _users.Add(user);
+            return Task.FromResult(user);
+        }
+
+        public Task<bool> DeleteUserAsync(int id)
+        {
+            var result = _users.FirstOrDefault(u => u.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет пользователя с id = {id}");
+            }
+
+            _users.Remove(result);
+            return Task.FromResult(true);
+        }
+
+        public Task<User> EditUserAsync(User user, int id)
+        {
+            var result = _users.FirstOrDefault(u => u.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет пользователя с id = {id}");
+            }
+
+            result.Name = user.Name;
+            return Task.FromResult(result);
+        }
+
+        public Task<User> FindUserByIdAsync(int id)
+        {
+            var result = _users.FirstOrDefault(u => u.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет пользователя с id = {id}");
+            }
+
+            return Task.FromResult(result);
+        }
+
+        public Task<User> FindUserByLoginAsync(string login)
+        {
+            // Логина у нас нет, это просто заглушка для задания
+            var result = _users.FirstOrDefault(u => u.Name == login);
+            return Task.FromResult(result!);
+        }
+
+        public Task<List<User>> GetUsersAsync(UserRequestOption option)
+        {
+            // пока все пользователи, без фильтров
+            return Task.FromResult(_users.ToList());
+        }
+    }
+}
+
+1.6. Контроллер Users (валидатор + 201 + async)
+
+Controllers/UsersController.cs
+
+using Microsoft.AspNetCore.Mvc;
+using SampleApp.API.Entities;
+using SampleApp.API.Interfaces;
+using SampleApp.API.Validations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace SampleApp.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UsersController : ControllerBase
+    {
+        private readonly IUserRepository _repo;
+    
+        public UsersController(IUserRepository repo)
+        {
+            _repo = repo;
+        }
+
+        // Задание 3: правильный статус-код 201 + валидация (Задание 1)
+        [HttpPost]
+        public async Task<ActionResult> CreateUser(User user)
+        {
+            var validator = new UserValidator();
+            var result = validator.Validate(user);
+    
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors.First().ErrorMessage);
+            }
+    
+            var createdUser = await _repo.CreateUserAsync(user);
+            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+        }
+    
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _repo.GetUsersAsync(new UserRequestOption());
+            return Ok(users);
+        }
+    
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(User user)
+        {
+            var updated = await _repo.EditUserAsync(user, user.Id);
+            return Ok(updated);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUserById(int id)
+        {
+            var user = await _repo.FindUserByIdAsync(id);
+            return Ok(user);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var deleted = await _repo.DeleteUserAsync(id);
+            return Ok(deleted);
+        }
+    }
+}
+
+
+👉 Здесь у тебя:
+
+валидация (Задание 1),
+
+статус-код 201 (Задание 3),
+
+async-методы (Задание 4, асинхронная версия репозитория).
+
+2. Задание 2: Role (модель + репозиторий + контроллер + валидатор)
+
+Теперь добавляем второй набор – Role.
+
+2.1. Модель Role – Entities/Role.cs
+namespace SampleApp.API.Entities
+{
+    public class Role
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
+}
+
+2.2. Интерфейс IRoleRepository – Interfaces/IRoleRepository.cs
+using System.Collections.Generic;
+using SampleApp.API.Entities;
+
+namespace SampleApp.API.Interfaces
+{
+    public interface IRoleRepository
+    {
+        Role CreateRole(Role role);
+        List<Role> GetRoles();
+        Role EditRole(Role role, int id);
+        bool DeleteRole(int id);
+        Role FindRoleById(int id);
+    }
+}
+
+2.3. Реализация RoleMemoryRepository – Repositories/RoleMemoryRepository.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using SampleApp.API.Entities;
+using SampleApp.API.Interfaces;
+
+namespace SampleApp.API.Repositories
+{
+    public class RoleMemoryRepository : IRoleRepository
+    {
+        private readonly List<Role> _roles = new();
+
+        public Role CreateRole(Role role)
+        {
+            _roles.Add(role);
+            return role;
+        }
+
+        public bool DeleteRole(int id)
+        {
+            var result = _roles.FirstOrDefault(r => r.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет роли с id = {id}");
+            }
+
+            _roles.Remove(result);
+            return true;
+        }
+
+        public Role EditRole(Role role, int id)
+        {
+            var result = _roles.FirstOrDefault(r => r.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет роли с id = {id}");
+            }
+
+            result.Name = role.Name;
+            return result;
+        }
+
+        public Role FindRoleById(int id)
+        {
+            var result = _roles.FirstOrDefault(r => r.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"Нет роли с id = {id}");
+            }
+
+            return result;
+        }
+
+        public List<Role> GetRoles()
+        {
+            return _roles.ToList();
+        }
+    }
+}
+
+2.4. Валидатор RoleValidator – Validations/RoleValidator.cs
+using FluentValidation;
+using SampleApp.API.Entities;
+
+namespace SampleApp.API.Validations
+{
+    public class RoleValidator : AbstractValidator<Role>
+    {
+        public RoleValidator()
+        {
+            RuleFor(r => r.Name)
+                .NotEmpty().WithMessage("Название роли обязательно")
+                .Length(2, 50).WithMessage("Название роли должно быть от 2 до 50 символов");
+        }
+    }
+}
+
+2.5. Контроллер RolesController – Controllers/RolesController.cs
+using Microsoft.AspNetCore.Mvc;
+using SampleApp.API.Entities;
+using SampleApp.API.Interfaces;
+using SampleApp.API.Validations;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace SampleApp.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class RolesController : ControllerBase
+    {
+        private readonly IRoleRepository _repo;
+
+        public RolesController(IRoleRepository repo)
+        {
+            _repo = repo;
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(Role role)
+        {
+            var validator = new RoleValidator();
+            var result = validator.Validate(role);
+
+            if (!result.IsValid)
+            {
+                return BadRequest(result.Errors.First().ErrorMessage);
+            }
+
+            return Ok(_repo.CreateRole(role));
+        }
+
+        [HttpGet]
+        public ActionResult GetRoles()
+        {
+            var roles = _repo.GetRoles();
+
+            if (roles == null || roles.Count == 0)
+                return NotFound();
+
+            return Ok(roles);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetRoleById(int id)
+        {
+            return Ok(_repo.FindRoleById(id));
+        }
+
+        [HttpPut]
+        public ActionResult UpdateRole(Role role)
+        {
+            return Ok(_repo.EditRole(role, role.Id));
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteRole(int id)
+        {
+            return Ok(_repo.DeleteRole(id));
+        }
+    }
+}
+
+
+Всё, Задание 2 выполнено: модель, интерфейс, репозиторий, контроллер, валидатор.
+
+3. Проверка, что всё собрано
+
+В терминале в папке проекта:
+
+dotnet build
+dotnet run
+
+
+Открой в браузере:
+
+http://localhost:порт/swagger
+
+
+Должно быть два блока:
+
+Users – с методами POST/GET/PUT/GET{id}/DELETE{id}
+
+Roles – с теми же типами методов.
+
+Для Задания 1 (валидация):
+
+в POST /api/Users отправь
+
+{ "id": 0, "name": "" }
+
+
+→ должен быть 400 Bad Request с текстом ошибки;
+
+отправь
+
+{ "id": 1, "name": "Иван" }
+
+
+→ 201 Created.
+
+Это и есть «Проверка валидации».
+
+4. Задание 5 (тесты) – отдельно
+
+Там уже нужно делать xUnit-проект, это отдельная тема.
+Если захочешь — напишу тебе ещё один отдельный блок «вот команды и код для тестов», но для начала сделай код выше, чтобы проект нормально собирался и Swagger показывал Users + Roles.
