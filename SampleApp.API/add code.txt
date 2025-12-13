@@ -14,8 +14,7 @@ CreateUser возвращал 201 Created,
 
 0. Какой у тебя должен быть Program.cs
 
-Program.cs оставляем простым, как по методичке + DI:
-
+Program.cs оставляем простым, как по методичке + DI:,,,,,
 using SampleApp.API.Interfaces;
 using SampleApp.API.Repositories;
 
