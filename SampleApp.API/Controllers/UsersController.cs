@@ -3,7 +3,6 @@ using SampleApp.API.Dtos;
 using SampleApp.API.Entities;
 using SampleApp.API.Interfaces;
 using SampleApp.API.Mappers;
-using SampleApp.API.Validations;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,10 +20,9 @@ namespace SampleApp.API.Controllers
             _repo = repo;
         }
 
-        // POST: принимает LoginDto, формирует User, хэширует пароль, сохраняет, возвращает UserDto
         [SwaggerOperation(
             Summary = "Создание пользователя",
-            Description = "Принимает LoginDto (Name/Login/Password), создаёт User с PasswordHash/PasswordSalt и сохраняет в БД",
+            Description = "Принимает LoginDto, создаёт User с PasswordHash/PasswordSalt и сохраняет в БД",
             OperationId = "CreateUser"
         )]
         [SwaggerResponse(201, "Пользователь успешно создан", typeof(UserDto))]
@@ -32,11 +30,8 @@ namespace SampleApp.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser([FromBody] LoginDto loginDto)
         {
-            var validator = new UserValidator();
-            var result = validator.Validate(loginDto);
-
-            if (!result.IsValid)
-                return BadRequest(result.Errors.First().ErrorMessage);
+            // ВАЖНО: РУЧНУЮ ВАЛИДАЦИЮ УБРАЛИ
+            // FluentValidation.AspNetCore сделает 400 автоматически, если LoginDto невалидный
 
             using var hmac = new HMACSHA256();
 
@@ -50,18 +45,13 @@ namespace SampleApp.API.Controllers
 
             var createdUser = await _repo.CreateUserAsync(user);
 
-            return CreatedAtAction(
-                nameof(GetUserById),
-                new { id = createdUser.Id },
-                createdUser.ToDto()
-            );
+            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser.ToDto());
         }
 
-        // GET: список пользователей (DTO)
         [HttpGet]
         [SwaggerOperation(
             Summary = "Получение списка пользователей",
-            Description = "Возвращает всех пользователей",
+            Description = "Возвращает всех пользователей (DTO)",
             OperationId = "GetUsers"
         )]
         [SwaggerResponse(200, "Список пользователей получен успешно", typeof(List<UserDto>))]
@@ -71,14 +61,12 @@ namespace SampleApp.API.Controllers
             return Ok(users.Select(u => u.ToDto()));
         }
 
-        // PUT: обновление по EditUserDto (DTO -> Entity -> save -> DTO)
         [SwaggerOperation(
             Summary = "Обновление пользователя",
-            Description = "Обновляет пользователя по Id",
+            Description = "Обновляет пользователя по Id (DTO)",
             OperationId = "UpdateUser"
         )]
         [SwaggerResponse(200, "Пользователь обновлён", typeof(UserDto))]
-        [SwaggerResponse(404, "Пользователь не найден")]
         [HttpPut]
         public async Task<ActionResult> UpdateUser(EditUserDto editUserDto)
         {
@@ -92,22 +80,19 @@ namespace SampleApp.API.Controllers
             return Ok(updated.ToDto());
         }
 
-        // GET by id: один пользователь (DTO)
         [HttpGet("{id}")]
         [SwaggerOperation(
             Summary = "Получение пользователя по ID",
-            Description = "Возвращает пользователя по идентификатору",
+            Description = "Возвращает пользователя по идентификатору (DTO)",
             OperationId = "GetUserById"
         )]
         [SwaggerResponse(200, "Пользователь найден", typeof(UserDto))]
-        [SwaggerResponse(404, "Пользователь не найден")]
         public async Task<ActionResult> GetUserById(int id)
         {
             var user = await _repo.FindUserByIdAsync(id);
             return Ok(user.ToDto());
         }
 
-        // DELETE
         [HttpDelete("{id}")]
         [SwaggerOperation(
             Summary = "Удаление пользователя по ID",
