@@ -9,4 +9,6 @@ public class User : Base
 
     // Если у тебя в Sprint1 был Name — оставь:
     public string Name { get; set; } = string.Empty;
+    public string Token { get; set; } = string.Empty;
+
 }

@@ -4,27 +4,31 @@ using SampleApp.API.Extensions;
 using SampleApp.API.Interfaces;
 using SampleApp.API.Middlewares;
 using SampleApp.API.Repositories;
+using SampleApp.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers + Swagger
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
 
-// DbContext (Postgres)
+// CORS
+builder.Services.AddCors();
+
+// DbContext Postgres
 builder.Services.AddDbContext<SampleAppContext>(o =>
     o.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 
-// Репозиторий (БД)
+// Repo
 builder.Services.AddScoped<IUserRepository, UsersRepository>();
 
-// FluentValidation auto
-builder.Services.AddFluentValidationServices();
+// Token service
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+// JWT + Swagger + Authorization
+builder.Services.AddJwtServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Глобальный обработчик ошибок (должен быть как можно раньше)
+// Middleware ошибок (если ты делал Sprint с обработчиком)
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 if (app.Environment.IsDevelopment())
@@ -33,6 +37,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 app.Run();

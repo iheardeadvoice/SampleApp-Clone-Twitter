@@ -28,6 +28,7 @@ public class SampleAppContext : DbContext
 
             entity.Property(e => e.PasswordHash).IsRequired();
             entity.Property(e => e.PasswordSalt).IsRequired();
+            entity.Property(e => e.Token).IsRequired();
         });
     }
 }

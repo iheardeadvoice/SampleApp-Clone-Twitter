@@ -3,6 +3,7 @@ using SampleApp.API.Data;
 using SampleApp.API.Entities;
 using SampleApp.API.Exceptions;
 using SampleApp.API.Interfaces;
+using System.Linq;
 
 namespace SampleApp.API.Repositories;
 
@@ -93,4 +94,7 @@ public class UsersRepository : IUserRepository
         _logger.LogInformation("Поиск по Login: найден пользователь. Login={Login}, Id={Id}", login, user.Id);
         return user;
     }
+
+    
+
 }

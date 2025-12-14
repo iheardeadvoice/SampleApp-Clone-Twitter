@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SampleApp.API.Data;
 using SampleApp.API.Dtos;
 using SampleApp.API.Entities;
+using SampleApp.API.Services;
 
 namespace SampleApp.API.Controllers;
 
@@ -13,7 +14,14 @@ namespace SampleApp.API.Controllers;
 public class SeedController : ControllerBase
 {
     private readonly SampleAppContext db;
-    public SeedController(SampleAppContext db) => this.db = db;
+    private readonly ITokenService _tokenService;
+
+    // ✅ Оставляем ТОЛЬКО один конструктор — чтобы _tokenService всегда был заполнен
+    public SeedController(SampleAppContext db, ITokenService tokenService)
+    {
+        this.db = db;
+        _tokenService = tokenService;
+    }
 
     [HttpGet("generate")]
     public ActionResult SeedUsers()
@@ -44,7 +52,10 @@ public class SeedController : ControllerBase
                     Name = u.Name,
                     Login = u.Login,
                     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(u.Password)),
-                    PasswordSalt = hmac.Key
+                    PasswordSalt = hmac.Key,
+
+                    // ✅ ВОТ СЮДА и надо было вставлять токен
+                    Token = _tokenService.CreateToken(u.Login)
                 });
             }
 

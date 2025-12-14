@@ -12,5 +12,6 @@ namespace SampleApp.API.Interfaces
         Task<bool> DeleteUserAsync(int id);
         Task<User> FindUserByIdAsync(int id);
         Task<User> FindUserByLoginAsync(string login);
+        
     }
 }

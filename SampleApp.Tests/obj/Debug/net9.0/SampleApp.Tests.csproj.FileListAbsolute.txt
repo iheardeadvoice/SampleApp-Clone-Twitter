@@ -227,3 +227,14 @@ D:\SampleApp\SampleApp.Tests\obj\Debug\net9.0\refint\SampleApp.Tests.dll
 D:\SampleApp\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.pdb
 D:\SampleApp\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.genruntimeconfig.cache
 D:\SampleApp\SampleApp.Tests\obj\Debug\net9.0\ref\SampleApp.Tests.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\bin\Debug\net9.0\.msCoverageSourceRootsMapping_SampleApp.Tests
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\bin\Debug\net9.0\CoverletSourceRootsMapping_SampleApp.Tests
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.csproj.AssemblyReference.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.AssemblyInfoInputs.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.AssemblyInfo.cs
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.csproj.CoreCompileInputs.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.sourcelink.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\refint\SampleApp.Tests.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.Tests\obj\Debug\net9.0\SampleApp.Tests.pdb
