@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SampleApp.API.Dtos;
 using SampleApp.API.Entities;
 using SampleApp.API.Interfaces;
+using SampleApp.API.Mappers;
 using SampleApp.API.Validations;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SampleApp.API.Controllers
 {
@@ -19,89 +21,100 @@ namespace SampleApp.API.Controllers
             _repo = repo;
         }
 
-        // Задание 3: правильный статус-код 201 + валидация (Задание 1)
+        // POST: принимает LoginDto, формирует User, хэширует пароль, сохраняет, возвращает UserDto
         [SwaggerOperation(
-        Summary = "Добавление пользователей в список",
-        Description = "Добавляет пользователей",
-        OperationId = "CreateUser"
+            Summary = "Создание пользователя",
+            Description = "Принимает LoginDto (Name/Login/Password), создаёт User с PasswordHash/PasswordSalt и сохраняет в БД",
+            OperationId = "CreateUser"
         )]
-        [SwaggerResponse(201, "Пользователь успешно добавлен в список", typeof(List<User>))]
-        [SwaggerResponse(200, "Запрос обработан корректно", typeof(List<User>))]
-        [SwaggerResponse(404, "NOT FOUND")]
-        [SwaggerResponse(400, "Сервер не может обработать запрос браузера из-за некорректного синтаксиса")]
+        [SwaggerResponse(201, "Пользователь успешно создан", typeof(UserDto))]
+        [SwaggerResponse(400, "Ошибка валидации")]
         [HttpPost]
-        public async Task<ActionResult> CreateUser(User user)
+        public async Task<ActionResult> CreateUser([FromBody] LoginDto loginDto)
         {
             var validator = new UserValidator();
-            var result = validator.Validate(user);
+            var result = validator.Validate(loginDto);
 
             if (!result.IsValid)
-            {
                 return BadRequest(result.Errors.First().ErrorMessage);
-            }
+
+            using var hmac = new HMACSHA256();
+
+            var user = new User
+            {
+                Name = loginDto.Name,
+                Login = loginDto.Login,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)),
+                PasswordSalt = hmac.Key
+            };
 
             var createdUser = await _repo.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+
+            return CreatedAtAction(
+                nameof(GetUserById),
+                new { id = createdUser.Id },
+                createdUser.ToDto()
+            );
         }
 
+        // GET: список пользователей (DTO)
         [HttpGet]
         [SwaggerOperation(
-        Summary = "Получение списка пользователей",
-        Description = "Возвращает все пользователей",
-        OperationId = "GetProducts"
-)]
-        [SwaggerResponse(200, "Список пользователей получен успешно", typeof(List<User>))]
-        [SwaggerResponse(404, "NOT FOUND")]
-        public ActionResult GetUsers()
+            Summary = "Получение списка пользователей",
+            Description = "Возвращает всех пользователей",
+            OperationId = "GetUsers"
+        )]
+        [SwaggerResponse(200, "Список пользователей получен успешно", typeof(List<UserDto>))]
+        public async Task<ActionResult> GetUsers()
         {
-            return Ok(_repo.GetUsersAsync());
+            var users = await _repo.GetUsersAsync();
+            return Ok(users.Select(u => u.ToDto()));
         }
 
-
+        // PUT: обновление по EditUserDto (DTO -> Entity -> save -> DTO)
         [SwaggerOperation(
-        Summary = "Создание нового ресурса | Полная замена-обновление существующего.",
-        Description = "Повторные и идентичные запросы",
-        OperationId = "GetUsers"
-)]
-        [SwaggerResponse(200, "Список пользователей получен успешно", typeof(List<User>))]
-        [SwaggerResponse(201, "Пользователь успешно добавлен в список", typeof(List<User>))]
-        [SwaggerResponse(404, "NOT FOUND")]
-        [SwaggerResponse(400, "Сервер не может обработать запрос браузера из-за некорректного синтаксиса")]
+            Summary = "Обновление пользователя",
+            Description = "Обновляет пользователя по Id",
+            OperationId = "UpdateUser"
+        )]
+        [SwaggerResponse(200, "Пользователь обновлён", typeof(UserDto))]
+        [SwaggerResponse(404, "Пользователь не найден")]
         [HttpPut]
-        public async Task<ActionResult> UpdateUser(User user)
+        public async Task<ActionResult> UpdateUser(EditUserDto editUserDto)
         {
-            var updated = await _repo.EditUserAsync(user, user.Id);
-            return Ok(updated);
+            var currentUser = await _repo.FindUserByIdAsync(editUserDto.Id);
+
+            currentUser.Login = editUserDto.Login;
+            currentUser.Name = editUserDto.Name;
+
+            var updated = await _repo.EditUserAsync(currentUser, currentUser.Id);
+
+            return Ok(updated.ToDto());
         }
 
-    
-        [SwaggerOperation(
-        Summary = "Получение ресурса с конкретным идентификатором",
-        Description = "Получение определённых данных по ID",
-        OperationId = "GetUserById"
-)]
-        [SwaggerResponse(404, "NOT FOUND")]
-        [SwaggerResponse(400, "Сервер не может обработать запрос браузера из-за некорректного синтаксиса")]
-        [SwaggerResponse(401, "Несанкционированный вход. Доступ закрыт.")]
-        [SwaggerResponse(403, "Вход запрещён. Доступ закрыт.")]
+        // GET by id: один пользователь (DTO)
         [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = "Получение пользователя по ID",
+            Description = "Возвращает пользователя по идентификатору",
+            OperationId = "GetUserById"
+        )]
+        [SwaggerResponse(200, "Пользователь найден", typeof(UserDto))]
+        [SwaggerResponse(404, "Пользователь не найден")]
         public async Task<ActionResult> GetUserById(int id)
         {
             var user = await _repo.FindUserByIdAsync(id);
-            return Ok(user);
+            return Ok(user.ToDto());
         }
 
-
-        [SwaggerOperation(
-        Summary = "Удаление пользователя по определённому идентификатору",
-        Description = "Удаление пользователя из списка по ID",
-        OperationId = "DeleteUser"
-)]
-        [SwaggerResponse(404, "NOT FOUND")]
-        [SwaggerResponse(400, "Сервер не может обработать запрос браузера из-за некорректного синтаксиса")]
-        [SwaggerResponse(401, "Несанкционированный вход. Доступ закрыт.")]
-        [SwaggerResponse(403, "Вход запрещён. Доступ закрыт.")]
+        // DELETE
         [HttpDelete("{id}")]
+        [SwaggerOperation(
+            Summary = "Удаление пользователя по ID",
+            Description = "Удаляет пользователя по идентификатору",
+            OperationId = "DeleteUser"
+        )]
+        [SwaggerResponse(200, "Пользователь удалён")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var deleted = await _repo.DeleteUserAsync(id);

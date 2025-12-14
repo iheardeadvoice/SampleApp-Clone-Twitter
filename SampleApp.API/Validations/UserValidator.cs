@@ -1,25 +1,18 @@
 ﻿using FluentValidation;
-using SampleApp.API.Entities;
+using SampleApp.API.Dtos;
 
-namespace SampleApp.API.Validations
+namespace SampleApp.API.Validations;
+
+public class UserValidator : AbstractValidator<LoginDto>
 {
-    public class UserValidator : AbstractValidator<User>
+    public UserValidator()
     {
-        public UserValidator()
-        {
-            RuleFor(u => u.Name)
-                .NotEmpty().WithMessage("Имя обязательно")
-                .Length(2, 50).WithMessage("Имя должно быть от 2 до 50 символов")
-                .Must(StartsWithCapitalLetter).WithMessage("Имя должно начинаться с заглавной буквы");
-            
-            RuleFor(u => u.Id)
-                .GreaterThan(0).WithMessage("ID должен быть положительным числом");
-        }
-
-        private bool StartsWithCapitalLetter(string name)
-        {
-            if (string.IsNullOrEmpty(name)) return false;
-            return char.IsUpper(name[0]);
-        }
+        RuleFor(u => u.Login)
+            .NotEmpty().WithMessage("Логин не должен быть пустым")
+            .Length(2, 50).WithMessage("Длина логина должно быть от 2 до 50 символов")
+            .Must(StartsWithCapitalLetter).WithMessage("Логин должен начинаться с заглавной буквы");
     }
+
+    private static bool StartsWithCapitalLetter(string login)
+        => !string.IsNullOrEmpty(login) && char.IsUpper(login[0]);
 }
