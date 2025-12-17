@@ -1,0 +1,986 @@
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\appsettings.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.exe
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.sourcelink.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp-Clone-Twitter\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.sourcelink.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\Users\stud\Documents\SampleApp\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\appsettings.json
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\SampleApp\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.sourcelink.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\swae.build.ex.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+D:\SampleApp\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.sourcelink.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\Users\егор\Desktop\Games\Артёмов-умные\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\appsettings.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.sourcelink.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\swae.build.ex.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+D:\SampleApp\SampleApp-Clone-Twitter\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\grup\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\Users\stud\Desktop\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\swae.build.ex.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\ssss\SampleApp-Clone-Twitter-main (1)\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.Development.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\appsettings.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\dotnet-tools.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.staticwebassets.endpoints.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.exe
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.deps.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.runtimeconfig.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\SampleApp.API.pdb
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Bogus.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Humanizer.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.CodeDom.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.AssemblyReference.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfoInputs.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.AssemblyInfo.cs
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.csproj.CoreCompileInputs.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cs
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.MvcApplicationPartsAssemblyInfo.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\scopedcss\bundle\SampleApp.API.styles.css
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.development.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleAp.B0491012.Up2Date
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\refint\SampleApp.API.dll
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.pdb
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\SampleApp.API.genruntimeconfig.cache
+C:\grup\SampleApp-Clone-Twitter-main (3)\SampleApp-Clone-Twitter-main\SampleApp.API\obj\Debug\net9.0\ref\SampleApp.API.dll
