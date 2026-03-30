@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, InputAdornment, IconButton, Alert } from '@mui/material';
-import { Eye, EyeOff, UserPlus } from 'lucide-react';
+import { Box, Button, Alert, TextField, InputAdornment, IconButton } from '@mui/material';
+import { UserPlus, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { PasswordStrength } from './PasswordStrength';
+import { FormDebug } from './FormDebug';
 
 type FormData = {
     login: string;
@@ -12,25 +14,40 @@ type FormData = {
 
 export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     const { register: registerUser } = useAuth();
-    const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [serverError, setServerError] = useState('');
+    const [showDebug, setShowDebug] = useState(import.meta.env.DEV);
+    const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, watch, formState } = useForm<FormData>({
+        mode: 'onChange',
+        defaultValues: {
+            login: '',
+            password: '',
+            name: '',
+        },
+    });
+
+    const { errors, touchedFields, isValid, isDirty } = formState;
+    const loginValue = watch('login');
+    const passwordValue = watch('password');
 
     const onSubmit = async (data: FormData) => {
         try {
             setLoading(true);
-            setError('');
+            setServerError('');
             await registerUser(data);
             onSuccess?.();
         } catch (err: any) {
             const errors = err.response?.data?.errors;
             if (errors) {
-                const messages = Object.values(errors).flat().join('. ');
-                setError(messages);
+                if (errors.Login) {
+                    setServerError(errors.Login[0]);
+                } else {
+                    setServerError('Проверьте правильность заполнения полей');
+                }
             } else {
-                setError(err.response?.data?.message || 'Ошибка регистрации');
+                setServerError(err.response?.data?.message || 'Ошибка регистрации');
             }
         } finally {
             setLoading(false);
@@ -40,36 +57,54 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {error && <Alert severity="error">{error}</Alert>}
+                {serverError && <Alert severity="error">{serverError}</Alert>}
 
+                {/* Имя */}
                 <TextField
+                    fullWidth
                     label="Имя"
                     {...register('name')}
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
                     disabled={loading}
-                    fullWidth
                 />
 
+                {/* Логин */}
                 <TextField
+                    fullWidth
                     label="Логин"
-                    {...register('login', { required: 'Логин обязателен' })}
+                    {...register('login', { 
+                        required: 'Логин обязателен',
+                        minLength: { value: 3, message: 'Минимум 3 символа' },
+                        validate: (value) => {
+                            if (value === 'admin') return 'Недопустимый логин пользователя';
+                            return true;
+                        }
+                    })}
                     error={!!errors.login}
                     helperText={errors.login?.message}
+                    required
                     disabled={loading}
-                    fullWidth
                 />
 
+                {/* Пароль */}
                 <TextField
+                    fullWidth
                     label="Пароль"
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password', {
+                    {...register('password', { 
                         required: 'Пароль обязателен',
                         minLength: { value: 3, message: 'Минимум 3 символа' },
-                        maxLength: { value: 8, message: 'Максимум 8 символов' }
+                        maxLength: { value: 8, message: 'Максимум 8 символов' },
+                        validate: (value) => {
+                            if (value === '123') return 'Слишком простой пароль';
+                            return true;
+                        }
                     })}
                     error={!!errors.password}
                     helperText={errors.password?.message}
+                    required
                     disabled={loading}
-                    fullWidth
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -81,15 +116,43 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     }}
                 />
 
+                {/* Индикатор сложности пароля */}
+                <PasswordStrength password={passwordValue} />
+
+                {/* Индикатор несохраненных изменений */}
+                {isDirty && (
+                    <Alert severity="info" sx={{ mt: 1 }}>
+                        ✏️ У вас есть несохраненные изменения
+                    </Alert>
+                )}
+
                 <Button
                     type="submit"
                     variant="contained"
                     startIcon={<UserPlus size={20} />}
-                    disabled={loading}
-                    fullWidth
+                    disabled={!isValid || loading}
+                    sx={{ mt: 1 }}
                 >
                     {loading ? 'Регистрация...' : 'Зарегистрироваться'}
                 </Button>
+
+                {/* Кнопка отладки */}
+                {import.meta.env.DEV && (
+                    <Button variant="text" size="small" onClick={() => setShowDebug(!showDebug)}>
+                        {showDebug ? 'Скрыть отладку' : 'Показать отладку'}
+                    </Button>
+                )}
+
+                {/* Отладочная информация */}
+                {showDebug && (
+                    <FormDebug
+                        values={watch()}
+                        errors={errors}
+                        touched={touchedFields}
+                        isValid={isValid}
+                        isDirty={isDirty}
+                    />
+                )}
             </Box>
         </form>
     );

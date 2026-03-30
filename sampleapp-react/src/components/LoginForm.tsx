@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box, InputAdornment, IconButton, Alert } from '@mui/material';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Box, Button, Alert, TextField, InputAdornment, IconButton } from '@mui/material';
+import { LogIn, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 type FormData = {
@@ -11,11 +11,17 @@ type FormData = {
 
 export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     const { login } = useAuth();
-    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm<FormData>({
+        mode: 'onChange',
+        defaultValues: {
+            login: '',
+            password: '',
+        },
+    });
 
     const onSubmit = async (data: FormData) => {
         try {
@@ -36,22 +42,29 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 {error && <Alert severity="error">{error}</Alert>}
 
                 <TextField
+                    fullWidth
                     label="Логин"
-                    {...register('login', { required: 'Логин обязателен' })}
+                    {...register('login', { 
+                        required: 'Логин обязателен' 
+                    })}
                     error={!!errors.login}
                     helperText={errors.login?.message}
+                    required
                     disabled={loading}
-                    fullWidth
                 />
 
                 <TextField
+                    fullWidth
                     label="Пароль"
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password', { required: 'Пароль обязателен' })}
+                    {...register('password', { 
+                        required: 'Пароль обязателен',
+                        minLength: { value: 3, message: 'Минимум 3 символа' }
+                    })}
                     error={!!errors.password}
                     helperText={errors.password?.message}
+                    required
                     disabled={loading}
-                    fullWidth
                     InputProps={{
                         endAdornment: (
                             <InputAdornment position="end">
@@ -67,8 +80,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     type="submit"
                     variant="contained"
                     startIcon={<LogIn size={20} />}
-                    disabled={loading}
-                    fullWidth
+                    disabled={!isValid || loading}
                 >
                     {loading ? 'Вход...' : 'Войти'}
                 </Button>
