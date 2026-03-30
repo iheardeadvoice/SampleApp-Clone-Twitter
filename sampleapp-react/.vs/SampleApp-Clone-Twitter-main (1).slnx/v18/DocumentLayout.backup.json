@@ -1,0 +1,344 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\UsersController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Controllers\\UsersController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RolesRepository.cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Repositories\\RolesRepository.cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Data\\SampleAppContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\LoginDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Dtos\\LoginDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\UserDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Dtos\\UserDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Entities\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Enums\\RoleType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Enums\\RoleType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\Role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Entities\\Role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\RolesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Controllers\\RolesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Validations\\RoleValidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Validations\\RoleValidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RoleMemoryRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Repositories\\RoleMemoryRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContextFactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Data\\SampleAppContextFactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\appsettings.Development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SampleApp.API\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 158,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SampleAppContext.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContext.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Data\\SampleAppContext.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContext.cs",
+              "RelativeToolTip": "SampleApp.API\\Data\\SampleAppContext.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAuwDsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T16:04:32.875Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\UserDto.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Dtos\\UserDto.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\UserDto.cs",
+              "RelativeToolTip": "SampleApp.API\\Dtos\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:33:08.601Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RolesRepository.cs.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RolesRepository.cs.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Repositories\\RolesRepository.cs.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RolesRepository.cs.cs",
+              "RelativeToolTip": "SampleApp.API\\Repositories\\RolesRepository.cs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:58:46.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "SampleApp.API\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:35:48.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\LoginDto.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Dtos\\LoginDto.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Dtos\\LoginDto.cs",
+              "RelativeToolTip": "SampleApp.API\\Dtos\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:14:42.187Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Program.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Program.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Program.cs",
+              "RelativeToolTip": "SampleApp.API\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T17:59:42.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Entities\\User.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\User.cs",
+              "RelativeToolTip": "SampleApp.API\\Entities\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T16:00:06.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Role.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\Role.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Entities\\Role.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Entities\\Role.cs",
+              "RelativeToolTip": "SampleApp.API\\Entities\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T15:58:51.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Controllers\\RolesController.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "SampleApp.API\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:06:07.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RoleValidator.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Validations\\RoleValidator.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Validations\\RoleValidator.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Validations\\RoleValidator.cs",
+              "RelativeToolTip": "SampleApp.API\\Validations\\RoleValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:06:26.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RoleType.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Enums\\RoleType.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Enums\\RoleType.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Enums\\RoleType.cs",
+              "RelativeToolTip": "SampleApp.API\\Enums\\RoleType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:00:16.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RoleMemoryRepository.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RoleMemoryRepository.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Repositories\\RoleMemoryRepository.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Repositories\\RoleMemoryRepository.cs",
+              "RelativeToolTip": "SampleApp.API\\Repositories\\RoleMemoryRepository.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:06:22.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20251216172528_AddRolesAndMicropostsRelations.Designer.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs",
+              "RelativeToolTip": "SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.Designer.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:06:33.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "20251216172528_AddRolesAndMicropostsRelations.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs",
+              "RelativeToolTip": "SampleApp.API\\Migrations\\20251216172528_AddRolesAndMicropostsRelations.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T18:06:32.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "SampleAppContextFactory.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContextFactory.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Data\\SampleAppContextFactory.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Data\\SampleAppContextFactory.cs",
+              "RelativeToolTip": "SampleApp.API\\Data\\SampleAppContextFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T16:34:35.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "SampleApp.API\\appsettings.Development.json",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.Development.json",
+              "RelativeToolTip": "SampleApp.API\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-16T15:48:04.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "SampleAppContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs",
+              "RelativeToolTip": "SampleApp.API\\Migrations\\SampleAppContextModelSnapshot.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAwwH0AAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T16:33:53.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.json",
+              "RelativeDocumentMoniker": "SampleApp.API\\appsettings.json",
+              "ToolTip": "C:\\ssss\\SampleApp-Clone-Twitter-main (1)\\SampleApp.API\\appsettings.json",
+              "RelativeToolTip": "SampleApp.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-16T15:47:23.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
