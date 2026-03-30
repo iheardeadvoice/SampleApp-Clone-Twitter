@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\SampleApp.Tests.csproj": {}
+    "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\SampleApp.Tests.csproj": {}
   },
   "projects": {
-    "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj": {
+    "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj",
+        "projectUniqueName": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj",
         "projectName": "SampleApp.API",
-        "projectPath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj",
+        "projectPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj",
         "packagesPath": "C:\\Users\\stud\\.nuget\\packages\\",
-        "outputPath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\obj\\",
+        "outputPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -28,6 +28,7 @@
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "C:\\Users\\stud\\.nuget": {},
+          "C:\\gruppa\\25ip236": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -136,14 +137,14 @@
         }
       }
     },
-    "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\SampleApp.Tests.csproj": {
+    "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\SampleApp.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\SampleApp.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\SampleApp.Tests.csproj",
         "projectName": "SampleApp.Tests",
-        "projectPath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\SampleApp.Tests.csproj",
+        "projectPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\SampleApp.Tests.csproj",
         "packagesPath": "C:\\Users\\stud\\.nuget\\packages\\",
-        "outputPath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\obj\\",
+        "outputPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -160,14 +161,15 @@
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "C:\\Users\\stud\\.nuget": {},
+          "C:\\gruppa\\25ip236": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj": {
-                "projectPath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj"
+              "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj": {
+                "projectPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj"
               }
             }
           }

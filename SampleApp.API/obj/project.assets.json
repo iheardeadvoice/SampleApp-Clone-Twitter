@@ -3480,11 +3480,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj",
+      "projectUniqueName": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj",
       "projectName": "SampleApp.API",
-      "projectPath": "c:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj",
+      "projectPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj",
       "packagesPath": "C:\\Users\\stud\\.nuget\\packages\\",
-      "outputPath": "c:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\obj\\",
+      "outputPath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3501,6 +3501,7 @@
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
         "C:\\Users\\stud\\.nuget": {},
+        "C:\\gruppa\\25ip236": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

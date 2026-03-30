@@ -44,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+app.UseCors(o => o.AllowAnyOrigin().AllowAnyHeader());
 
 app.UseAuthentication();
 app.UseAuthorization();

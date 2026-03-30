@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HcFA2ltTVRY=",
+  "dgSpecHash": "0dUg4+CT1i4=",
   "success": true,
-  "projectFilePath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.API\\SampleApp.API.csproj",
+  "projectFilePath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.API\\SampleApp.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stud\\.nuget\\packages\\bogus\\35.6.5\\bogus.35.6.5.nupkg.sha512",
     "C:\\Users\\stud\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",

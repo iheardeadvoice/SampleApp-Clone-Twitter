@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "akaejFJKzOA=",
+  "dgSpecHash": "5/rkL3XZPX4=",
   "success": true,
-  "projectFilePath": "C:\\grup\\SampleApp-Clone-Twitter-main\\SampleApp.Tests\\SampleApp.Tests.csproj",
+  "projectFilePath": "C:\\Users\\stud\\Documents\\SampleApp\\SampleApp-Clone-Twitter\\SampleApp.Tests\\SampleApp.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stud\\.nuget\\packages\\bogus\\35.6.5\\bogus.35.6.5.nupkg.sha512",
     "C:\\Users\\stud\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",

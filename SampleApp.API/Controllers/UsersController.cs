@@ -95,7 +95,7 @@ namespace SampleApp.API.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser.ToDto());
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [SwaggerOperation(Summary = "Список пользователей", OperationId = "GetUsers")]
         [SwaggerResponse(200, "OK", typeof(List<UserDto>))]
