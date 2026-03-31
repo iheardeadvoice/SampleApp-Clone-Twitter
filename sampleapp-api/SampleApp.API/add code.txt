@@ -1,1201 +1,269 @@
-{
-  "openapi": "3.0.4",
-  "info": {
-    "title": "SampleApp",
-    "description": "API для пользователей",
-    "version": "v1"
-  },
-  "paths": {
-    "/api/Microposts": {
-      "get": {
-        "tags": [
-          "Microposts"
-        ],
-        "summary": "Получение списка сообщений",
-        "operationId": "GetMicroposts",
-        "responses": {
-          "200": {
-            "description": "ОК",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Micropost"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Micropost"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Micropost"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Microposts"
-        ],
-        "summary": "Создание сообщения",
-        "operationId": "CreateMicropost",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MicropostDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MicropostDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MicropostDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Создано",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Ошибка",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Microposts/{id}": {
-      "get": {
-        "tags": [
-          "Microposts"
-        ],
-        "summary": "Сообщение по id",
-        "operationId": "GetMicropost",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ОК",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Не найдено",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Microposts"
-        ],
-        "summary": "Обновление сообщения",
-        "operationId": "UpdateMicropost",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditMicropostDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditMicropostDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditMicropostDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "ОК",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Не найдено",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Microposts"
-        ],
-        "summary": "Удаление сообщения",
-        "operationId": "DeleteMicropost",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ОК",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Micropost"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Не найдено",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Roles": {
-      "post": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Добавление ролей в список",
-        "description": "Добавляет роль",
-        "operationId": "CreateRole",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Роль успешно добавлена в список",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Запрос обработан корректно",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "NOT FOUND"
-          },
-          "400": {
-            "description": "Сервер не может обработать запрос браузера из-за некорректного синтаксиса"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Получение списка ролей",
-        "description": "Возвращает все роли",
-        "operationId": "GetRoles",
-        "responses": {
-          "200": {
-            "description": "Список ролей получен успешно",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Создание нового ресурса | Полная замена-обновление существующего.",
-        "description": "Повторные и идентичные запросы",
-        "operationId": "UpdateRole",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Role"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Список ролей получен успешно",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Роль успешно добавлена в список",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "NOT FOUND"
-          },
-          "400": {
-            "description": "Сервер не может обработать запрос браузера из-за некорректного синтаксиса"
-          }
-        }
-      }
-    },
-    "/api/Roles/{id}": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Получение списка ролей по определённому идентификатору",
-        "description": "Осуществляет поиск по ID",
-        "operationId": "GetRoleById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Список ролей получен успешно",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Roles"
-        ],
-        "summary": "Удаление роли по определённому идентификатору",
-        "description": "Удаление роли из списка по ID",
-        "operationId": "DeleteRole",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "404": {
-            "description": "NOT FOUND"
-          },
-          "400": {
-            "description": "Сервер не может обработать запрос браузера из-за некорректного синтаксиса"
-          },
-          "401": {
-            "description": "Несанкционированный вход. Доступ закрыт."
-          },
-          "403": {
-            "description": "Вход запрещён. Доступ закрыт."
-          }
-        }
-      }
-    },
-    "/api/Seed/generate": {
-      "get": {
-        "tags": [
-          "Seed"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Token": {
-      "get": {
-        "tags": [
-          "Token"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Users/Login": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Логин по Login/Password",
-        "operationId": "Login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Успешно",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Неверный пароль"
-          }
-        }
-      }
-    },
-    "/api/Users": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Создание пользователя",
-        "operationId": "CreateUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Создано",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Список пользователей",
-        "operationId": "GetUsers",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Users/{id}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Пользователь по Id",
-        "operationId": "GetUserById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Не найден"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Обновление пользователя",
-        "operationId": "UpdateUser",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserUpdateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Пользователь обновлен",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Пользователь не найден"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "EditMicropostDto": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "statusCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "detail": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "login": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "role": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Micropost": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "MicropostDto": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Relation": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "followed": {
-            "$ref": "#/components/schemas/User"
-          },
-          "followedId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "follower": {
-            "$ref": "#/components/schemas/User"
-          },
-          "followerId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Role": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "RoleType": {
-        "enum": [
-          "Admin",
-          "Manager",
-          "User"
-        ],
-        "type": "string"
-      },
-      "User": {
-        "required": [
-          "login",
-          "passwordHash",
-          "passwordSalt"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "login": {
-            "type": "string",
-            "nullable": true
-          },
-          "passwordHash": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
-          },
-          "passwordSalt": {
-            "type": "string",
-            "format": "byte",
-            "nullable": true
-          },
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "role": {
-            "$ref": "#/components/schemas/Role"
-          },
-          "microposts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Micropost"
-            },
-            "nullable": true
-          },
-          "followedRelations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Relation"
-            },
-            "nullable": true
-          },
-          "followerRelations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Relation"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "login": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "role": {
-            "$ref": "#/components/schemas/RoleType"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserUpdateDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "login": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "apiKey",
-        "description": "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token",
-        "name": "Authorization",
-        "in": "header"
-      }
-    }
-  },
-  "security": [
-    {
-      "Bearer": [ ]
-    }
-  ]
-}
+Да. Ниже даю готовый интерфейс для API по твоему swagger.json — чтобы можно было сразу использовать во фронте.
+
+Сделаем 2 файла:
+	1.	src/types/swagger.ts — все типы и DTO
+	2.	src/api/swaggerApi.ts — все методы API
+
+⸻
+
+1) Файл
+
+src/types/swagger.ts
+
+export type RoleType = 'Admin' | 'Manager' | 'User';
+
+export type ErrorResponse = {
+  statusCode?: string | null;
+  message?: string | null;
+  detail?: string | null;
+};
+
+export type LoginDto = {
+  name?: string | null;
+  login?: string | null;
+  password?: string | null;
+  role?: string | null;
+};
+
+export type UserUpdateDto = {
+  name?: string | null;
+  login?: string | null;
+};
+
+export type Role = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  name?: string | null;
+};
+
+export type UserDto = {
+  id: number;
+  login?: string | null;
+  name?: string | null;
+  token?: string | null;
+  role: RoleType;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MicropostDto = {
+  content?: string | null;
+  userId: number;
+};
+
+export type EditMicropostDto = {
+  content?: string | null;
+};
+
+export type Relation = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  followedId: number;
+  followerId: number;
+};
+
+export type User = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  name?: string | null;
+  login?: string | null;
+  passwordHash?: string | null;
+  passwordSalt?: string | null;
+  token?: string | null;
+  roleId: number;
+  role?: Role | null;
+  microposts?: Micropost[] | null;
+  followedRelations?: Relation[] | null;
+  followerRelations?: Relation[] | null;
+};
+
+export type Micropost = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  content?: string | null;
+  user?: User | null;
+  userId: number;
+};
+
+
+⸻
+
+2) Файл
+
+src/api/swaggerApi.ts
+
+import { apiClient } from './client';
+import type {
+  EditMicropostDto,
+  LoginDto,
+  Micropost,
+  MicropostDto,
+  Role,
+  User,
+  UserDto,
+  UserUpdateDto,
+} from '../types/swagger';
+
+/* =========================
+   MICROPOSTS
+========================= */
+
+export const getMicroposts = async (): Promise<Micropost[]> => {
+  const response = await apiClient.get<Micropost[]>('/Microposts');
+  return response.data;
+};
+
+export const getMicropostById = async (id: number): Promise<Micropost> => {
+  const response = await apiClient.get<Micropost>(`/Microposts/${id}`);
+  return response.data;
+};
+
+export const createMicropost = async (
+  payload: MicropostDto
+): Promise<Micropost> => {
+  const response = await apiClient.post<Micropost>('/Microposts', payload);
+  return response.data;
+};
+
+export const updateMicropost = async (
+  id: number,
+  payload: EditMicropostDto
+): Promise<Micropost> => {
+  const response = await apiClient.put<Micropost>(`/Microposts/${id}`, payload);
+  return response.data;
+};
+
+export const deleteMicropost = async (id: number): Promise<Micropost> => {
+  const response = await apiClient.delete<Micropost>(`/Microposts/${id}`);
+  return response.data;
+};
+
+/* =========================
+   ROLES
+   В swagger ответы у Roles описаны как массив User.
+   Оставляю строго по swagger.
+========================= */
+
+export const getRoles = async (): Promise<User[]> => {
+  const response = await apiClient.get<User[]>('/Roles');
+  return response.data;
+};
+
+export const getRoleById = async (id: number): Promise<User[]> => {
+  const response = await apiClient.get<User[]>(`/Roles/${id}`);
+  return response.data;
+};
+
+export const createRole = async (payload: Role): Promise<User[]> => {
+  const response = await apiClient.post<User[]>('/Roles', payload);
+  return response.data;
+};
+
+export const updateRole = async (payload: Role): Promise<User[]> => {
+  const response = await apiClient.put<User[]>('/Roles', payload);
+  return response.data;
+};
+
+export const deleteRole = async (id: number): Promise<void> => {
+  await apiClient.delete(`/Roles/${id}`);
+};
+
+/* =========================
+   SEED
+========================= */
+
+export const generateSeed = async (): Promise<void> => {
+  await apiClient.get('/Seed/generate');
+};
+
+/* =========================
+   TOKEN
+========================= */
+
+export const getTokenInfo = async (): Promise<unknown> => {
+  const response = await apiClient.get('/Token');
+  return response.data;
+};
+
+/* =========================
+   USERS
+========================= */
+
+export const loginUser = async (payload: LoginDto): Promise<UserDto> => {
+  const response = await apiClient.post<UserDto>('/Users/Login', payload);
+  return response.data;
+};
+
+export const createUser = async (payload: LoginDto): Promise<UserDto> => {
+  const response = await apiClient.post<UserDto>('/Users', payload);
+  return response.data;
+};
+
+export const getUsers = async (): Promise<UserDto[]> => {
+  const response = await apiClient.get<UserDto[]>('/Users');
+  return response.data;
+};
+
+export const getUserById = async (id: number): Promise<UserDto> => {
+  const response = await apiClient.get<UserDto>(`/Users/${id}`);
+  return response.data;
+};
+
+export const updateUser = async (
+  id: number,
+  payload: UserUpdateDto
+): Promise<UserDto> => {
+  const response = await apiClient.put<UserDto>(`/Users/${id}`, payload);
+  return response.data;
+};
+
+
+⸻
+
+Как использовать
+
+Пример логина:
+
+import { loginUser } from '../api/swaggerApi';
+
+const user = await loginUser({
+  login: 'admin',
+  password: '123',
+});
+
+Пример пользователей:
+
+import { getUsers, getUserById, updateUser } from '../api/swaggerApi';
+
+const users = await getUsers();
+const user = await getUserById(5);
+
+await updateUser(5, {
+  name: 'Иван',
+  login: 'ivan90',
+});
+
+Пример micropost:
+
+import { createMicropost, getMicroposts } from '../api/swaggerApi';
+
+await createMicropost({
+  content: 'Привет!',
+  userId: 5,
+});
+
+const posts = await getMicroposts();
+
+
+⸻
+
+Важно
+
+У тебя в swagger есть странность:
+эндпоинты /api/Roles и /api/Roles/{id} в ответах описаны как массив User, а не Role. Я оставил строго по swagger, чтобы интерфейс совпадал с твоим JSON.
+
+Если хочешь, следующим сообщением я могу сделать тебе ещё готовую страницу Swagger UI внутри React: вкладки Users / Microposts / Roles с формами и кнопками для всех этих методов.
