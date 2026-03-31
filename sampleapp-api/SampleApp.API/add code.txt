@@ -1,111 +1,70 @@
-Вот полностью готовый HomePage.tsx.
-
-Путь:
-
-src/pages/HomePage.tsx
-
-Код:
-
-import { Container, Paper, Typography, Box, Button } from '@mui/material';
-import { Home, Users, LogIn, UserPlus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-
-export const HomePage = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Paper sx={{ p: 6, textAlign: 'center' }}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-          <Home size={64} color="#1976d2" />
-        </Box>
-
-        {user ? (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать, {user.login}!
-            </Typography>
-
-            <Typography variant="h5" color="text.secondary" paragraph>
-              ID: {user.id} • {user.name || 'Без имени'}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Вы авторизованы в системе. Можете перейти к списку пользователей
-              или открыть свой профиль.
-            </Typography>
-
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<Users size={20} />}
-                onClick={() => navigate('/users')}
-              >
-                Пользователи
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={() => navigate(`/profile/${user.id}`)}
-              >
-                Мой профиль
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать!
-            </Typography>
-
-            <Typography variant="h5" color="text.secondary" paragraph>
-              SampleApp на React
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Авторизуйтесь или зарегистрируйтесь, чтобы получить доступ к
-              защищённым страницам, профилям пользователей и редактированию
-              данных.
-            </Typography>
-
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<LogIn size={20} />}
-                onClick={() => navigate('/login')}
-              >
-                Войти
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<UserPlus size={20} />}
-                onClick={() => navigate('/register')}
-              >
-                Регистрация
-              </Button>
-            </Box>
-          </>
-        )}
-      </Paper>
-    </Container>
-  );
-};
-
-Если после вставки будет ошибка именно по HomePage.tsx, пришли её текст.
+[{
+	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
+	"owner": "typescript",
+	"code": "2769",
+	"severity": 8,
+	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; md: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; md: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
+	"source": "ts",
+	"startLineNumber": 177,
+	"startColumn": 10,
+	"endLineNumber": 177,
+	"endColumn": 14,
+	"relatedInformation": [
+		{
+			"startLineNumber": 64,
+			"startColumn": 5,
+			"endLineNumber": 64,
+			"endColumn": 14,
+			"message": "Здесь объявлен \"component\".",
+			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
+		}
+	],
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
+	"owner": "typescript",
+	"code": "2769",
+	"severity": 8,
+	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; md: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; md: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
+	"source": "ts",
+	"startLineNumber": 211,
+	"startColumn": 10,
+	"endLineNumber": 211,
+	"endColumn": 14,
+	"relatedInformation": [
+		{
+			"startLineNumber": 64,
+			"startColumn": 5,
+			"endLineNumber": 64,
+			"endColumn": 14,
+			"message": "Здесь объявлен \"component\".",
+			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
+		}
+	],
+	"modelVersionId": 3,
+	"origin": "extHost1"
+},{
+	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
+	"owner": "typescript",
+	"code": "2769",
+	"severity": 8,
+	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
+	"source": "ts",
+	"startLineNumber": 249,
+	"startColumn": 12,
+	"endLineNumber": 249,
+	"endColumn": 16,
+	"relatedInformation": [
+		{
+			"startLineNumber": 64,
+			"startColumn": 5,
+			"endLineNumber": 64,
+			"endColumn": 14,
+			"message": "Здесь объявлен \"component\".",
+			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
+		}
+	],
+	"modelVersionId": 3,
+	"origin": "extHost1"
+}]
