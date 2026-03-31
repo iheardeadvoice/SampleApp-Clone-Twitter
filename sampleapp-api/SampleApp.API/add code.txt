@@ -1,70 +1,171 @@
-[{
-	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
-	"owner": "typescript",
-	"code": "2769",
-	"severity": 8,
-	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; md: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; md: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
-	"source": "ts",
-	"startLineNumber": 177,
-	"startColumn": 10,
-	"endLineNumber": 177,
-	"endColumn": 14,
-	"relatedInformation": [
-		{
-			"startLineNumber": 64,
-			"startColumn": 5,
-			"endLineNumber": 64,
-			"endColumn": 14,
-			"message": "Здесь объявлен \"component\".",
-			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
-		}
-	],
-	"modelVersionId": 3,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
-	"owner": "typescript",
-	"code": "2769",
-	"severity": 8,
-	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; md: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; md: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
-	"source": "ts",
-	"startLineNumber": 211,
-	"startColumn": 10,
-	"endLineNumber": 211,
-	"endColumn": 14,
-	"relatedInformation": [
-		{
-			"startLineNumber": 64,
-			"startColumn": 5,
-			"endLineNumber": 64,
-			"endColumn": 14,
-			"message": "Здесь объявлен \"component\".",
-			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
-		}
-	],
-	"modelVersionId": 3,
-	"origin": "extHost1"
-},{
-	"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/src/pages/ProfilePage.tsx",
-	"owner": "typescript",
-	"code": "2769",
-	"severity": 8,
-	"message": "Ни одна перегрузка не соответствует этому вызову.\n  Перегрузка 1 из 2, \"(props: { component: ElementType<any, keyof IntrinsicElements>; } & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<...> & Omit<...>): Element | null\", возвратила следующую ошибку.\n    Свойство \"component\" отсутствует в типе \"{ children: Element; item: true; xs: number; }\" и является обязательным в типе \"{ component: ElementType<any, keyof IntrinsicElements>; }\".\n  Перегрузка 2 из 2, \"(props: DefaultComponentProps<GridTypeMap<{}, \"div\">>): Element | null\", возвратила следующую ошибку.\n    Тип \"{ children: Element; item: true; xs: number; }\" не может быть назначен для типа \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".\n      Свойство \"item\" не существует в типе \"IntrinsicAttributes & GridBaseProps & { sx?: SxProps<Theme> | undefined; } & SystemProps<Theme> & Omit<...>\".",
-	"source": "ts",
-	"startLineNumber": 249,
-	"startColumn": 12,
-	"endLineNumber": 249,
-	"endColumn": 16,
-	"relatedInformation": [
-		{
-			"startLineNumber": 64,
-			"startColumn": 5,
-			"endLineNumber": 64,
-			"endColumn": 14,
-			"message": "Здесь объявлен \"component\".",
-			"resource": "/c:/Users/stud/Documents/SampleApp/sampleapp-react/node_modules/@mui/types/esm/index.d.ts"
-		}
-	],
-	"modelVersionId": 3,
-	"origin": "extHost1"
-}]
+Да. Чтобы редактирование профиля реально сохранялось, тебе нужно добавить PUT endpoint на бэке.
+
+Сейчас меняй ровно это.
+
+⸻
+
+1) Создай файл
+
+sampleapp-api/SampleApp.API/Dtos/UserUpdateDto.cs
+
+namespace SampleApp.API.Dtos;
+
+public class UserUpdateDto
+{
+    public string Name { get; set; } = string.Empty;
+    public string Login { get; set; } = string.Empty;
+}
+
+
+⸻
+
+2) В файл
+
+sampleapp-api/SampleApp.API/Controllers/UsersController.cs
+
+добавь импорт:
+
+using SampleApp.API.Dtos;
+
+Если он уже есть — второй раз не добавляй.
+
+⸻
+
+3) В этот же UsersController.cs вставь новый метод внутрь класса UsersController
+
+Вставь его после GetUserById или в любое место внутри класса:
+
+[Authorize]
+[HttpPut("{id}")]
+[SwaggerOperation(Summary = "Обновление пользователя", OperationId = "UpdateUser")]
+[SwaggerResponse(200, "Пользователь обновлен", typeof(UserDto))]
+[SwaggerResponse(404, "Пользователь не найден")]
+public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto updateDto)
+{
+    try
+    {
+        var user = await _repo.FindUserByIdAsync(id);
+
+        user.Name = updateDto.Name;
+        user.Login = updateDto.Login;
+
+        await _repo.UpdateUserAsync(user);
+
+        return Ok(user.ToDto());
+    }
+    catch (NotFoundException)
+    {
+        return NotFound($"Пользователь с id={id} не найден");
+    }
+}
+
+
+⸻
+
+4) Если у тебя ругается на Authorize
+
+Добавь в начало UsersController.cs:
+
+using Microsoft.AspNetCore.Authorization;
+
+
+⸻
+
+5) Если у тебя ругается на NotFoundException
+
+Добавь в начало UsersController.cs:
+
+using SampleApp.API.Exceptions;
+
+
+⸻
+
+6) Если у тебя ругается на ToDto()
+
+Скорее всего у тебя уже есть mapper.
+Но если вдруг нет импорта, добавь:
+
+using SampleApp.API.Mappers;
+
+
+⸻
+
+7) Фронт можно оставить почти как есть, но лучше чуть поправить EditProfilePage.tsx
+
+Путь:
+sampleapp-react/src/pages/EditProfilePage.tsx
+
+Замени только блок после успешного сохранения на этот:
+
+await updateUser(Number(id), {
+  name: formData.name,
+  login: formData.login,
+});
+
+if (currentUser) {
+  const updatedUser = {
+    ...currentUser,
+    name: formData.name,
+    login: formData.login,
+  };
+
+  localStorage.setItem('user', JSON.stringify(updatedUser));
+}
+
+window.location.href = `/profile/${id}`;
+
+То есть у тебя было:
+
+await updateUser(Number(id), {
+  name: formData.name,
+  login: formData.login,
+});
+
+// Обновляем данные в контексте если нужно
+if (currentUser) {
+  const updatedUser = { ...currentUser, name: formData.name, login: formData.login };
+  localStorage.setItem('user', JSON.stringify(updatedUser));
+}
+
+navigate(`/profile/${id}`);
+
+А должно стать:
+
+await updateUser(Number(id), {
+  name: formData.name,
+  login: formData.login,
+});
+
+if (currentUser) {
+  const updatedUser = {
+    ...currentUser,
+    name: formData.name,
+    login: formData.login,
+  };
+
+  localStorage.setItem('user', JSON.stringify(updatedUser));
+}
+
+window.location.href = `/profile/${id}`;
+
+
+⸻
+
+8) Итог
+
+Чтобы всё заработало, тебе нужно:
+	•	создать UserUpdateDto.cs
+	•	добавить UpdateUser(...) в UsersController.cs
+	•	при желании заменить navigate(...) на window.location.href = ... в EditProfilePage.tsx
+
+⸻
+
+Готовый смысл
+
+После этого:
+	•	кнопка Сохранить изменения начнёт реально отправлять PUT /Users/{id}
+	•	сервер обновит name и login
+	•	фронт перейдёт обратно в профиль
+	•	новые данные будут видны
+
+Если хочешь, я следующим сообщением могу дать тебе **
