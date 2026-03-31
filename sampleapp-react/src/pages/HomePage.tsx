@@ -1,5 +1,5 @@
 import { Container, Typography, Box, Paper, Avatar, Button } from '@mui/material';
-import { Home, Users, Sparkles, LogIn, UserPlus, Loader2 } from 'lucide-react';
+import { Home, Users, Sparkles, LogIn, UserPlus, Loader2, Shield } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,10 +32,20 @@ export const HomePage = () => {
 
                 {!user ? (
                     <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
-                        <Button variant="contained" startIcon={<LogIn size={20} />} onClick={() => navigate('/login')}>
+                        <Button 
+                            variant="contained" 
+                            color="primary"
+                            startIcon={<LogIn size={20} />} 
+                            onClick={() => navigate('/login')}
+                        >
                             Войти
                         </Button>
-                        <Button variant="outlined" startIcon={<UserPlus size={20} />} onClick={() => navigate('/register')}>
+                        <Button 
+                            variant="outlined" 
+                            color="primary"
+                            startIcon={<UserPlus size={20} />} 
+                            onClick={() => navigate('/register')}
+                        >
                             Регистрация
                         </Button>
                     </Box>
@@ -48,14 +58,24 @@ export const HomePage = () => {
                                 </Typography>
                             </Box>
                         )}
-                        <Button
-                            variant="outlined"
-                            startIcon={<Loader2 size={20} />}
-                            onClick={() => navigate('/loading-demo')}
-                            sx={{ mt: 2 }}
-                        >
-                            Демо лоадера
-                        </Button>
+                        <Box sx={{ mt: 2, display: 'flex', gap: 2, justifyContent: 'center' }}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<Loader2 size={20} />}
+                                onClick={() => navigate('/loading-demo')}
+                            >
+                                Демо лоадера
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<Shield size={20} />}
+                                onClick={() => navigate('/guards-demo')}
+                            >
+                                Демо защитников
+                            </Button>
+                        </Box>
                     </>
                 )}
             </Paper>
