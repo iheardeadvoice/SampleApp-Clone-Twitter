@@ -1,0 +1,172 @@
+import {
+  Container,
+  Typography,
+  Box,
+  Paper,
+  Card,
+  CardContent,
+  Alert,
+  Chip,
+  Button,
+  Grid,
+} from '@mui/material';
+import {
+  Table2,
+  Search,
+  ArrowUpDown,
+  LayoutList,
+} from 'lucide-react';
+import { useUsers } from '../hooks/useUsers';
+import { UsersTable } from '../components/UsersTable';
+import { SearchBar } from '../components/SearchBar';
+import { PaginationControls } from '../components/PaginationControls';
+
+export const TableDemoPage = () => {
+  const {
+    users,
+    filteredCount,
+    totalCount,
+    sortConfig,
+    requestSort,
+    searchText,
+    handleSearch,
+    clearSearch,
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    from,
+    to,
+  } = useUsers();
+
+  return (
+    <Container maxWidth={false} sx={{ py: 4, px: { xs: 2, sm: 3, md: 4 } }}>
+      <Typography variant="h3" gutterBottom align="center">
+        Демо таблицы
+      </Typography>
+
+      <Typography
+        variant="subtitle1"
+        color="text.secondary"
+        paragraph
+        align="center"
+      >
+        Сортировка, поиск и пагинация в действии
+      </Typography>
+
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <ArrowUpDown size={20} color="#3f51b5" />
+                <Typography variant="h6">Сортировка</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Нажмите на заголовки столбцов для сортировки.
+                Активный столбец подсвечивается.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 4 }}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <Search size={20} color="#3f51b5" />
+                <Typography variant="h6">Поиск</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Поиск по логину, имени или ID.
+                Количество результатов обновляется в реальном времени.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 4 }}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <LayoutList size={20} color="#3f51b5" />
+                <Typography variant="h6">Пагинация</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Настраиваемое количество строк на странице.
+                Показывает текущий диапазон записей.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Paper sx={{ p: 3 }}>
+        <Box display="flex" alignItems="center" gap={2} mb={3} flexWrap="wrap">
+          <Table2 size={24} color="#3f51b5" />
+          <Typography variant="h5">Таблица пользователей</Typography>
+          <Box flex={1} />
+          <Chip
+            label={`Всего: ${totalCount}`}
+            color="primary"
+            variant="outlined"
+          />
+          <Chip
+            label={`На странице: ${users.length}`}
+            color="secondary"
+            variant="outlined"
+          />
+        </Box>
+
+        <SearchBar
+          value={searchText}
+          onChange={handleSearch}
+          placeholder="Поиск по таблице..."
+        />
+
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          my={2}
+          flexWrap="wrap"
+          gap={1}
+        >
+          <Typography variant="body2" color="text.secondary">
+            Показаны {from}-{to} из {filteredCount}
+          </Typography>
+
+          {searchText && (
+            <Button size="small" onClick={clearSearch}>
+              Очистить поиск
+            </Button>
+          )}
+        </Box>
+
+        <UsersTable
+          users={users}
+          sortConfig={sortConfig}
+          onSort={requestSort}
+        />
+
+        {filteredCount > 0 && (
+          <PaginationControls
+            count={filteredCount}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={rowsPerPageOptions}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
+
+        {filteredCount === 0 && (
+          <Alert severity="info" sx={{ mt: 2 }}>
+            Ничего не найдено. Попробуйте изменить параметры поиска.
+          </Alert>
+        )}
+      </Paper>
+    </Container>
+  );
+};

@@ -1,0 +1,511 @@
+Ок, делаю **максимально пошагово**: *какой файл → куда → какой код → зачем → что проверить* + **что конкретно делать в DBeaver** (клики/кнопки).
+
+Я буду идти **ровно в том порядке, как в практике**: Role → миграция → DBeaver Roles → Enum → DTO/Mapper → JSON enum строкой → Micropost → миграции → DBeaver проверка → репо/контроллер → валидация → [Authorize].
+
+---
+
+## 0) Перед стартом (чтобы потом не ловить 500/миграции)
+
+1. **PostgreSQL должен быть запущен** (служба).
+2. В проекте **строка подключения** должна вести на твой Postgres:
+
+   * `Host=localhost;Port=5432;Database=SampleApp;Username=postgres;Password=...`
+3. Команды `dotnet ef ...` запускай **из папки проекта API**, где лежит `SampleApp.API.csproj`.
+
+---
+
+# Часть 1. Модель Role
+
+## Шаг 1 — Создай `Role.cs`
+
+**Где:** `SampleApp.API/Entities/Role.cs` (папка Entities)
+
+**Вставь 1-в-1:**
+
+```csharp
+using SampleApp.API.Entities; // если Base в Entities
+// или using SampleApp.API.Models; (зависит где Base)
+
+namespace SampleApp.API.Entities;
+
+public class Role : Base
+{
+    public string Name { get; set; } = string.Empty;
+}
+```
+
+✅ **Зачем:** будет таблица `Roles`, где хранятся роли.
+
+---
+
+## Шаг 2 — Добавь связь 1:M в `User.cs`
+
+**Где:** `SampleApp.API/Entities/User.cs`
+
+Найди класс `User` и добавь в него:
+
+```csharp
+public int RoleId { get; set; }
+public Role? Role { get; set; }
+```
+
+✅ **Зачем:** `RoleId` — внешний ключ на таблицу Roles. `Role` — навигация EF.
+
+---
+
+## Шаг 3 — Добавь коллекцию Roles в контекст
+
+**Где:** `SampleApp.API/Data/SampleAppContext.cs` (или как у тебя называется контекст)
+
+Внутри класса контекста добавь:
+
+```csharp
+public DbSet<Role> Roles { get; set; }
+```
+
+И сверху файла (если надо):
+
+```csharp
+using SampleApp.API.Entities;
+```
+
+✅ **Зачем:** чтобы EF создал таблицу `Roles` и мог с ней работать.
+
+---
+
+## Шаг 4 — Настрой OnModelCreating (как в практике)
+
+**Где:** `SampleApp.API/Data/SampleAppContext.cs`
+
+Если у тебя уже есть `OnModelCreating` — **добавь внутрь** эти блоки.
+Если нет — **создай метод** и вставь.
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder.Entity<User>(entity =>
+    {
+        entity.HasKey(e => e.Id);
+        entity.HasIndex(e => e.Login).IsUnique();
+        entity.Property(e => e.Login).IsRequired().HasMaxLength(50);
+        entity.Property(e => e.Name).HasMaxLength(100);
+        entity.Property(e => e.PasswordHash).IsRequired();
+        entity.Property(e => e.PasswordSalt).IsRequired();
+        entity.Property(e => e.Token).IsRequired();
+
+        entity.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId);
+    });
+
+    modelBuilder.Entity<Role>(entity =>
+    {
+        entity.HasKey(e => e.Id);
+        entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+    });
+}
+```
+
+✅ **Зачем:** EF “и так” может понять, но тут мы:
+
+* фиксируем ограничения,
+* задаём FK связь `Users.RoleId -> Roles.Id`,
+* делаем `Token` Required (как в практике).
+
+---
+
+## Шаг 5 — Миграция + применение
+
+Открой терминал **в папке API** (`.../SampleApp.API`) и выполни:
+
+```bash
+dotnet ef migrations add CreateRoles
+dotnet ef database update
+```
+
+✅ **Результат:** в БД должна появиться таблица **Roles**, а в таблице Users колонка **RoleId** и FK.
+
+---
+
+# Часть 2. DBeaver — заполнение Roles (это твоя “работа руками”)
+
+## Что должно получиться
+
+Таблица `Roles` должна иметь строки:
+
+| Id | Name    |
+| -- | ------- |
+| 1  | admin   |
+| 2  | manager |
+| 3  | user    |
+
+⚠️ Важно: **Id должны совпадать с enum из практики** (Admin=1 Manager=2 User=3)
+
+---
+
+## Как сделать в DBeaver пошагово
+
+1. Открой DBeaver.
+
+2. Слева **Database Navigator** → найди соединение с Postgres (`localhost:5432`).
+
+3. Раскрой:
+
+   * `Databases` → `SampleApp`
+   * `Schemas` → `public`
+   * `Tables` → `Roles`
+
+4. ПКМ по `Roles` → **View Data** → **All Rows** (или “Просмотр данных”).
+
+5. В таблице вверху найди кнопку **+ (Добавить строку)**
+
+   * Обычно это иконка “плюс” или “Insert Row”.
+
+6. Добавь 3 строки:
+
+   * строка 1: `Id=1` `Name=admin`
+   * строка 2: `Id=2` `Name=manager`
+   * строка 3: `Id=3` `Name=user`
+
+7. Нажми **Save** (дискетка) или **Ctrl+S**.
+
+8. Если у тебя выключен автокоммит — сверху появится кнопка **Commit** → нажми **Commit**.
+
+✅ **Проверка:** обнови таблицу (Refresh) — строки должны остаться.
+
+---
+
+## Как проверить связь FK в DBeaver (очень полезно)
+
+* Открой `Users` → вкладка “Свойства/Properties” → “Foreign Keys”
+* Там должна быть связь на `Roles(Id)`.
+
+---
+
+# Часть 3. Enum RoleType + дефолт RoleId
+
+## Шаг 6 — Создай `Enums/RoleType.cs`
+
+**Где:** `SampleApp.API/Enums/RoleType.cs` (создай папку Enums)
+
+```csharp
+namespace SampleApp.API.Enums;
+
+public enum RoleType
+{
+    User = 3,
+    Admin = 1,
+    Manager = 2,
+}
+```
+
+---
+
+## Шаг 7 — В `User.cs` поставить значение по умолчанию
+
+**Где:** `SampleApp.API/Entities/User.cs`
+
+1. Добавь using:
+
+```csharp
+using SampleApp.API.Enums;
+```
+
+2. Замени `RoleId` на:
+
+```csharp
+public int RoleId { get; set; } = (int)RoleType.User;
+```
+
+✅ **Зачем:** когда создаёшь пользователя — если RoleId не передали, будет 3 (user).
+⚠️ Но FK всё равно требует, чтобы в `Roles` реально была строка с `Id=3` (поэтому DBeaver шаг обязателен).
+
+---
+
+# Часть 4. UserDto + UserMapper + enum строкой в JSON
+
+## Шаг 8 — Добавь поле Role в `UserDto`
+
+**Где:** `SampleApp.API/Dtos/UserDto.cs`
+
+Добавь:
+
+```csharp
+using SampleApp.API.Enums;
+
+public RoleType Role { get; set; }
+```
+
+---
+
+## Шаг 9 — Обнови `UserMapper`
+
+**Где:** `SampleApp.API/Mappers/UserMapper.cs`
+
+Добавь using:
+
+```csharp
+using SampleApp.API.Enums;
+```
+
+В `ToDto`:
+
+```csharp
+Role = (RoleType)user.RoleId,
+```
+
+В `ToEntity`:
+
+```csharp
+RoleId = (int)userDto.Role,
+```
+
+---
+
+## Шаг 10 — Сделай чтобы enum в ответе был СТРОКОЙ (а не числом)
+
+Это важная часть: без неё Swagger будет отдавать `role: 3`, а надо `role: "User"`.
+
+### 10.1 Создай файл `Extensions/ControllerServices.cs`
+
+**Где:** `SampleApp.API/Extensions/ControllerServices.cs`
+
+```csharp
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace SampleApp.API.Extensions;
+
+public static class ControllerServices
+{
+    public static IServiceCollection AddControllerServices(this IServiceCollection services)
+    {
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
+        return services;
+    }
+}
+```
+
+### 10.2 В `Program.cs` подключи
+
+**Где:** `SampleApp.API/Program.cs`
+
+Найди:
+
+```csharp
+builder.Services.AddControllers();
+```
+
+ЗАМЕНИ на:
+
+```csharp
+builder.Services.AddControllerServices();
+```
+
+И добавь using сверху:
+
+```csharp
+using SampleApp.API.Extensions;
+```
+
+✅ **Проверка:** Swagger → GetUsers → `role` должен стать `"User"` / `"Admin"`.
+
+---
+
+# Часть 5. Модель Micropost
+
+## Шаг 11 — Создай `Entities/Micropost.cs`
+
+**Где:** `SampleApp.API/Entities/Micropost.cs`
+
+```csharp
+namespace SampleApp.API.Entities;
+
+public class Micropost : Base
+{
+    public string Content { get; set; } = string.Empty;
+    public User? User { get; set; }
+    public int UserId { get; set; }
+}
+```
+
+---
+
+## Шаг 12 — В `User.cs` добавь Microposts
+
+**Где:** `SampleApp.API/Entities/User.cs`
+
+Добавь:
+
+```csharp
+public IEnumerable<Micropost>? Microposts { get; set; }
+```
+
+---
+
+## Шаг 13 — В контекст добавь DbSet Microposts
+
+**Где:** `SampleApp.API/Data/SampleAppContext.cs`
+
+Добавь:
+
+```csharp
+public DbSet<Micropost> Microposts { get; set; }
+```
+
+---
+
+## Шаг 14 — Миграция и update
+
+```bash
+dotnet ef migrations add CreateMicropost
+dotnet ef database update
+```
+
+✅ **DBeaver проверка:** появится таблица `Microposts` (или `Micropost` — зависит от настройки pluralization).
+
+---
+
+# Часть 6. DTO Micropost
+
+## Шаг 15 — Создай `Dtos/MicropostDto.cs`
+
+```csharp
+namespace SampleApp.API.Dtos;
+
+public record MicropostDto(string Content, int UserId);
+```
+
+## Шаг 16 — Создай `Dtos/EditMicropostDto.cs`
+
+```csharp
+namespace SampleApp.API.Dtos;
+
+public record EditMicropostDto(string Content);
+```
+
+---
+
+# Часть 7. Репозиторий Micropost
+
+## Шаг 17 — Создай `Interfaces/IMicropostRepository.cs`
+
+```csharp
+using SampleApp.API.Entities;
+
+namespace SampleApp.API.Interfaces;
+
+public interface IMicropostRepository
+{
+    Micropost CreateMicropost(Micropost post);
+    List<Micropost> GetMicroposts();
+    Micropost DeleteMicropost(int id);
+    Micropost FindMicropostById(int id);
+    Micropost EditMicropost(Micropost editedMicropost, int id);
+}
+```
+
+## Шаг 18 — Создай `Repositories/MicropostRepository.cs`
+
+Вставь из практики 1-в-1.
+
+---
+
+## Шаг 19 — Зарегистрируй репозиторий в DI
+
+**Где:** `Program.cs`
+
+Добавь:
+
+```csharp
+builder.Services.AddScoped<IMicropostRepository, MicropostRepository>();
+```
+
+(и using для Interfaces/Repositories если надо)
+
+---
+
+# Часть 8. Контроллер Microposts
+
+## Шаг 20 — Создай `Controllers/MicropostsController.cs`
+
+Вставь контроллер из практики 1-в-1.
+
+---
+
+# Часть 9. Валидация Micropost
+
+## Шаг 21 — Создай `Validations/MicropostValidator.cs`
+
+Вставь из практики.
+
+---
+
+# Часть 10. Задание: [Authorize]
+
+## Шаг 22 — Защити MicropostsController
+
+**Где:** `Controllers/MicropostsController.cs`
+
+1. Добавь using:
+
+```csharp
+using Microsoft.AspNetCore.Authorization;
+```
+
+2. Над классом контроллера добавь:
+
+```csharp
+[Authorize]
+```
+
+✅ **Что будет:** без токена запросы к Micropost будут 401 Unauthorized (это нормально).
+
+---
+
+# Часть 11. DBeaver — что проверять дальше (по твоим скринам)
+
+Твои скрины показывают:
+
+* `Users` связана с `Roles` по `RoleId`
+* `Microposts` связана с `Users` по `UserId`
+
+## Как проверить это в DBeaver
+
+1. В `public → Tables`:
+
+   * `Users` → вкладка “Columns”: должны быть `RoleId`, `Login`, `PasswordHash`, `PasswordSalt`, `Token`
+   * `Roles` → `Id`, `Name`
+   * `Microposts` → `Id`, `Content`, `UserId`
+2. В `Users` → “Foreign Keys” → должна быть FK на Roles
+3. В `Microposts` → “Foreign Keys” → должна быть FK на Users
+
+---
+
+# Самая частая жопа, из-за которой всё ломается
+
+1. **Roles не заполнена** → при создании User FK ругается.
+2. **Id ролей не 1/2/3** → enum не совпадает, будет бред.
+3. **Миграция не применена** → таблиц нет / колонки нет.
+4. В Swagger ты создаёшь User, но **RoleId не передаёшь**, а дефолт ещё не поставил → ошибка.
+5. `[Authorize]` поставил, но **токен не выдаёшь/не вставляешь** → 401 (это норма, не ошибка).
+
+---
+
+## Скажи мне 2 вещи — и я дальше проведу тебя по DBeaver “как по рельсам”
+
+1. **У тебя автокоммит в DBeaver включён?** (если нет — ты добавляешь строки и они “пропадают”)
+2. Скинь скрин:
+
+   * `Roles` таблица в DBeaver (чтобы я видел, заполнилась ли она и какие Id)
+
+И да — если хочешь, я следующим сообщением дам **только DBeaver часть** супер-подробно (кнопки/меню/где commit), без кода вообще.
+ public IEnumerable<Micropost>? Microposts { get; set; }
