@@ -65,122 +65,139 @@ export const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, cursor: 'pointer' }}
-          onClick={() => navigate('/')}
+      <Toolbar sx={{ minHeight: 64 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+          }}
         >
-          SampleApp
-        </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/')}
+          >
+            SampleApp
+          </Typography>
+        </Box>
 
-        <Button
-          color="inherit"
-          onClick={() => navigate('/')}
-          startIcon={<Home size={20} />}
-          sx={{ mr: 1 }}
+        <Box
+          sx={{
+            ml: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
         >
-          Главная
-        </Button>
-
-        {user && (
           <Button
             color="inherit"
-            onClick={() => navigate('/users')}
-            startIcon={<Users size={20} />}
+            onClick={() => navigate('/')}
+            startIcon={<Home size={20} />}
             sx={{ mr: 1 }}
           >
-            Пользователи
+            Главная
           </Button>
-        )}
 
-        {user ? (
-          <>
-            {token && (
-              <Tooltip title="JWT токен активен">
-                <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-                  <Shield size={20} color="#4caf50" />
-                </Box>
-              </Tooltip>
-            )}
-
-            <Tooltip title="Профиль">
-              <IconButton
-                onClick={handleMenu}
-                size="small"
-                sx={{ ml: 1 }}
-                aria-controls={Boolean(anchorEl) ? 'account-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
-              >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-                  {user.login.charAt(0).toUpperCase()}
-                </Avatar>
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              anchorEl={anchorEl}
-              id="account-menu"
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              PaperProps={{
-                sx: {
-                  mt: 1.5,
-                  minWidth: 200,
-                  '& .MuiMenuItem-root': {
-                    px: 2,
-                    py: 1,
-                  },
-                },
-              }}
+          {user && (
+            <Button
+              color="inherit"
+              onClick={() => navigate('/users')}
+              startIcon={<Users size={20} />}
+              sx={{ mr: 1 }}
             >
-              <Box sx={{ px: 2, py: 1 }}>
-                <Typography variant="subtitle2" noWrap>
-                  {user.name || user.login}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" noWrap>
-                  @{user.login}
-                </Typography>
-              </Box>
+              Пользователи
+            </Button>
+          )}
 
-              <Divider />
+          {user ? (
+            <>
+              {token && (
+                <Tooltip title="JWT токен активен">
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+                    <Shield size={20} color="#4caf50" />
+                  </Box>
+                </Tooltip>
+              )}
 
-              <MenuItem onClick={handleProfile}>
-                <UserIcon size={16} style={{ marginRight: 12 }} />
-                Профиль
-              </MenuItem>
+              <Tooltip title="Профиль">
+                <IconButton
+                  onClick={handleMenu}
+                  size="small"
+                  sx={{ ml: 1 }}
+                  aria-controls={Boolean(anchorEl) ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
+                >
+                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                    {user.login.charAt(0).toUpperCase()}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
 
-              <MenuItem onClick={handleEditProfile}>
-                <Edit size={16} style={{ marginRight: 12 }} />
-                Редактировать
-              </MenuItem>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                PaperProps={{
+                  sx: {
+                    mt: 1.5,
+                    minWidth: 200,
+                    '& .MuiMenuItem-root': {
+                      px: 2,
+                      py: 1,
+                    },
+                  },
+                }}
+              >
+                <Box sx={{ px: 2, py: 1 }}>
+                  <Typography variant="subtitle2" noWrap>
+                    {user.name || user.login}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" noWrap>
+                    @{user.login}
+                  </Typography>
+                </Box>
 
-              <MenuItem onClick={handleSettings}>
-                <Settings size={16} style={{ marginRight: 12 }} />
-                Настройки
-              </MenuItem>
+                <Divider />
 
-              <Divider />
+                <MenuItem onClick={handleProfile}>
+                  <UserIcon size={16} style={{ marginRight: 12 }} />
+                  Профиль
+                </MenuItem>
 
-              <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
-                <LogOut size={16} style={{ marginRight: 12 }} />
-                Выйти
-              </MenuItem>
-            </Menu>
-          </>
-        ) : (
-          <Button
-            color="inherit"
-            onClick={() => navigate('/login')}
-            startIcon={<LogIn size={20} />}
-          >
-            Вход
-          </Button>
-        )}
+                <MenuItem onClick={handleEditProfile}>
+                  <Edit size={16} style={{ marginRight: 12 }} />
+                  Редактировать
+                </MenuItem>
+
+                <MenuItem onClick={handleSettings}>
+                  <Settings size={16} style={{ marginRight: 12 }} />
+                  Настройки
+                </MenuItem>
+
+                <Divider />
+
+                <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                  <LogOut size={16} style={{ marginRight: 12 }} />
+                  Выйти
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => navigate('/login')}
+              startIcon={<LogIn size={20} />}
+            >
+              Вход
+            </Button>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

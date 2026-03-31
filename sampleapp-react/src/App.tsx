@@ -15,6 +15,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LoadingDemoPage } from './pages/LoadingDemoPage';
 import { GuardsDemoPage } from './pages/GuardsDemoPage';
+import { TableDemoPage } from './pages/TableDemoPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { ServerErrorPage } from './pages/ServerErrorPage';
 import { setLoadingCallback } from './api/client';
@@ -53,6 +54,7 @@ function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/loading-demo" element={<LoadingDemoPage />} />
               <Route path="/guards-demo" element={<GuardsDemoPage />} />
+              <Route path="/table-demo" element={<TableDemoPage />} />
 
               <Route
                 path="/users"
