@@ -1,233 +1,100 @@
-Ниже полные готовые файлы.
 
-⸻
+Да, сейчас ID сортируется как текст, а не как число.
+Поэтому получается:
 
-src/App.tsx
+12, 13, 14, 2, 3...
 
-import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider } from './contexts/AuthContext';
-import { LoadingProvider } from './contexts/LoadingContext';
-import { GlobalLoader } from './components/GlobalLoader';
-import { Header } from './components/Header';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { HomePage } from './pages/HomePage';
-import { UsersPage } from './pages/UsersPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { EditProfilePage } from './pages/EditProfilePage';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { LoadingDemoPage } from './pages/LoadingDemoPage';
-import { GuardsDemoPage } from './pages/GuardsDemoPage';
-import { TableDemoPage } from './pages/TableDemoPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { ServerErrorPage } from './pages/ServerErrorPage';
-import { setLoadingCallback } from './api/client';
-import { useLoading } from './contexts/LoadingContext';
+вместо:
 
-const theme = createTheme({
-  palette: {
-    primary: { main: '#1976d2' },
-  },
-});
+2, 3, 4, 5...
 
-const LoadingBridge = () => {
-  const { setLoading } = useLoading();
+Что исправить
 
-  useEffect(() => {
-    setLoadingCallback(setLoading);
-  }, [setLoading]);
+Полностью замени файл:
 
-  return null;
+src/hooks/useSort.ts
+
+на этот код:
+
+import { useMemo, useState } from 'react';
+
+export type SortDirection = 'asc' | 'desc';
+
+export type SortConfig<T> = {
+  key: keyof T | null;
+  direction: SortDirection;
 };
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <LoadingProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <LoadingBridge />
-            <GlobalLoader message="Загрузка..." />
-            <Header />
-
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/loading-demo" element={<LoadingDemoPage />} />
-              <Route path="/guards-demo" element={<GuardsDemoPage />} />
-              <Route path="/table-demo" element={<TableDemoPage />} />
-
-              <Route
-                path="/users"
-                element={
-                  <ProtectedRoute>
-                    <UsersPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile/:id"
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile/:id/edit"
-                element={
-                  <ProtectedRoute>
-                    <EditProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route path="/404" element={<NotFoundPage />} />
-              <Route path="/500" element={<ServerErrorPage />} />
-              <Route path="*" element={<Navigate to="/404" replace />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </LoadingProvider>
-    </ThemeProvider>
+export const useSort = <T extends Record<string, unknown>>(
+  data: T[],
+  initialConfig?: SortConfig<T>
+) => {
+  const [sortConfig, setSortConfig] = useState<SortConfig<T>>(
+    initialConfig || { key: null, direction: 'asc' }
   );
-}
 
-export default App;
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return data;
 
+    return [...data].sort((a, b) => {
+      const aRaw = a[sortConfig.key];
+      const bRaw = b[sortConfig.key];
 
-⸻
+      const aNumber = Number(aRaw);
+      const bNumber = Number(bRaw);
 
-src/pages/HomePage.tsx
+      const bothAreNumbers =
+        aRaw !== null &&
+        aRaw !== undefined &&
+        bRaw !== null &&
+        bRaw !== undefined &&
+        !Number.isNaN(aNumber) &&
+        !Number.isNaN(bNumber);
 
-import { Container, Paper, Typography, Box, Button } from '@mui/material';
-import { Home, Users, LogIn, UserPlus, Table2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+      if (bothAreNumbers) {
+        return sortConfig.direction === 'asc'
+          ? aNumber - bNumber
+          : bNumber - aNumber;
+      }
 
-export const HomePage = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
+      const aValue = String(aRaw ?? '').toLowerCase();
+      const bValue = String(bRaw ?? '').toLowerCase();
 
-  return (
-    <Container
-      maxWidth={false}
-      sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}
-    >
-      <Paper sx={{ p: 6, textAlign: 'center', width: '100%' }}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-          <Home size={64} color="#1976d2" />
-        </Box>
+      return sortConfig.direction === 'asc'
+        ? aValue.localeCompare(bValue)
+        : bValue.localeCompare(aValue);
+    });
+  }, [data, sortConfig]);
 
-        {user ? (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать, {user.login}!
-            </Typography>
+  const requestSort = (key: keyof T) => {
+    let direction: SortDirection = 'asc';
 
-            <Typography variant="h5" color="text.secondary" paragraph>
-              ID: {user.id} • {user.name || 'Без имени'}
-            </Typography>
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
 
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Вы авторизованы в системе. Можете перейти к списку пользователей,
-              открыть свой профиль или протестировать демо таблицы.
-            </Typography>
+    setSortConfig({ key, direction });
+  };
 
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<Users size={20} />}
-                onClick={() => navigate('/users')}
-              >
-                Пользователи
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={() => navigate(`/profile/${user.id}`)}
-              >
-                Мой профиль
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<Table2 size={20} />}
-                onClick={() => navigate('/table-demo')}
-              >
-                Демо таблицы
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать!
-            </Typography>
-
-            <Typography variant="h5" color="text.secondary" paragraph>
-              SampleApp на React
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Авторизуйтесь или зарегистрируйтесь, чтобы получить доступ к
-              защищённым страницам, профилям пользователей, редактированию
-              данных и демо таблицы.
-            </Typography>
-
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<LogIn size={20} />}
-                onClick={() => navigate('/login')}
-              >
-                Войти
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<UserPlus size={20} />}
-                onClick={() => navigate('/register')}
-              >
-                Регистрация
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<Table2 size={20} />}
-                onClick={() => navigate('/table-demo')}
-              >
-                Демо таблицы
-              </Button>
-            </Box>
-          </>
-        )}
-      </Paper>
-    </Container>
-  );
+  return {
+    sortedData,
+    sortConfig,
+    requestSort,
+  };
 };
 
-Если нужно, следующим сообщением скину ещё и полный TableDemoPage.tsx без ошибок Grid.
+Почему это исправит
+
+Теперь хук сначала пытается понять, можно ли оба значения превратить в числа.
+Если да — сортирует как числа.
+Если нет — сортирует как строки.
+
+То есть:
+	•	id будет сортироваться правильно
+	•	login и name останутся строковой сортировкой
+
+После этого ID будет идти нормально:
+	•	по возрастанию: 2, 3, 4, 5, 12, 13, 14
+	•	по убыванию: 14, 13, 12, 5, 4, 3, 2
+
+Если хочешь, я сразу дам ещё фикс, чтобы в таблице поиск по ID тоже работал стабильно, даже если id приходит строкой.
