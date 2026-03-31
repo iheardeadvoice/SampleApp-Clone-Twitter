@@ -1,10 +1,10 @@
+Да. Делаем React 7. Профиль пользователя под твою текущую структуру, где уже используется ProtectedRoute, а не AuthGuard.
 
-React 7. Профиль пользователя
-IOF edited this page Mar 11, 2026 · 2 revisions
-Sprint 7 на React (Профиль пользователя)
+Ниже — готовые файлы, которые нужно вставить целиком.
 
-Добавляем профиль пользователя с меню в хедере и динамическими маршрутами.
-1. Обновляем API для пользователей (src/api/users.ts)
+⸻
+
+1) src/api/users.ts
 
 import { apiClient } from './client';
 import { User } from '../types';
@@ -34,18 +34,34 @@ export const deleteUser = async (id: number) => {
   return response.data;
 };
 
-2. Обновляем компонент Header с меню профиля (src/components/Header.tsx)
 
-import React, { useState } from 'react';
-import { 
-  AppBar, Toolbar, Typography, Button, 
-  Menu, MenuItem, Avatar, Box, Divider,
-  IconButton, Tooltip
+⸻
+
+2) src/components/Header.tsx
+
+import { useState, type MouseEvent } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Menu,
+  MenuItem,
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
-import { 
-  Home, Users, LogIn, LogOut, 
-  User as UserIcon, Settings, Edit,
-  Shield
+import {
+  Home,
+  Users,
+  LogIn,
+  LogOut,
+  User as UserIcon,
+  Settings,
+  Edit,
+  Shield,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -55,7 +71,7 @@ export const Header = () => {
   const { user, logout, token } = useAuth();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -91,18 +107,18 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography 
-          variant="h6" 
-          component="div" 
+        <Typography
+          variant="h6"
+          component="div"
           sx={{ flexGrow: 1, cursor: 'pointer' }}
           onClick={() => navigate('/')}
         >
           SampleApp
         </Typography>
 
-        <Button 
-          color="inherit" 
-          onClick={() => navigate('/')} 
+        <Button
+          color="inherit"
+          onClick={() => navigate('/')}
           startIcon={<Home size={20} />}
           sx={{ mr: 1 }}
         >
@@ -110,9 +126,9 @@ export const Header = () => {
         </Button>
 
         {user && (
-          <Button 
-            color="inherit" 
-            onClick={() => navigate('/users')} 
+          <Button
+            color="inherit"
+            onClick={() => navigate('/users')}
             startIcon={<Users size={20} />}
             sx={{ mr: 1 }}
           >
@@ -124,10 +140,12 @@ export const Header = () => {
           <>
             {token && (
               <Tooltip title="JWT токен активен">
-                <Shield size={20} color="#4caf50" style={{ marginRight: 8 }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+                  <Shield size={20} color="#4caf50" />
+                </Box>
               </Tooltip>
             )}
-            
+
             <Tooltip title="Профиль">
               <IconButton
                 onClick={handleMenu}
@@ -148,7 +166,6 @@ export const Header = () => {
               id="account-menu"
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              onClick={handleClose}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
               anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
               PaperProps={{
@@ -170,26 +187,26 @@ export const Header = () => {
                   @{user.login}
                 </Typography>
               </Box>
-              
+
               <Divider />
-              
+
               <MenuItem onClick={handleProfile}>
                 <UserIcon size={16} style={{ marginRight: 12 }} />
                 Профиль
               </MenuItem>
-              
+
               <MenuItem onClick={handleEditProfile}>
                 <Edit size={16} style={{ marginRight: 12 }} />
                 Редактировать
               </MenuItem>
-              
+
               <MenuItem onClick={handleSettings}>
                 <Settings size={16} style={{ marginRight: 12 }} />
                 Настройки
               </MenuItem>
-              
+
               <Divider />
-              
+
               <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
                 <LogOut size={16} style={{ marginRight: 12 }} />
                 Выйти
@@ -197,9 +214,9 @@ export const Header = () => {
             </Menu>
           </>
         ) : (
-          <Button 
-            color="inherit" 
-            onClick={() => navigate('/login')} 
+          <Button
+            color="inherit"
+            onClick={() => navigate('/login')}
             startIcon={<LogIn size={20} />}
           >
             Вход
@@ -210,9 +227,12 @@ export const Header = () => {
   );
 };
 
-3. Создаем страницу профиля (src/pages/ProfilePage.tsx)
 
-import React, { useEffect, useState } from 'react';
+⸻
+
+3) src/pages/ProfilePage.tsx
+
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -224,7 +244,6 @@ import {
   CircularProgress,
   Alert,
   Button,
-  Divider,
   Card,
   CardContent,
   Grid,
@@ -233,8 +252,6 @@ import {
 } from '@mui/material';
 import {
   User as UserIcon,
-  Mail,
-  Calendar,
   Shield,
   Edit,
   ArrowLeft,
@@ -249,7 +266,8 @@ import { User } from '../types';
 export const ProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, token } = useAuth();
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -257,10 +275,11 @@ export const ProfilePage = () => {
   useEffect(() => {
     const loadUser = async () => {
       if (!id) return;
+
       try {
         setLoading(true);
         setError(null);
-        const data = await getUserById(parseInt(id));
+        const data = await getUserById(Number(id));
         setUser(data);
       } catch (err) {
         setError('Не удалось загрузить профиль пользователя');
@@ -283,9 +302,17 @@ export const ProfilePage = () => {
     }
   };
 
-  const handleShare = () => {
-    // В реальном приложении здесь был бы функционал шаринга
-    alert('Ссылка на профиль скопирована');
+  const handleShare = async () => {
+    const profileUrl = `${window.location.origin}/profile/${id}`;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(profileUrl);
+      }
+      alert('Ссылка на профиль скопирована');
+    } catch {
+      alert('Не удалось скопировать ссылку');
+    }
   };
 
   if (loading) {
@@ -313,21 +340,18 @@ export const ProfilePage = () => {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      {/* Кнопка назад */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Button startIcon={<ArrowLeft size={18} />} onClick={handleBack}>
           Назад
         </Button>
-        <Box>
-          <Tooltip title="Поделиться">
-            <IconButton onClick={handleShare}>
-              <Share2 size={20} />
-            </IconButton>
-          </Tooltip>
-        </Box>
+
+        <Tooltip title="Поделиться">
+          <IconButton onClick={handleShare}>
+            <Share2 size={20} />
+          </IconButton>
+        </Tooltip>
       </Box>
 
-      {/* Основная информация */}
       <Paper sx={{ p: 4, mb: 3 }}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Avatar
@@ -359,7 +383,8 @@ export const ProfilePage = () => {
                 size="small"
               />
             )}
-            {user.token && (
+
+            {token && isOwnProfile && (
               <Chip
                 icon={<Shield size={14} />}
                 label="JWT активен"
@@ -382,7 +407,6 @@ export const ProfilePage = () => {
         </Box>
       </Paper>
 
-      {/* Детальная информация */}
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Card>
@@ -433,8 +457,8 @@ export const ProfilePage = () => {
                   </Typography>
                   <Chip
                     size="small"
-                    label={user.token ? "Активен" : "Не активен"}
-                    color={user.token ? "success" : "default"}
+                    label={isOwnProfile && token ? 'Активен' : 'Не активен'}
+                    color={isOwnProfile && token ? 'success' : 'default'}
                   />
                 </Box>
 
@@ -442,8 +466,12 @@ export const ProfilePage = () => {
                   <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
                     Токен:
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
-                    {user.token ? `${user.token.substring(0, 15)}...` : 'Нет'}
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontFamily: 'monospace' }}
+                  >
+                    {isOwnProfile && token ? `${token.substring(0, 15)}...` : 'Скрыт'}
                   </Typography>
                 </Box>
               </Box>
@@ -451,8 +479,7 @@ export const ProfilePage = () => {
           </Card>
         </Grid>
 
-        {/* JWT токен (только для своего профиля) */}
-        {isOwnProfile && currentUser?.token && (
+        {isOwnProfile && token && (
           <Grid item xs={12}>
             <Card>
               <CardContent>
@@ -460,6 +487,7 @@ export const ProfilePage = () => {
                   <Shield size={20} color="#4caf50" />
                   <Typography variant="h6">Ваш JWT токен</Typography>
                 </Box>
+
                 <Paper
                   variant="outlined"
                   sx={{
@@ -470,9 +498,14 @@ export const ProfilePage = () => {
                     wordBreak: 'break-all',
                   }}
                 >
-                  {currentUser.token}
+                  {token}
                 </Paper>
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ mt: 1, display: 'block' }}
+                >
                   Используется для авторизации запросов к API
                 </Typography>
               </CardContent>
@@ -484,9 +517,12 @@ export const ProfilePage = () => {
   );
 };
 
-4. Создаем страницу редактирования профиля (src/pages/EditProfilePage.tsx)
 
-import React, { useEffect, useState } from 'react';
+⸻
+
+4) src/pages/EditProfilePage.tsx
+
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -499,18 +535,18 @@ import {
   CircularProgress,
   Alert,
   Divider,
-  IconButton,
 } from '@mui/material';
 import { ArrowLeft, Save, User as UserIcon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserById, updateUser } from '../api/users';
 import { User } from '../types';
-import { usePreventUnsavedChanges } from '../hooks/usePreventUnsavedChanges';
+import { PreventUnsavedChanges } from '../components/guards/PreventUnsavedChanges';
 
 export const EditProfilePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user: currentUser } = useAuth();
+
   const [user, setUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     name: '',
@@ -521,17 +557,11 @@ export const EditProfilePage = () => {
   const [error, setError] = useState<string | null>(null);
 
   const isOwnProfile = currentUser?.id === Number(id);
-  const isDirty = 
-    formData.name !== (user?.name || '') || 
-    formData.login !== user?.login;
-
-  usePreventUnsavedChanges({
-    isDirty: isDirty && !saving,
-    message: 'У вас есть несохраненные изменения. Вы действительно хотите покинуть страницу?',
-  });
+  const isDirty =
+    formData.name !== (user?.name || '') ||
+    formData.login !== (user?.login || '');
 
   useEffect(() => {
-    // Проверяем, что пользователь редактирует свой профиль
     if (!isOwnProfile) {
       navigate('/users', { replace: true });
       return;
@@ -539,9 +569,12 @@ export const EditProfilePage = () => {
 
     const loadUser = async () => {
       if (!id) return;
+
       try {
         setLoading(true);
-        const data = await getUserById(parseInt(id));
+        setError(null);
+
+        const data = await getUserById(Number(id));
         setUser(data);
         setFormData({
           name: data.name || '',
@@ -558,15 +591,15 @@ export const EditProfilePage = () => {
     loadUser();
   }, [id, isOwnProfile, navigate]);
 
-  const handleChange = (field: keyof typeof formData) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
-  };
+  const handleChange =
+    (field: keyof typeof formData) =>
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.login.trim()) {
       alert('Логин не может быть пустым');
       return;
@@ -581,15 +614,19 @@ export const EditProfilePage = () => {
         login: formData.login,
       });
 
-      // Обновляем данные в контексте если нужно
       if (currentUser) {
-        const updatedUser = { ...currentUser, name: formData.name, login: formData.login };
+        const updatedUser = {
+          ...currentUser,
+          name: formData.name,
+          login: formData.login,
+        };
         localStorage.setItem('user', JSON.stringify(updatedUser));
       }
 
       navigate(`/profile/${id}`);
     } catch (err: any) {
       const errors = err.response?.data?.errors;
+
       if (errors) {
         const messages = Object.values(errors).flat().join('. ');
         setError(messages);
@@ -621,76 +658,90 @@ export const EditProfilePage = () => {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Button startIcon={<ArrowLeft size={18} />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
-        Назад
-      </Button>
+    <PreventUnsavedChanges
+      isDirty={isDirty && !saving}
+      message="У вас есть несохраненные изменения. Вы действительно хотите покинуть страницу?"
+    >
+      {({ confirmNavigate }) => (
+        <Container maxWidth="sm" sx={{ py: 4 }}>
+          <Button
+            startIcon={<ArrowLeft size={18} />}
+            onClick={() => confirmNavigate(() => navigate(-1))}
+            sx={{ mb: 2 }}
+          >
+            Назад
+          </Button>
 
-      <Paper sx={{ p: 4 }}>
-        <Box display="flex" alignItems="center" gap={2} mb={3}>
-          <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-            <UserIcon size={32} />
-          </Avatar>
-          <Box>
-            <Typography variant="h5">Редактирование профиля</Typography>
-            <Typography variant="body2" color="text.secondary">
-              ID: {user?.id}
-            </Typography>
-          </Box>
-        </Box>
+          <Paper sx={{ p: 4 }}>
+            <Box display="flex" alignItems="center" gap={2} mb={3}>
+              <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
+                <UserIcon size={32} />
+              </Avatar>
 
-        <Divider sx={{ mb: 3 }} />
+              <Box>
+                <Typography variant="h5">Редактирование профиля</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  ID: {user?.id}
+                </Typography>
+              </Box>
+            </Box>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error}
-          </Alert>
-        )}
+            <Divider sx={{ mb: 3 }} />
 
-        <form onSubmit={handleSubmit}>
-          <Box display="flex" flexDirection="column" gap={3}>
-            <TextField
-              fullWidth
-              label="Имя"
-              value={formData.name}
-              onChange={handleChange('name')}
-              disabled={saving}
-            />
-
-            <TextField
-              fullWidth
-              label="Логин"
-              value={formData.login}
-              onChange={handleChange('login')}
-              disabled={saving}
-              required
-            />
-
-            {isDirty && (
-              <Alert severity="info">
-                ✏️ У вас есть несохраненные изменения
+            {error && (
+              <Alert severity="error" sx={{ mb: 3 }}>
+                {error}
               </Alert>
             )}
 
-            <Button
-              type="submit"
-              variant="contained"
-              startIcon={<Save size={18} />}
-              disabled={!isDirty || saving}
-              size="large"
-            >
-              {saving ? 'Сохранение...' : 'Сохранить изменения'}
-            </Button>
-          </Box>
-        </form>
-      </Paper>
-    </Container>
+            <form onSubmit={handleSubmit}>
+              <Box display="flex" flexDirection="column" gap={3}>
+                <TextField
+                  fullWidth
+                  label="Имя"
+                  value={formData.name}
+                  onChange={handleChange('name')}
+                  disabled={saving}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Логин"
+                  value={formData.login}
+                  onChange={handleChange('login')}
+                  disabled={saving}
+                  required
+                />
+
+                {isDirty && (
+                  <Alert severity="info">
+                    У вас есть несохраненные изменения
+                  </Alert>
+                )}
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  startIcon={<Save size={18} />}
+                  disabled={!isDirty || saving}
+                  size="large"
+                >
+                  {saving ? 'Сохранение...' : 'Сохранить изменения'}
+                </Button>
+              </Box>
+            </form>
+          </Paper>
+        </Container>
+      )}
+    </PreventUnsavedChanges>
   );
 };
 
-5. Обновляем таблицу пользователей с ссылками на профили (src/components/UsersTable.tsx)
 
-import React from 'react';
+⸻
+
+5) src/components/UsersTable.tsx
+
 import {
   Table,
   TableBody,
@@ -705,7 +756,7 @@ import {
   Avatar,
   Box,
 } from '@mui/material';
-import { Eye, Edit2, User as UserIcon } from 'lucide-react';
+import { Eye, Edit2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types';
 import { useAuth } from '../contexts/AuthContext';
@@ -737,6 +788,7 @@ export const UsersTable = ({ users }: UsersTableProps) => {
             <TableCell align="center">Действия</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id} hover>
@@ -746,11 +798,15 @@ export const UsersTable = ({ users }: UsersTableProps) => {
                     sx={{
                       width: 32,
                       height: 32,
-                      bgcolor: currentUser?.id === user.id ? 'primary.main' : 'secondary.main',
+                      bgcolor:
+                        currentUser?.id === user.id
+                          ? 'primary.main'
+                          : 'secondary.main',
                     }}
                   >
                     {user.login.charAt(0).toUpperCase()}
                   </Avatar>
+
                   <Typography>
                     {user.name || user.login}
                     {currentUser?.id === user.id && (
@@ -761,8 +817,10 @@ export const UsersTable = ({ users }: UsersTableProps) => {
                   </Typography>
                 </Box>
               </TableCell>
+
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.login}</TableCell>
+
               <TableCell align="center">
                 <Tooltip title="Просмотреть профиль">
                   <IconButton
@@ -773,6 +831,7 @@ export const UsersTable = ({ users }: UsersTableProps) => {
                     <Eye size={18} />
                   </IconButton>
                 </Tooltip>
+
                 {currentUser?.id === user.id && (
                   <Tooltip title="Редактировать">
                     <IconButton
@@ -792,17 +851,20 @@ export const UsersTable = ({ users }: UsersTableProps) => {
   );
 };
 
-6. Обновляем App.tsx с новыми маршрутами
 
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+⸻
+
+6) src/App.tsx
+
+import { useEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from './contexts/AuthContext';
 import { LoadingProvider } from './contexts/LoadingContext';
 import { GlobalLoader } from './components/GlobalLoader';
-import { AuthGuard } from './components/guards/AuthGuard';
 import { Header } from './components/Header';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { UsersPage } from './pages/UsersPage';
 import { ProfilePage } from './pages/ProfilePage';
@@ -810,6 +872,7 @@ import { EditProfilePage } from './pages/EditProfilePage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { LoadingDemoPage } from './pages/LoadingDemoPage';
+import { GuardsDemoPage } from './pages/GuardsDemoPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { ServerErrorPage } from './pages/ServerErrorPage';
 import { setLoadingCallback } from './api/client';
@@ -817,15 +880,17 @@ import { useLoading } from './contexts/LoadingContext';
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#3f51b5' },
+    primary: { main: '#1976d2' },
   },
 });
 
 const LoadingBridge = () => {
   const { setLoading } = useLoading();
+
   useEffect(() => {
     setLoadingCallback(setLoading);
   }, [setLoading]);
+
   return null;
 };
 
@@ -839,33 +904,41 @@ function App() {
             <LoadingBridge />
             <GlobalLoader message="Загрузка..." />
             <Header />
+
             <Routes>
-              {/* Публичные маршруты */}
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/loading-demo" element={<LoadingDemoPage />} />
-              
-              {/* Защищенные маршруты */}
-              <Route path="/users" element={
-                <AuthGuard>
-                  <UsersPage />
-                </AuthGuard>
-              } />
-              
-              <Route path="/profile/:id" element={
-                <AuthGuard>
-                  <ProfilePage />
-                </AuthGuard>
-              } />
-              
-              <Route path="/profile/:id/edit" element={
-                <AuthGuard>
-                  <EditProfilePage />
-                </AuthGuard>
-              } />
-              
-              {/* Маршруты ошибок */}
+              <Route path="/guards-demo" element={<GuardsDemoPage />} />
+
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute>
+                    <UsersPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile/:id"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile/:id/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route path="/404" element={<NotFoundPage />} />
               <Route path="/500" element={<ServerErrorPage />} />
               <Route path="*" element={<Navigate to="/404" replace />} />
@@ -879,15 +952,24 @@ function App() {
 
 export default App;
 
-7. Обновляем HomePage с приветствием пользователя
 
-// В HomePage.tsx добавить:
+⸻
+
+7) src/pages/HomePage.tsx
+
+Если хочешь быстро и без риска, замени только приветственный блок.
+Но проще — пришли файл, и я дам точную версию под твою текущую разметку.
+
+Если делать прямо сейчас, добавь импорт:
+
 import { useAuth } from '../contexts/AuthContext';
 
-// Внутри компонента:
+И внутри компонента:
+
 const { user } = useAuth();
 
-// В JSX заменить приветствие:
+И в месте приветствия поставь:
+
 {user ? (
   <>
     <Typography variant="h2" gutterBottom>
@@ -903,24 +985,26 @@ const { user } = useAuth();
   </Typography>
 )}
 
-Тестирование функциональности
 
-    Меню профиля:
-        Авторизуйтесь → нажмите на аватар в хедере
-        Должны увидеть меню с пунктами "Профиль", "Редактировать", "Выйти"
+⸻
 
-    Просмотр профиля:
-        Нажмите "Профиль" в меню → откроется страница профиля
-        Проверьте отображение информации и JWT токена (для своего профиля)
+Что создать нового
 
-    Редактирование профиля:
-        Нажмите "Редактировать" в меню или на странице профиля
-        Измените данные → появится предупреждение о несохраненных изменениях
-        Сохраните → вернетесь на страницу профиля
+Создай новый файл:
 
-    Навигация по пользователям:
-        На странице пользователей нажмите на иконку глаза у любого пользователя
-        Откроется его профиль (с ограниченной информацией)
+src/pages/EditProfilePage.tsx
 
-Что получилось:
-✅ Меню профиля - аватар с выпадающим меню ✅ Страница профиля - просмотр информации о пользователе ✅ Редактирование профиля - только для своего профиля ✅ Защита маршрутов - недоступны без авторизации ✅ Защита от потери данных - предупреждение при несохраненных изменениях ✅ Навигация - удобные ссылки между страницами
+
+⸻
+
+Что проверить
+
+После вставки проверь:
+	•	логин → аватар в хедере
+	•	меню аватара → Профиль, Редактировать, Выйти
+	•	/profile/:id
+	•	/profile/:id/edit
+	•	на /users у каждого пользователя иконка просмотра
+	•	у своего пользователя ещё и иконка редактирования
+
+Если хочешь, следующим сообщением я дам тебе ещё готовый HomePage.tsx целиком, чтобы вообще ничего не править вручную.
