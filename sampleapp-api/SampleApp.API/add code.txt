@@ -1,269 +1,1027 @@
-Да. Ниже даю готовый интерфейс для API по твоему swagger.json — чтобы можно было сразу использовать во фронте.
+Ниже — готовый интерфейс под микропосты: лента, создание, редактирование, удаление и переходы к профилю автора.
 
-Сделаем 2 файла:
-	1.	src/types/swagger.ts — все типы и DTO
-	2.	src/api/swaggerApi.ts — все методы API
+По подписчикам: в твоём swagger нет endpoint’ов для follow/followers, поэтому полноценный экран подписок сейчас подключать не к чему. Я делаю то, что реально можно завести на твоё API: сообщения / лента.
 
 ⸻
 
-1) Файл
+1) Новый файл
 
-src/types/swagger.ts
+src/api/microposts.ts
 
-export type RoleType = 'Admin' | 'Manager' | 'User';
-
-export type ErrorResponse = {
-  statusCode?: string | null;
-  message?: string | null;
-  detail?: string | null;
-};
-
-export type LoginDto = {
-  name?: string | null;
-  login?: string | null;
-  password?: string | null;
-  role?: string | null;
-};
-
-export type UserUpdateDto = {
-  name?: string | null;
-  login?: string | null;
-};
-
-export type Role = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name?: string | null;
-};
-
-export type UserDto = {
-  id: number;
-  login?: string | null;
-  name?: string | null;
-  token?: string | null;
-  role: RoleType;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type MicropostDto = {
-  content?: string | null;
-  userId: number;
-};
-
-export type EditMicropostDto = {
-  content?: string | null;
-};
-
-export type Relation = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  followedId: number;
-  followerId: number;
-};
-
-export type User = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  name?: string | null;
-  login?: string | null;
-  passwordHash?: string | null;
-  passwordSalt?: string | null;
-  token?: string | null;
-  roleId: number;
-  role?: Role | null;
-  microposts?: Micropost[] | null;
-  followedRelations?: Relation[] | null;
-  followerRelations?: Relation[] | null;
-};
-
-export type Micropost = {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  content?: string | null;
-  user?: User | null;
-  userId: number;
-};
-
-
-⸻
-
-2) Файл
-
-src/api/swaggerApi.ts
-
-import { apiClient } from './client';
 import type {
   EditMicropostDto,
-  LoginDto,
   Micropost,
   MicropostDto,
-  Role,
-  User,
-  UserDto,
-  UserUpdateDto,
 } from '../types/swagger';
-
-/* =========================
-   MICROPOSTS
-========================= */
+import {
+  getMicroposts as getMicropostsApi,
+  getMicropostById as getMicropostByIdApi,
+  createMicropost as createMicropostApi,
+  updateMicropost as updateMicropostApi,
+  deleteMicropost as deleteMicropostApi,
+} from './swaggerApi';
 
 export const getMicroposts = async (): Promise<Micropost[]> => {
-  const response = await apiClient.get<Micropost[]>('/Microposts');
-  return response.data;
+  return getMicropostsApi();
 };
 
 export const getMicropostById = async (id: number): Promise<Micropost> => {
-  const response = await apiClient.get<Micropost>(`/Microposts/${id}`);
-  return response.data;
+  return getMicropostByIdApi(id);
 };
 
 export const createMicropost = async (
   payload: MicropostDto
 ): Promise<Micropost> => {
-  const response = await apiClient.post<Micropost>('/Microposts', payload);
-  return response.data;
+  return createMicropostApi(payload);
 };
 
 export const updateMicropost = async (
   id: number,
   payload: EditMicropostDto
 ): Promise<Micropost> => {
-  const response = await apiClient.put<Micropost>(`/Microposts/${id}`, payload);
-  return response.data;
+  return updateMicropostApi(id, payload);
 };
 
 export const deleteMicropost = async (id: number): Promise<Micropost> => {
-  const response = await apiClient.delete<Micropost>(`/Microposts/${id}`);
-  return response.data;
-};
-
-/* =========================
-   ROLES
-   В swagger ответы у Roles описаны как массив User.
-   Оставляю строго по swagger.
-========================= */
-
-export const getRoles = async (): Promise<User[]> => {
-  const response = await apiClient.get<User[]>('/Roles');
-  return response.data;
-};
-
-export const getRoleById = async (id: number): Promise<User[]> => {
-  const response = await apiClient.get<User[]>(`/Roles/${id}`);
-  return response.data;
-};
-
-export const createRole = async (payload: Role): Promise<User[]> => {
-  const response = await apiClient.post<User[]>('/Roles', payload);
-  return response.data;
-};
-
-export const updateRole = async (payload: Role): Promise<User[]> => {
-  const response = await apiClient.put<User[]>('/Roles', payload);
-  return response.data;
-};
-
-export const deleteRole = async (id: number): Promise<void> => {
-  await apiClient.delete(`/Roles/${id}`);
-};
-
-/* =========================
-   SEED
-========================= */
-
-export const generateSeed = async (): Promise<void> => {
-  await apiClient.get('/Seed/generate');
-};
-
-/* =========================
-   TOKEN
-========================= */
-
-export const getTokenInfo = async (): Promise<unknown> => {
-  const response = await apiClient.get('/Token');
-  return response.data;
-};
-
-/* =========================
-   USERS
-========================= */
-
-export const loginUser = async (payload: LoginDto): Promise<UserDto> => {
-  const response = await apiClient.post<UserDto>('/Users/Login', payload);
-  return response.data;
-};
-
-export const createUser = async (payload: LoginDto): Promise<UserDto> => {
-  const response = await apiClient.post<UserDto>('/Users', payload);
-  return response.data;
-};
-
-export const getUsers = async (): Promise<UserDto[]> => {
-  const response = await apiClient.get<UserDto[]>('/Users');
-  return response.data;
-};
-
-export const getUserById = async (id: number): Promise<UserDto> => {
-  const response = await apiClient.get<UserDto>(`/Users/${id}`);
-  return response.data;
-};
-
-export const updateUser = async (
-  id: number,
-  payload: UserUpdateDto
-): Promise<UserDto> => {
-  const response = await apiClient.put<UserDto>(`/Users/${id}`, payload);
-  return response.data;
+  return deleteMicropostApi(id);
 };
 
 
 ⸻
 
-Как использовать
+2) Новый файл
 
-Пример логина:
+src/components/MicropostComposer.tsx
 
-import { loginUser } from '../api/swaggerApi';
+import { useState, type ChangeEvent } from 'react';
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Send } from 'lucide-react';
 
-const user = await loginUser({
-  login: 'admin',
-  password: '123',
-});
+type MicropostComposerProps = {
+  onSubmit: (content: string) => Promise<void>;
+  loading?: boolean;
+};
 
-Пример пользователей:
+export const MicropostComposer = ({
+  onSubmit,
+  loading = false,
+}: MicropostComposerProps) => {
+  const [content, setContent] = useState('');
+  const [error, setError] = useState('');
 
-import { getUsers, getUserById, updateUser } from '../api/swaggerApi';
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setContent(e.target.value);
 
-const users = await getUsers();
-const user = await getUserById(5);
+    if (error) {
+      setError('');
+    }
+  };
 
-await updateUser(5, {
-  name: 'Иван',
-  login: 'ivan90',
-});
+  const handleSubmit = async () => {
+    if (!content.trim()) {
+      setError('Введите текст сообщения');
+      return;
+    }
 
-Пример micropost:
+    if (content.trim().length < 2) {
+      setError('Минимум 2 символа');
+      return;
+    }
 
-import { createMicropost, getMicroposts } from '../api/swaggerApi';
+    try {
+      await onSubmit(content.trim());
+      setContent('');
+      setError('');
+    } catch (err: any) {
+      setError(err?.message || 'Не удалось создать сообщение');
+    }
+  };
 
-await createMicropost({
-  content: 'Привет!',
-  userId: 5,
-});
+  return (
+    <Paper sx={{ p: 3, mb: 3 }}>
+      <Typography variant="h6" gutterBottom>
+        Новое сообщение
+      </Typography>
 
-const posts = await getMicroposts();
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      <Box display="flex" flexDirection="column" gap={2}>
+        <TextField
+          multiline
+          minRows={3}
+          maxRows={8}
+          fullWidth
+          placeholder="Что у вас нового?"
+          value={content}
+          onChange={handleChange}
+          disabled={loading}
+        />
+
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="caption" color="text.secondary">
+            {content.length} символов
+          </Typography>
+
+          <Button
+            variant="contained"
+            startIcon={<Send size={18} />}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? 'Публикация...' : 'Опубликовать'}
+          </Button>
+        </Box>
+      </Box>
+    </Paper>
+  );
+};
 
 
 ⸻
 
-Важно
+3) Новый файл
 
-У тебя в swagger есть странность:
-эндпоинты /api/Roles и /api/Roles/{id} в ответах описаны как массив User, а не Role. Я оставил строго по swagger, чтобы интерфейс совпадал с твоим JSON.
+src/components/MicropostCard.tsx
 
-Если хочешь, следующим сообщением я могу сделать тебе ещё готовую страницу Swagger UI внутри React: вкладки Users / Microposts / Roles с формами и кнопками для всех этих методов.
+import { useState } from 'react';
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import {
+  Edit2,
+  Save,
+  Trash2,
+  X,
+  User as UserIcon,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import type { Micropost } from '../types/swagger';
+import { useAuth } from '../contexts/AuthContext';
+
+type MicropostCardProps = {
+  post: Micropost;
+  onUpdate: (id: number, content: string) => Promise<void>;
+  onDelete: (id: number) => Promise<void>;
+};
+
+export const MicropostCard = ({
+  post,
+  onUpdate,
+  onDelete,
+}: MicropostCardProps) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [content, setContent] = useState(post.content || '');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const isOwnPost = user?.id === post.userId;
+
+  const handleSave = async () => {
+    if (!content.trim()) {
+      setError('Сообщение не может быть пустым');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+      await onUpdate(post.id, content.trim());
+      setIsEditing(false);
+    } catch (err: any) {
+      setError(err?.message || 'Не удалось обновить сообщение');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm('Удалить сообщение?');
+    if (!confirmed) return;
+
+    try {
+      setLoading(true);
+      setError('');
+      await onDelete(post.id);
+    } catch (err: any) {
+      setError(err?.message || 'Не удалось удалить сообщение');
+      setLoading(false);
+    }
+  };
+
+  const authorName = post.user?.name || post.user?.login || `User #${post.userId}`;
+  const authorLogin = post.user?.login || `user${post.userId}`;
+  const createdAt = new Date(post.createdAt).toLocaleString('ru-RU');
+
+  return (
+    <Card variant="outlined">
+      <CardContent>
+        <Box display="flex" justifyContent="space-between" alignItems="flex-start" gap={2}>
+          <Box display="flex" gap={2} flex={1}>
+            <Avatar
+              sx={{ cursor: 'pointer' }}
+              onClick={() => navigate(`/profile/${post.userId}`)}
+            >
+              {authorLogin.charAt(0).toUpperCase()}
+            </Avatar>
+
+            <Box flex={1}>
+              <Box display="flex" alignItems="center" gap={1} flexWrap="wrap" mb={1}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: 600, cursor: 'pointer' }}
+                  onClick={() => navigate(`/profile/${post.userId}`)}
+                >
+                  {authorName}
+                </Typography>
+
+                <Typography variant="body2" color="text.secondary">
+                  @{authorLogin}
+                </Typography>
+
+                <Typography variant="body2" color="text.secondary">
+                  •
+                </Typography>
+
+                <Typography variant="body2" color="text.secondary">
+                  {createdAt}
+                </Typography>
+              </Box>
+
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
+
+              {isEditing ? (
+                <Stack spacing={2}>
+                  <TextField
+                    multiline
+                    minRows={3}
+                    fullWidth
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    disabled={loading}
+                  />
+
+                  <Box display="flex" gap={1}>
+                    <Button
+                      variant="contained"
+                      startIcon={<Save size={16} />}
+                      onClick={handleSave}
+                      disabled={loading}
+                    >
+                      Сохранить
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      startIcon={<X size={16} />}
+                      onClick={() => {
+                        setIsEditing(false);
+                        setContent(post.content || '');
+                        setError('');
+                      }}
+                      disabled={loading}
+                    >
+                      Отмена
+                    </Button>
+                  </Box>
+                </Stack>
+              ) : (
+                <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+                  {post.content || '—'}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          {isOwnPost && !isEditing && (
+            <Box display="flex" gap={1}>
+              <Tooltip title="Редактировать">
+                <IconButton onClick={() => setIsEditing(true)} disabled={loading}>
+                  <Edit2 size={18} />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Удалить">
+                <IconButton onClick={handleDelete} disabled={loading} color="error">
+                  <Trash2 size={18} />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          )}
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
+
+
+⸻
+
+4) Новый файл
+
+src/hooks/useMicroposts.ts
+
+import { useEffect, useState } from 'react';
+import {
+  createMicropost,
+  deleteMicropost,
+  getMicroposts,
+  updateMicropost,
+} from '../api/microposts';
+import type { Micropost } from '../types/swagger';
+import { useAuth } from '../contexts/AuthContext';
+import { useLoading } from '../contexts/LoadingContext';
+
+export const useMicroposts = () => {
+  const [posts, setPosts] = useState<Micropost[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
+  const { withLoading } = useLoading();
+
+  const loadPosts = async () => {
+    try {
+      setError(null);
+      const data = await withLoading(getMicroposts());
+      const sorted = [...data].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      setPosts(sorted);
+    } catch (err) {
+      setError('Не удалось загрузить ленту сообщений');
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const createPost = async (content: string) => {
+    if (!user?.id) {
+      throw new Error('Нужно войти в систему');
+    }
+
+    const created = await withLoading(
+      createMicropost({
+        content,
+        userId: user.id,
+      })
+    );
+
+    setPosts((prev) =>
+      [created, ...prev].sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+    );
+  };
+
+  const editPost = async (id: number, content: string) => {
+    const updated = await withLoading(updateMicropost(id, { content }));
+
+    setPosts((prev) =>
+      prev.map((post) => (post.id === id ? { ...post, ...updated } : post))
+    );
+  };
+
+  const removePost = async (id: number) => {
+    await withLoading(deleteMicropost(id));
+    setPosts((prev) => prev.filter((post) => post.id !== id));
+  };
+
+  return {
+    posts,
+    error,
+    refetch: loadPosts,
+    createPost,
+    editPost,
+    removePost,
+  };
+};
+
+
+⸻
+
+5) Новый файл
+
+src/pages/FeedPage.tsx
+
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Container,
+  Paper,
+  Typography,
+} from '@mui/material';
+import { MessageSquare, RefreshCw } from 'lucide-react';
+import { useMicroposts } from '../hooks/useMicroposts';
+import { useLoading } from '../contexts/LoadingContext';
+import { MicropostComposer } from '../components/MicropostComposer';
+import { MicropostCard } from '../components/MicropostCard';
+import { ButtonLoader } from '../components/ButtonLoader';
+
+export const FeedPage = () => {
+  const { posts, error, refetch, createPost, editPost, removePost } =
+    useMicroposts();
+  const { isLoading } = useLoading();
+
+  return (
+    <Container
+      maxWidth={false}
+      sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}
+    >
+      <Box sx={{ width: '100%' }}>
+        <Paper sx={{ p: 3, mb: 3 }}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            gap={2}
+            flexWrap="wrap"
+          >
+            <Box display="flex" alignItems="center" gap={2}>
+              <MessageSquare size={28} color="#1976d2" />
+              <Typography variant="h4">Лента сообщений</Typography>
+              <Chip
+                label={`Всего: ${posts.length}`}
+                size="small"
+                color="primary"
+                variant="outlined"
+              />
+            </Box>
+
+            <Button
+              variant="contained"
+              onClick={refetch}
+              disabled={isLoading}
+              startIcon={isLoading ? <ButtonLoader /> : <RefreshCw size={18} />}
+            >
+              {isLoading ? 'Загрузка...' : 'Обновить'}
+            </Button>
+          </Box>
+        </Paper>
+
+        <MicropostComposer onSubmit={createPost} loading={isLoading} />
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
+
+        <Box display="flex" flexDirection="column" gap={2}>
+          {posts.length === 0 ? (
+            <Paper sx={{ p: 4, textAlign: 'center' }}>
+              <Typography color="text.secondary">
+                Сообщений пока нет. Опубликуйте первое.
+              </Typography>
+            </Paper>
+          ) : (
+            posts.map((post) => (
+              <MicropostCard
+                key={post.id}
+                post={post}
+                onUpdate={editPost}
+                onDelete={removePost}
+              />
+            ))
+          )}
+        </Box>
+      </Box>
+    </Container>
+  );
+};
+
+
+⸻
+
+6) Полностью замени файл
+
+src/components/Header.tsx
+
+import { useState, type MouseEvent } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Menu,
+  MenuItem,
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
+import {
+  Home,
+  Users,
+  LogIn,
+  LogOut,
+  User as UserIcon,
+  Settings,
+  Edit,
+  Shield,
+  MessageSquare,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
+export const Header = () => {
+  const navigate = useNavigate();
+  const { user, logout, token } = useAuth();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleClose();
+    navigate('/');
+  };
+
+  const handleProfile = () => {
+    handleClose();
+    if (user) {
+      navigate(`/profile/${user.id}`);
+    }
+  };
+
+  const handleEditProfile = () => {
+    handleClose();
+    if (user) {
+      navigate(`/profile/${user.id}/edit`);
+    }
+  };
+
+  const handleSettings = () => {
+    handleClose();
+    navigate('/settings');
+  };
+
+  return (
+    <AppBar position="static">
+      <Toolbar sx={{ minHeight: 64 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0,
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/')}
+          >
+            SampleApp
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            ml: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
+          <Button
+            color="inherit"
+            onClick={() => navigate('/')}
+            startIcon={<Home size={20} />}
+            sx={{ mr: 1 }}
+          >
+            Главная
+          </Button>
+
+          {user && (
+            <>
+              <Button
+                color="inherit"
+                onClick={() => navigate('/feed')}
+                startIcon={<MessageSquare size={20} />}
+                sx={{ mr: 1 }}
+              >
+                Лента
+              </Button>
+
+              <Button
+                color="inherit"
+                onClick={() => navigate('/users')}
+                startIcon={<Users size={20} />}
+                sx={{ mr: 1 }}
+              >
+                Пользователи
+              </Button>
+            </>
+          )}
+
+          {user ? (
+            <>
+              {token && (
+                <Tooltip title="JWT токен активен">
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
+                    <Shield size={20} color="#4caf50" />
+                  </Box>
+                </Tooltip>
+              )}
+
+              <Tooltip title="Профиль">
+                <IconButton
+                  onClick={handleMenu}
+                  size="small"
+                  sx={{ ml: 1 }}
+                  aria-controls={Boolean(anchorEl) ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
+                >
+                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                    {user.login.charAt(0).toUpperCase()}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                PaperProps={{
+                  sx: {
+                    mt: 1.5,
+                    minWidth: 200,
+                    '& .MuiMenuItem-root': {
+                      px: 2,
+                      py: 1,
+                    },
+                  },
+                }}
+              >
+                <Box sx={{ px: 2, py: 1 }}>
+                  <Typography variant="subtitle2" noWrap>
+                    {user.name || user.login}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" noWrap>
+                    @{user.login}
+                  </Typography>
+                </Box>
+
+                <Divider />
+
+                <MenuItem onClick={handleProfile}>
+                  <UserIcon size={16} style={{ marginRight: 12 }} />
+                  Профиль
+                </MenuItem>
+
+                <MenuItem onClick={handleEditProfile}>
+                  <Edit size={16} style={{ marginRight: 12 }} />
+                  Редактировать
+                </MenuItem>
+
+                <MenuItem onClick={handleSettings}>
+                  <Settings size={16} style={{ marginRight: 12 }} />
+                  Настройки
+                </MenuItem>
+
+                <Divider />
+
+                <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                  <LogOut size={16} style={{ marginRight: 12 }} />
+                  Выйти
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => navigate('/login')}
+              startIcon={<LogIn size={20} />}
+            >
+              Вход
+            </Button>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+
+⸻
+
+7) Полностью замени файл
+
+src/App.tsx
+
+import { useEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { AuthProvider } from './contexts/AuthContext';
+import { LoadingProvider } from './contexts/LoadingContext';
+import { GlobalLoader } from './components/GlobalLoader';
+import { Header } from './components/Header';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { HomePage } from './pages/HomePage';
+import { UsersPage } from './pages/UsersPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { EditProfilePage } from './pages/EditProfilePage';
+import { FeedPage } from './pages/FeedPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { LoadingDemoPage } from './pages/LoadingDemoPage';
+import { GuardsDemoPage } from './pages/GuardsDemoPage';
+import { TableDemoPage } from './pages/TableDemoPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { ServerErrorPage } from './pages/ServerErrorPage';
+import { setLoadingCallback } from './api/client';
+import { useLoading } from './contexts/LoadingContext';
+
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+  },
+});
+
+const LoadingBridge = () => {
+  const { setLoading } = useLoading();
+
+  useEffect(() => {
+    setLoadingCallback(setLoading);
+  }, [setLoading]);
+
+  return null;
+};
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <LoadingProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <LoadingBridge />
+            <GlobalLoader message="Загрузка..." />
+            <Header />
+
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/loading-demo" element={<LoadingDemoPage />} />
+              <Route path="/guards-demo" element={<GuardsDemoPage />} />
+              <Route path="/table-demo" element={<TableDemoPage />} />
+
+              <Route
+                path="/feed"
+                element={
+                  <ProtectedRoute>
+                    <FeedPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute>
+                    <UsersPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile/:id"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/profile/:id/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="/404" element={<NotFoundPage />} />
+              <Route path="/500" element={<ServerErrorPage />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </LoadingProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
+
+⸻
+
+8) Полностью замени файл
+
+src/pages/HomePage.tsx
+
+import { Container, Paper, Typography, Box, Button } from '@mui/material';
+import { Home, Users, LogIn, UserPlus, Table2, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
+export const HomePage = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  return (
+    <Container
+      maxWidth={false}
+      sx={{ py: 4, px: { xs: 2, sm: 3, md: 4, lg: 6 } }}
+    >
+      <Paper sx={{ p: 6, textAlign: 'center', width: '100%' }}>
+        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
+          <Home size={64} color="#1976d2" />
+        </Box>
+
+        {user ? (
+          <>
+            <Typography variant="h2" gutterBottom>
+              Добро пожаловать, {user.login}!
+            </Typography>
+
+            <Typography variant="h5" color="text.secondary" paragraph>
+              ID: {user.id} • {user.name || 'Без имени'}
+            </Typography>
+
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              Вы авторизованы в системе. Можете открыть ленту сообщений,
+              список пользователей, профиль или демо таблицы.
+            </Typography>
+
+            <Box
+              display="flex"
+              gap={2}
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<MessageSquare size={20} />}
+                onClick={() => navigate('/feed')}
+              >
+                Лента
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Users size={20} />}
+                onClick={() => navigate('/users')}
+              >
+                Пользователи
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                onClick={() => navigate(`/profile/${user.id}`)}
+              >
+                Мой профиль
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Table2 size={20} />}
+                onClick={() => navigate('/table-demo')}
+              >
+                Демо таблицы
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Typography variant="h2" gutterBottom>
+              Добро пожаловать!
+            </Typography>
+
+            <Typography variant="h5" color="text.secondary" paragraph>
+              SampleApp на React
+            </Typography>
+
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              Авторизуйтесь или зарегистрируйтесь, чтобы получить доступ к
+              ленте сообщений, защищённым страницам, профилям пользователей и
+              редактированию данных.
+            </Typography>
+
+            <Box
+              display="flex"
+              gap={2}
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<LogIn size={20} />}
+                onClick={() => navigate('/login')}
+              >
+                Войти
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<UserPlus size={20} />}
+                onClick={() => navigate('/register')}
+              >
+                Регистрация
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Table2 size={20} />}
+                onClick={() => navigate('/table-demo')}
+              >
+                Демо таблицы
+              </Button>
+            </Box>
+          </>
+        )}
+      </Paper>
+    </Container>
+  );
+};
+
+
+⸻
+
+Что у тебя появится
+
+После вставки:
+	•	новый маршрут /feed
+	•	кнопка Лента в хедере
+	•	кнопка Лента на главной
+	•	создание сообщения
+	•	редактирование своего сообщения
+	•	удаление своего сообщения
+	•	переход к профилю автора
+
+Что не будет работать пока не появится в API
+
+Полноценные:
+	•	подписки
+	•	подписчики / подписки
+	•	follow / unfollow
+	•	персональная домашняя лента “только тех, на кого подписан”
+
+Потому что в твоём swagger на это сейчас нет endpoint’ов.
+
+Если хочешь, следующим сообщением я сделаю тебе ещё страницу “Мои сообщения” или страницу автора с его микропостами.
