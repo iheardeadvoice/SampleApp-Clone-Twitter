@@ -1,250 +1,874 @@
-Да. Я раньше дал код под другую форму бэка, а у тебя в API уже есть другая архитектура.
-По ошибкам видно, что у тебя нужно использовать:
-	•	LoginDto, а не UserLoginDto/UserRegisterDto
-	•	_tokenService.CreateToken(...), а не _repo.GenerateJwtTokenAsync(...)
-	•	FindUserByLoginAsync(string login) с одним аргументом
-	•	UserDto как record с конструктором
-	•	User с обязательными PasswordHash и PasswordSalt  ￼
 
-Ниже даю только правильные полные файлы, которые нужно оставить.
+React 8. Сортировка, поиск и пагинация
+IOF edited this page Mar 11, 2026 · 2 revisions
+Sprint 8 на React (Сортировка, пагинация и поиск)
 
-⸻
+Добавляем сортировку, пагинацию и поиск в таблицу пользователей.
+1. Создаем кастомные хуки для сортировки, пагинации и поиска
 
-1) Полный файл
+src/hooks/useSort.ts
 
-sampleapp-api/SampleApp.API/Dtos/UserUpdateDto.cs
+import { useState, useMemo } from 'react';
 
-namespace SampleApp.API.Dtos;
+export type SortDirection = 'asc' | 'desc';
 
-public class UserUpdateDto
-{
-    public string Name { get; set; } = string.Empty;
-    public string Login { get; set; } = string.Empty;
-}
+export type SortConfig<T> = {
+  key: keyof T | null;
+  direction: SortDirection;
+};
 
+export const useSort = <T extends Record<string, any>>(
+  data: T[],
+  initialConfig?: SortConfig<T>
+) => {
+  const [sortConfig, setSortConfig] = useState<SortConfig<T>>(
+    initialConfig || { key: null, direction: 'asc' }
+  );
 
-⸻
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return data;
 
-2) Полный файл
+    return [...data].sort((a, b) => {
+      const aValue = a[sortConfig.key!]?.toString() || '';
+      const bValue = b[sortConfig.key!]?.toString() || '';
 
-sampleapp-api/SampleApp.API/Mappers/UserMapper.cs
+      if (sortConfig.direction === 'asc') {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
+    });
+  }, [data, sortConfig]);
 
-using SampleApp.API.Dtos;
-using SampleApp.API.Entities;
-using SampleApp.API.Enums;
-
-namespace SampleApp.API.Mappers;
-
-public static class UserMapper
-{
-    public static UserDto ToDto(this User user)
-    {
-        return new UserDto(
-            user.Id,
-            user.Login,
-            user.Name,
-            user.Token ?? string.Empty,
-            (RoleType)user.RoleId,
-            user.CreatedAt,
-            user.UpdatedAt
-        );
+  const requestSort = (key: keyof T) => {
+    let direction: SortDirection = 'asc';
+    
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
     }
+    
+    setSortConfig({ key, direction });
+  };
 
-    public static User ToEntity(this UserDto userDto)
-    {
-        return new User()
-        {
-            Id = userDto.Id,
-            Login = userDto.Login,
-            Name = userDto.Name,
-            Token = userDto.Token,
-            RoleId = (int)userDto.Role,
-            CreatedAt = userDto.CreatedAt,
-            UpdatedAt = userDto.UpdatedAt,
-            PasswordHash = null!,
-            PasswordSalt = null!,
-        };
+  return {
+    sortedData,
+    sortConfig,
+    requestSort,
+  };
+};
+
+src/hooks/usePagination.ts
+
+import { useState, useMemo } from 'react';
+
+type UsePaginationProps = {
+  initialPage?: number;
+  initialRowsPerPage?: number;
+  rowsPerPageOptions?: number[];
+};
+
+export const usePagination = <T>(
+  data: T[],
+  {
+    initialPage = 0,
+    initialRowsPerPage = 5,
+    rowsPerPageOptions = [5, 10, 25, 50],
+  }: UsePaginationProps = {}
+) => {
+  const [page, setPage] = useState(initialPage);
+  const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
+
+  const paginatedData = useMemo(() => {
+    const start = page * rowsPerPage;
+    const end = start + rowsPerPage;
+    return data.slice(start, end);
+  }, [data, page, rowsPerPage]);
+
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const resetPagination = () => {
+    setPage(0);
+  };
+
+  return {
+    paginatedData,
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    resetPagination,
+    totalCount: data.length,
+    totalPages: Math.ceil(data.length / rowsPerPage),
+    from: page * rowsPerPage + 1,
+    to: Math.min((page + 1) * rowsPerPage, data.length),
+  };
+};
+
+src/hooks/useSearch.ts
+
+import { useState, useMemo, useCallback } from 'react';
+
+type UseSearchProps<T> = {
+  data: T[];
+  searchFields: (keyof T)[];
+  initialSearch?: string;
+};
+
+export const useSearch = <T extends Record<string, any>>({
+  data,
+  searchFields,
+  initialSearch = '',
+}: UseSearchProps<T>) => {
+  const [searchText, setSearchText] = useState(initialSearch);
+
+  const filteredData = useMemo(() => {
+    if (!searchText.trim()) return data;
+
+    const searchLower = searchText.toLowerCase();
+    return data.filter((item) =>
+      searchFields.some((field) => {
+        const value = item[field]?.toString().toLowerCase() || '';
+        return value.includes(searchLower);
+      })
+    );
+  }, [data, searchText, searchFields]);
+
+  const handleSearch = useCallback((text: string) => {
+    setSearchText(text);
+  }, []);
+
+  const clearSearch = useCallback(() => {
+    setSearchText('');
+  }, []);
+
+  return {
+    searchText,
+    filteredData,
+    handleSearch,
+    clearSearch,
+    setSearchText,
+  };
+};
+
+2. Создаем компонент SearchBar (src/components/SearchBar.tsx)
+
+import React from 'react';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
+import { Search, X } from 'lucide-react';
+
+type SearchBarProps = {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+};
+
+export const SearchBar = ({
+  value,
+  onChange,
+  placeholder = 'Поиск...',
+  disabled = false,
+}: SearchBarProps) => {
+  return (
+    <TextField
+      fullWidth
+      variant="outlined"
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      disabled={disabled}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <Search size={20} color="#999" />
+          </InputAdornment>
+        ),
+        endAdornment: value && (
+          <InputAdornment position="end">
+            <IconButton onClick={() => onChange('')} size="small" edge="end">
+              <X size={18} />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: 2,
+        },
+      }}
+    />
+  );
+};
+
+3. Создаем компонент SortableTableHeader (src/components/SortableTableHeader.tsx)
+
+import React from 'react';
+import { TableCell, TableSortLabel, Box } from '@mui/material';
+import { SortDirection } from '../hooks/useSort';
+
+type SortableTableHeaderProps<T> = {
+  field: keyof T;
+  label: string;
+  currentSort: keyof T | null;
+  direction: SortDirection;
+  onSort: (field: keyof T) => void;
+  width?: string | number;
+};
+
+export const SortableTableHeader = <T extends Record<string, any>>({
+  field,
+  label,
+  currentSort,
+  direction,
+  onSort,
+  width,
+}: SortableTableHeaderProps<T>) => {
+  return (
+    <TableCell width={width}>
+      <TableSortLabel
+        active={currentSort === field}
+        direction={currentSort === field ? direction : 'asc'}
+        onClick={() => onSort(field)}
+      >
+        {label}
+      </TableSortLabel>
+    </TableCell>
+  );
+};
+
+4. Создаем компонент PaginationControls (src/components/PaginationControls.tsx)
+
+import React from 'react';
+import { TablePagination, Box } from '@mui/material';
+
+type PaginationControlsProps = {
+  count: number;
+  page: number;
+  rowsPerPage: number;
+  rowsPerPageOptions: number[];
+  onPageChange: (event: unknown, newPage: number) => void;
+  onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  labelRowsPerPage?: string;
+};
+
+export const PaginationControls = ({
+  count,
+  page,
+  rowsPerPage,
+  rowsPerPageOptions,
+  onPageChange,
+  onRowsPerPageChange,
+  labelRowsPerPage = 'Строк на странице:',
+}: PaginationControlsProps) => {
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+      <TablePagination
+        rowsPerPageOptions={rowsPerPageOptions}
+        component="div"
+        count={count}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={onPageChange}
+        onRowsPerPageChange={onRowsPerPageChange}
+        labelRowsPerPage={labelRowsPerPage}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from}-${to} из ${count}`
+        }
+        showFirstButton
+        showLastButton
+      />
+    </Box>
+  );
+};
+
+5. Обновляем компонент UsersTable с сортировкой (src/components/UsersTable.tsx)
+
+import React from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
+  Tooltip,
+  Avatar,
+  Box,
+  Chip,
+} from '@mui/material';
+import { Eye, Edit2, User as UserIcon, ChevronUp, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { User } from '../types';
+import { useAuth } from '../contexts/AuthContext';
+import { SortableTableHeader } from './SortableTableHeader';
+import { SortConfig } from '../hooks/useSort';
+
+type UsersTableProps = {
+  users: User[];
+  sortConfig: SortConfig<User>;
+  onSort: (field: keyof User) => void;
+};
+
+export const UsersTable = ({ users, sortConfig, onSort }: UsersTableProps) => {
+  const navigate = useNavigate();
+  const { user: currentUser } = useAuth();
+
+  if (users.length === 0) {
+    return (
+      <Typography color="text.secondary" align="center" py={4}>
+        Нет пользователей
+      </Typography>
+    );
+  }
+
+  return (
+    <TableContainer component={Paper} variant="outlined">
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Пользователь</TableCell>
+            <SortableTableHeader<User>
+              field="id"
+              label="ID"
+              currentSort={sortConfig.key}
+              direction={sortConfig.direction}
+              onSort={onSort}
+              width={80}
+            />
+            <SortableTableHeader<User>
+              field="login"
+              label="Логин"
+              currentSort={sortConfig.key}
+              direction={sortConfig.direction}
+              onSort={onSort}
+            />
+            <TableCell align="center" width={120}>Действия</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id} hover>
+              <TableCell>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Avatar
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      bgcolor: currentUser?.id === user.id ? 'primary.main' : 'secondary.main',
+                    }}
+                  >
+                    {user.login.charAt(0).toUpperCase()}
+                  </Avatar>
+                  <Box>
+                    <Typography variant="body1">
+                      {user.name || user.login}
+                    </Typography>
+                    {user.name && (
+                      <Typography variant="caption" color="text.secondary">
+                        @{user.login}
+                      </Typography>
+                    )}
+                  </Box>
+                  {currentUser?.id === user.id && (
+                    <Chip
+                      label="Это вы"
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    />
+                  )}
+                </Box>
+              </TableCell>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.login}</TableCell>
+              <TableCell align="center">
+                <Tooltip title="Просмотреть профиль">
+                  <IconButton
+                    size="small"
+                    onClick={() => navigate(`/profile/${user.id}`)}
+                    sx={{ mr: 1 }}
+                  >
+                    <Eye size={18} />
+                  </IconButton>
+                </Tooltip>
+                {currentUser?.id === user.id && (
+                  <Tooltip title="Редактировать">
+                    <IconButton
+                      size="small"
+                      onClick={() => navigate(`/profile/${user.id}/edit`)}
+                    >
+                      <Edit2 size={18} />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+6. Обновляем хук useUsers с поиском и сортировкой (src/hooks/useUsers.ts)
+
+import { useState, useEffect } from 'react';
+import { getUsers } from '../api/users';
+import { User } from '../types';
+import { useLoading } from '../contexts/LoadingContext';
+import { useSort } from './useSort';
+import { useSearch } from './useSearch';
+import { usePagination } from './usePagination';
+
+export const useUsers = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const { withLoading } = useLoading();
+
+  // Сортировка
+  const { sortedData, sortConfig, requestSort } = useSort<User>(users, {
+    key: 'id',
+    direction: 'asc',
+  });
+
+  // Поиск
+  const {
+    searchText,
+    filteredData: searchedUsers,
+    handleSearch,
+    clearSearch,
+  } = useSearch({
+    data: sortedData,
+    searchFields: ['login', 'name', 'id'],
+  });
+
+  // Пагинация
+  const {
+    paginatedData,
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    resetPagination,
+    totalCount,
+    from,
+    to,
+  } = usePagination(searchedUsers, { initialRowsPerPage: 5 });
+
+  // Сброс пагинации при поиске
+  useEffect(() => {
+    resetPagination();
+  }, [searchText, resetPagination]);
+
+  const loadUsers = async () => {
+    try {
+      setError(null);
+      const data = await withLoading(getUsers());
+      setUsers(data);
+    } catch (err) {
+      setError('Не удалось загрузить пользователей');
+      console.error(err);
     }
-}
+  };
 
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
-⸻
+  return {
+    // Данные
+    users: paginatedData,
+    allUsers: users,
+    filteredCount: searchedUsers.length,
+    totalCount: users.length,
+    error,
+    refetch: loadUsers,
+    
+    // Сортировка
+    sortConfig,
+    requestSort,
+    
+    // Поиск
+    searchText,
+    handleSearch,
+    clearSearch,
+    
+    // Пагинация
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    from,
+    to,
+  };
+};
 
-3) Полный файл
+7. Обновляем страницу пользователей (src/pages/UsersPage.tsx)
 
-sampleapp-api/SampleApp.API/Controllers/UsersController.cs
+import React from 'react';
+import {
+  Container,
+  Typography,
+  Box,
+  Button,
+  Paper,
+  Chip,
+  Stack,
+  Badge,
+} from '@mui/material';
+import {
+  RefreshCw,
+  Users as UsersIcon,
+  Filter,
+  ChevronUp,
+  ChevronDown,
+} from 'lucide-react';
+import { useUsers } from '../hooks/useUsers';
+import { useLoading } from '../contexts/LoadingContext';
+import { useAuth } from '../contexts/AuthContext';
+import { UsersTable } from '../components/UsersTable';
+import { SearchBar } from '../components/SearchBar';
+import { PaginationControls } from '../components/PaginationControls';
+import { ErrorMessage } from '../components/ErrorMessage';
+import { ButtonLoader } from '../components/ButtonLoader';
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SampleApp.API.Dtos;
-using SampleApp.API.Entities;
-using SampleApp.API.Exceptions;
-using SampleApp.API.Interfaces;
-using SampleApp.API.Mappers;
-using SampleApp.API.Services;
-using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Cryptography;
-using System.Text;
-using SampleApp.API.Enums;
+export const UsersPage = () => {
+  const {
+    users,
+    filteredCount,
+    totalCount,
+    error,
+    refetch,
+    sortConfig,
+    requestSort,
+    searchText,
+    handleSearch,
+    clearSearch,
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    from,
+    to,
+  } = useUsers();
 
-namespace SampleApp.API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
-    {
-        private readonly IUserRepository _repo;
-        private readonly ITokenService _tokenService;
+  const { isLoading } = useLoading();
+  const { token } = useAuth();
 
-        public UsersController(IUserRepository repo, ITokenService tokenService)
-        {
-            _repo = repo;
-            _tokenService = tokenService;
-        }
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Paper sx={{ p: 3 }}>
+        {/* Заголовок */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Box display="flex" alignItems="center" gap={2}>
+            <UsersIcon size={28} color="#3f51b5" />
+            <Typography variant="h4">
+              Пользователи
+            </Typography>
+            <Chip
+              label={`Всего: ${totalCount}`}
+              size="small"
+              color="primary"
+              variant="outlined"
+            />
+            {searchText && (
+              <Chip
+                label={`Найдено: ${filteredCount}`}
+                size="small"
+                color="success"
+                variant="outlined"
+                onDelete={clearSearch}
+              />
+            )}
+          </Box>
+          
+          <Button
+            variant="contained"
+            onClick={() => refetch()}
+            disabled={isLoading}
+            startIcon={isLoading ? <ButtonLoader /> : <RefreshCw size={18} />}
+          >
+            {isLoading ? 'Загрузка...' : 'Обновить'}
+          </Button>
+        </Box>
 
-        [HttpPost("Login")]
-        [SwaggerOperation(Summary = "Логин по Login/Password", OperationId = "Login")]
-        [SwaggerResponse(200, "Успешно", typeof(UserDto))]
-        [SwaggerResponse(401, "Неверный пароль")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
-        {
-            try
-            {
-                var user = await _repo.FindUserByLoginAsync(loginDto.Login);
-                return await CheckPasswordHashAndUpdateToken(loginDto, user);
-            }
-            catch (NotFoundException)
-            {
-                return Unauthorized("Пользователь не найден");
-            }
-        }
+        {/* Поиск */}
+        <Box mb={3}>
+          <SearchBar
+            value={searchText}
+            onChange={handleSearch}
+            placeholder="Поиск по логину, имени или ID..."
+            disabled={isLoading}
+          />
+        </Box>
 
-        private async Task<IActionResult> CheckPasswordHashAndUpdateToken(LoginDto loginDto, User user)
-        {
-            using var hmac = new HMACSHA256(user.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+        {/* Информация о текущей странице */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="body2" color="text.secondary">
+            Показаны записи {from}-{to} из {filteredCount}
+          </Typography>
+          
+          {sortConfig.key && (
+            <Chip
+              icon={sortConfig.direction === 'asc' ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              label={`Сортировка по ${sortConfig.key} (${sortConfig.direction === 'asc' ? 'возр' : 'убыв'})`}
+              size="small"
+              variant="outlined"
+              onDelete={() => requestSort('id')}
+            />
+          )}
+        </Box>
 
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i])
-                {
-                    return Unauthorized("Неправильный пароль");
-                }
-            }
+        {error && <ErrorMessage message={error} onRetry={refetch} />}
 
-            user.Token = _tokenService.CreateToken(user.Login);
-            await _repo.UpdateUserAsync(user);
+        {/* Таблица */}
+        <UsersTable
+          users={users}
+          sortConfig={sortConfig}
+          onSort={requestSort}
+        />
 
-            return Ok(user.ToDto());
-        }
+        {/* Пагинация */}
+        {filteredCount > 0 && (
+          <PaginationControls
+            count={filteredCount}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={rowsPerPageOptions}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
 
-        [HttpPost]
-        [SwaggerOperation(Summary = "Создание пользователя", OperationId = "CreateUser")]
-        [SwaggerResponse(201, "Создано", typeof(UserDto))]
-        public async Task<IActionResult> CreateUser([FromBody] LoginDto loginDto)
-        {
-            using var hmac = new HMACSHA256();
+        {/* Информация о JWT */}
+        {token && (
+          <Box mt={2} p={2} bgcolor="#f5f5f5" borderRadius={1}>
+            <Typography variant="caption" color="text.secondary">
+              JWT токен активен • Запросы авторизованы
+            </Typography>
+          </Box>
+        )}
+      </Paper>
+    </Container>
+  );
+};
 
-            var user = new User
-            {
-                Name = loginDto.Name,
-                Login = loginDto.Login,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)),
-                PasswordSalt = hmac.Key,
-                Token = _tokenService.CreateToken(loginDto.Login)
-            };
+8. Создаем демо-страницу для тестирования (src/pages/TableDemoPage.tsx)
 
-            if (!string.IsNullOrWhiteSpace(loginDto.Role))
-            {
-                var roleRaw = loginDto.Role.Trim();
+import React from 'react';
+import {
+  Container,
+  Typography,
+  Box,
+  Paper,
+  Grid,
+  Card,
+  CardContent,
+  Alert,
+} from '@mui/material';
+import {
+  Table2,
+  Search,
+  ArrowUpDown,
+  LayoutList,
+} from 'lucide-react';
+import { useUsers } from '../hooks/useUsers';
+import { UsersTable } from '../components/UsersTable';
+import { SearchBar } from '../components/SearchBar';
+import { PaginationControls } from '../components/PaginationControls';
 
-                if (int.TryParse(roleRaw, out var roleIdFromClient))
-                {
-                    user.RoleId = roleIdFromClient;
-                }
-                else if (Enum.TryParse(roleRaw, ignoreCase: true, out RoleType parsedRole))
-                {
-                    user.RoleId = (int)parsedRole;
-                }
-            }
+export const TableDemoPage = () => {
+  const {
+    users,
+    filteredCount,
+    totalCount,
+    sortConfig,
+    requestSort,
+    searchText,
+    handleSearch,
+    clearSearch,
+    page,
+    rowsPerPage,
+    rowsPerPageOptions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    from,
+    to,
+  } = useUsers();
 
-            var createdUser = await _repo.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser.ToDto());
-        }
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h3" gutterBottom align="center">
+        Демо таблицы
+      </Typography>
+      
+      <Typography variant="subtitle1" color="text.secondary" paragraph align="center">
+        Сортировка, поиск и пагинация в действии
+      </Typography>
 
-        [Authorize]
-        [HttpGet]
-        [SwaggerOperation(Summary = "Список пользователей", OperationId = "GetUsers")]
-        [SwaggerResponse(200, "OK", typeof(List<UserDto>))]
-        public async Task<IActionResult> GetUsers()
-        {
-            var users = await _repo.GetUsersAsync();
-            return Ok(users.Select(u => u.ToDto()));
-        }
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <ArrowUpDown size={20} color="#3f51b5" />
+                <Typography variant="h6">Сортировка</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Нажмите на заголовки столбцов для сортировки.
+                Активный столбец подсвечивается.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
 
-        [Authorize]
-        [HttpGet("{id}")]
-        [SwaggerOperation(Summary = "Пользователь по Id", OperationId = "GetUserById")]
-        [SwaggerResponse(200, "OK", typeof(UserDto))]
-        [SwaggerResponse(404, "Не найден")]
-        public async Task<IActionResult> GetUserById(int id)
-        {
-            try
-            {
-                var user = await _repo.FindUserByIdAsync(id);
-                return Ok(user.ToDto());
-            }
-            catch (NotFoundException)
-            {
-                return NotFound($"Пользователь с id={id} не найден");
-            }
-        }
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <Search size={20} color="#3f51b5" />
+                <Typography variant="h6">Поиск</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Поиск по логину, имени или ID.
+                Количество результатов обновляется в реальном времени.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
 
-        [Authorize]
-        [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Обновление пользователя", OperationId = "UpdateUser")]
-        [SwaggerResponse(200, "Пользователь обновлен", typeof(UserDto))]
-        [SwaggerResponse(404, "Пользователь не найден")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto updateDto)
-        {
-            try
-            {
-                var user = await _repo.FindUserByIdAsync(id);
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <LayoutList size={20} color="#3f51b5" />
+                <Typography variant="h6">Пагинация</Typography>
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Настраиваемое количество строк на странице.
+                Показывает текущий диапазон записей.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
 
-                user.Name = updateDto.Name;
-                user.Login = updateDto.Login;
+      <Paper sx={{ p: 3 }}>
+        <Box display="flex" alignItems="center" gap={2} mb={3}>
+          <Table2 size={24} color="#3f51b5" />
+          <Typography variant="h5">Таблица пользователей</Typography>
+          <Box flex={1} />
+          <Chip
+            label={`Всего: ${totalCount}`}
+            color="primary"
+            variant="outlined"
+          />
+          <Chip
+            label={`На странице: ${users.length}`}
+            color="secondary"
+            variant="outlined"
+          />
+        </Box>
 
-                await _repo.EditUserAsync(user, id);
+        <SearchBar
+          value={searchText}
+          onChange={handleSearch}
+          placeholder="Поиск по таблице..."
+        />
 
-                var updatedUser = await _repo.FindUserByIdAsync(id);
-                return Ok(updatedUser.ToDto());
-            }
-            catch (NotFoundException)
-            {
-                return NotFound($"Пользователь с id={id} не найден");
-            }
-        }
-    }
-}
+        <Box display="flex" justifyContent="space-between" alignItems="center" my={2}>
+          <Typography variant="body2" color="text.secondary">
+            Показаны {from}-{to} из {filteredCount}
+          </Typography>
+          {searchText && (
+            <Button size="small" onClick={clearSearch}>
+              Очистить поиск
+            </Button>
+          )}
+        </Box>
 
+        <UsersTable
+          users={users}
+          sortConfig={sortConfig}
+          onSort={requestSort}
+        />
 
-⸻
+        {filteredCount > 0 && (
+          <PaginationControls
+            count={filteredCount}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={rowsPerPageOptions}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
 
-4) Если ты создавал эти файлы, их не нужно использовать
+        {filteredCount === 0 && (
+          <Alert severity="info" sx={{ mt: 2 }}>
+            Ничего не найдено. Попробуйте изменить параметры поиска.
+          </Alert>
+        )}
+      </Paper>
+    </Container>
+  );
+};
 
-Удаляй или не трогай:
-	•	sampleapp-api/SampleApp.API/Dtos/UserLoginDto.cs
-	•	sampleapp-api/SampleApp.API/Dtos/UserRegisterDto.cs
+9. Обновляем App.tsx с новым маршрутом
 
-Потому что у тебя бэкенд уже работает через LoginDto.  ￼
+// Добавить импорт
+import { TableDemoPage } from './pages/TableDemoPage';
 
-⸻
+// Добавить маршрут
+<Route path="/table-demo" element={<TableDemoPage />} />
 
-5) Фронт
+10. Обновляем HomePage с ссылкой на демо
 
-sampleapp-react/src/pages/EditProfilePage.tsx
+// Добавить кнопку в HomePage
+<Button
+  variant="outlined"
+  startIcon={<Table2 size={20} />}
+  onClick={() => navigate('/table-demo')}
+>
+  Демо таблицы
+</Button>
 
-Оставляй тот вариант, который я уже дал последним.
-Его повторно менять не нужно.
+Тестирование функциональности
 
-Если после этого API соберётся, но имя/логин всё ещё не будут сохраняться, тогда следующий файл, который нужно менять целиком, это реализация репозитория с EditUserAsync.
+    Сортировка:
+        Нажмите на заголовки столбцов "ID" или "Логин"
+        Данные должны сортироваться по выбранному полю
+        Иконка показывает направление сортировки
+
+    Поиск:
+        Введите текст в поле поиска
+        Таблица должна фильтроваться в реальном времени
+        Показывается количество найденных записей
+        Можно очистить поиск крестиком или кнопкой
+
+    Пагинация:
+        Используйте кнопки для переключения страниц
+        Измените количество строк на странице
+        Показывается текущий диапазон записей
+
+    Интеграция:
+        Поиск и сортировка работают вместе
+        Пагинация сбрасывается при изменении поиска
+        Все функции оптимизированы через useMemo
+
+Что получилось:
+✅ Сортировка - по всем столбцам таблицы ✅ Поиск - фильтрация в реальном времени ✅ Пагинация - настраиваемое количество строк ✅ Индикаторы - показывают текущее состояние ✅ Оптимизация - useMemo для производительности ✅ Демо-страница - для тестирования всех функций
