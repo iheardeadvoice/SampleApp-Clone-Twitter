@@ -1,8 +1,8 @@
-Да. Ниже только готовый код для тех мест, которые нужно поменять.
+Да. Вот полные коды файлов, чтобы ты просто заменил их целиком.
 
 ⸻
 
-1) Новый файл
+1) Полный файл
 
 sampleapp-api/SampleApp.API/Dtos/UserUpdateDto.cs
 
@@ -17,49 +17,7 @@ public class UserUpdateDto
 
 ⸻
 
-2) В файл
-
-sampleapp-api/SampleApp.API/Controllers/UsersController.cs
-
-добавь эти using, если их нет:
-
-using Microsoft.AspNetCore.Authorization;
-using SampleApp.API.Dtos;
-using SampleApp.API.Entities;
-using SampleApp.API.Exceptions;
-using SampleApp.API.Mappers;
-
-и внутрь класса UsersController вставь весь этот метод:
-
-[Authorize]
-[HttpPut("{id}")]
-[SwaggerOperation(Summary = "Обновление пользователя", OperationId = "UpdateUser")]
-[SwaggerResponse(200, "Пользователь обновлен", typeof(UserDto))]
-[SwaggerResponse(404, "Пользователь не найден")]
-public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto updateDto)
-{
-    try
-    {
-        await _repo.EditUserAsync(new User
-        {
-            Name = updateDto.Name,
-            Login = updateDto.Login
-        }, id);
-
-        var updatedUser = await _repo.FindUserByIdAsync(id);
-
-        return Ok(updatedUser.ToDto());
-    }
-    catch (NotFoundException)
-    {
-        return NotFound($"Пользователь с id={id} не найден");
-    }
-}
-
-
-⸻
-
-3) Полностью замени файл
+2) Полный файл
 
 sampleapp-react/src/api/users.ts
 
@@ -97,7 +55,7 @@ export const deleteUser = async (id: number) => {
 
 ⸻
 
-4) Полностью замени файл
+3) Полный файл
 
 sampleapp-react/src/pages/EditProfilePage.tsx
 
@@ -230,7 +188,11 @@ export const EditProfilePage = () => {
     return (
       <Container maxWidth="sm" sx={{ py: 4 }}>
         <Alert severity="error">{error}</Alert>
-        <Button startIcon={<ArrowLeft size={18} />} onClick={() => navigate(-1)} sx={{ mt: 2 }}>
+        <Button
+          startIcon={<ArrowLeft size={18} />}
+          onClick={() => navigate(-1)}
+          sx={{ mt: 2 }}
+        >
           Назад
         </Button>
       </Container>
@@ -317,4 +279,122 @@ export const EditProfilePage = () => {
   );
 };
 
-Если после этого всё ещё не сохраняется, тогда нужен полный код файла репозитория, где реализован EditUserAsync, и я дам тебе готовую замену уже для него.
+
+⸻
+
+4) Полный файл
+
+sampleapp-api/SampleApp.API/Controllers/UsersController.cs
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SampleApp.API.Dtos;
+using SampleApp.API.Entities;
+using SampleApp.API.Exceptions;
+using SampleApp.API.Interfaces;
+using SampleApp.API.Mappers;
+using Swashbuckle.AspNetCore.Annotations;
+
+namespace SampleApp.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class UsersController : ControllerBase
+{
+    private readonly IUserRepository _repo;
+
+    public UsersController(IUserRepository repo)
+    {
+        _repo = repo;
+    }
+
+    [HttpPost("Login")]
+    [SwaggerOperation(Summary = "Авторизация пользователя", OperationId = "Login")]
+    [SwaggerResponse(200, "Пользователь авторизован", typeof(UserDto))]
+    [SwaggerResponse(404, "Пользователь не найден")]
+    public async Task<IActionResult> Login([FromBody] UserLoginDto userDto)
+    {
+        try
+        {
+            User user = await _repo.FindUserByLoginAsync(userDto.Login, userDto.Password);
+
+            var token = await _repo.GenerateJwtTokenAsync(user);
+            user.Token = token;
+            await _repo.UpdateUserAsync(user);
+
+            return Ok(user.ToDto());
+        }
+        catch (NotFoundException)
+        {
+            return NotFound($"Пользователя с логином={userDto.Login} не существует");
+        }
+    }
+
+    [HttpPost]
+    [SwaggerOperation(Summary = "Регистрация пользователя", OperationId = "Register")]
+    [SwaggerResponse(200, "Пользователь зарегистрирован", typeof(UserDto))]
+    [SwaggerResponse(400, "Ошибка регистрации")]
+    public async Task<IActionResult> Register([FromBody] UserRegisterDto registerDto)
+    {
+        var user = registerDto.ToEntity();
+
+        await _repo.CreateUserAsync(user);
+
+        return Ok(user.ToDto());
+    }
+
+    [Authorize]
+    [HttpGet]
+    [SwaggerOperation(Summary = "Получение всех пользователей", OperationId = "GetUsers")]
+    [SwaggerResponse(200, "Список пользователей", typeof(IEnumerable<UserDto>))]
+    public async Task<IActionResult> GetUsers()
+    {
+        var users = await _repo.GetUsersAsync();
+        return Ok(users.Select(u => u.ToDto()));
+    }
+
+    [Authorize]
+    [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Получение пользователя по id", OperationId = "GetUserById")]
+    [SwaggerResponse(200, "Пользователь найден", typeof(UserDto))]
+    [SwaggerResponse(404, "Пользователь не найден")]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        try
+        {
+            var user = await _repo.FindUserByIdAsync(id);
+            return Ok(user.ToDto());
+        }
+        catch (NotFoundException)
+        {
+            return NotFound($"Пользователь с id={id} не найден");
+        }
+    }
+
+    [Authorize]
+    [HttpPut("{id}")]
+    [SwaggerOperation(Summary = "Обновление пользователя", OperationId = "UpdateUser")]
+    [SwaggerResponse(200, "Пользователь обновлен", typeof(UserDto))]
+    [SwaggerResponse(404, "Пользователь не найден")]
+    public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto updateDto)
+    {
+        try
+        {
+            await _repo.EditUserAsync(new User
+            {
+                Name = updateDto.Name,
+                Login = updateDto.Login
+            }, id);
+
+            var updatedUser = await _repo.FindUserByIdAsync(id);
+
+            return Ok(updatedUser.ToDto());
+        }
+        catch (NotFoundException)
+        {
+            return NotFound($"Пользователь с id={id} не найден");
+        }
+    }
+}
+
+Если после этого профиль всё ещё визуально не меняется, следующий файл, который нужно менять целиком — это реализация репозитория с EditUserAsync. Тогда скинь путь или код этого файла.
