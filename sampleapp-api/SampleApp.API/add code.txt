@@ -1,58 +1,21 @@
-Да. Ниже — готовые файлы, которые тебе нужно вставить целиком.
+Да — проблема, скорее всего, в usePreventUnsavedChanges.
+Чёрный экран на двух страницах сразу (/guards-demo и /register) указывает на общий компонент/хук, который падает во время рендера. В твоём случае это именно PreventUnsavedChanges → usePreventUnsavedChanges. useBlocker вообще существует и документирован для Declarative mode тоже, но у тебя сейчас на практике страница падает, значит надо ставить более надёжную реализацию без него.  ￼
 
-Важно:
-	•	не создавай src/components/guards/AuthGuard.tsx
-	•	используй только src/components/ProtectedRoute.tsx
-	•	если файл уже есть — полностью замени его содержимое
-
-⸻
-
-1) src/components/ProtectedRoute.tsx
-
-import type { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
-import { useAuth } from '../contexts/AuthContext';
-
-type ProtectedRouteProps = {
-  children: ReactNode;
-};
-
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
-  const location = useLocation();
-
-  if (loading) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="60vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
-  }
-
-  return <>{children}</>;
-};
-
+Сейчас дам рабочую замену, без useBlocker.
+Она:
+	•	защищает от обновления/закрытия вкладки;
+	•	показывает кастомный диалог при попытке уйти со страницы по кнопке/ссылке, если ты сам вызываешь confirmNavigate;
+	•	не даёт чёрный экран.
 
 ⸻
 
-2) src/hooks/usePreventUnsavedChanges.ts
+Что заменить
+
+1) Полностью замени файл
+
+src/hooks/usePreventUnsavedChanges.ts
 
 import { useCallback, useEffect, useState } from 'react';
-import {
-  useBeforeUnload,
-  useBlocker,
-  type BlockerFunction,
-} from 'react-router-dom';
 
 type UsePreventUnsavedChangesProps = {
   isDirty: boolean;
@@ -67,71 +30,57 @@ export const usePreventUnsavedChanges = ({
   onConfirm,
   onCancel,
 }: UsePreventUnsavedChangesProps) => {
-  const shouldBlock = useCallback<BlockerFunction>(
-    ({ currentLocation, nextLocation }) => {
-      if (!isDirty) return false;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState<null | (() => void)>(null);
 
-      const currentPath =
-        currentLocation.pathname +
-        currentLocation.search +
-        currentLocation.hash;
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!isDirty) return;
 
-      const nextPath =
-        nextLocation.pathname +
-        nextLocation.search +
-        nextLocation.hash;
+      event.preventDefault();
+      event.returnValue = message;
+    };
 
-      return currentPath !== nextPath;
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isDirty, message]);
+
+  const confirmNavigate = useCallback(
+    (action: () => void) => {
+      if (!isDirty) {
+        action();
+        return;
+      }
+
+      setPendingAction(() => action);
+      setIsDialogOpen(true);
     },
     [isDirty]
   );
-
-  const blocker = useBlocker(shouldBlock);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  useBeforeUnload(
-    useCallback(
-      (event: BeforeUnloadEvent) => {
-        if (!isDirty) return;
-        event.preventDefault();
-        event.returnValue = message;
-      },
-      [isDirty, message]
-    ),
-    { capture: true }
-  );
-
-  useEffect(() => {
-    if (blocker.state === 'blocked') {
-      setIsDialogOpen(true);
-    }
-
-    if (blocker.state === 'unblocked') {
-      setIsDialogOpen(false);
-    }
-  }, [blocker.state]);
 
   const confirmNavigation = useCallback(() => {
     setIsDialogOpen(false);
     onConfirm?.();
 
-    if (blocker.state === 'blocked') {
-      blocker.proceed();
+    if (pendingAction) {
+      pendingAction();
+      setPendingAction(null);
     }
-  }, [blocker, onConfirm]);
+  }, [onConfirm, pendingAction]);
 
   const cancelNavigation = useCallback(() => {
     setIsDialogOpen(false);
+    setPendingAction(null);
     onCancel?.();
-
-    if (blocker.state === 'blocked') {
-      blocker.reset();
-    }
-  }, [blocker, onCancel]);
+  }, [onCancel]);
 
   return {
     isDialogOpen,
     message,
+    confirmNavigate,
     confirmNavigation,
     cancelNavigation,
   };
@@ -140,107 +89,9 @@ export const usePreventUnsavedChanges = ({
 
 ⸻
 
-3) src/components/guards/ConfirmDialog.tsx
+2) Полностью замени файл
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
-import { AlertTriangle } from 'lucide-react';
-
-type ConfirmDialogProps = {
-  open: boolean;
-  title?: string;
-  message: string;
-  confirmText?: string;
-  cancelText?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  severity?: 'error' | 'warning' | 'info';
-};
-
-export const ConfirmDialog = ({
-  open,
-  title = 'Подтверждение',
-  message,
-  confirmText = 'Подтвердить',
-  cancelText = 'Отмена',
-  onConfirm,
-  onCancel,
-  severity = 'warning',
-}: ConfirmDialogProps) => {
-  const getButtonColor = () => {
-    switch (severity) {
-      case 'error':
-        return 'error';
-      case 'warning':
-        return 'warning';
-      case 'info':
-        return 'info';
-      default:
-        return 'primary';
-    }
-  };
-
-  const getIconColor = () => {
-    switch (severity) {
-      case 'error':
-        return '#f44336';
-      case 'warning':
-        return '#ff9800';
-      case 'info':
-        return '#0288d1';
-      default:
-        return '#1976d2';
-    }
-  };
-
-  return (
-    <Dialog
-      open={open}
-      onClose={onCancel}
-      aria-labelledby="confirm-dialog-title"
-      aria-describedby="confirm-dialog-description"
-    >
-      <DialogTitle
-        id="confirm-dialog-title"
-        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-      >
-        <AlertTriangle color={getIconColor()} size={22} />
-        {title}
-      </DialogTitle>
-
-      <DialogContent>
-        <DialogContentText id="confirm-dialog-description">
-          {message}
-        </DialogContentText>
-      </DialogContent>
-
-      <DialogActions>
-        <Button onClick={onCancel} color="inherit">
-          {cancelText}
-        </Button>
-        <Button
-          onClick={onConfirm}
-          color={getButtonColor()}
-          variant="contained"
-          autoFocus
-        >
-          {confirmText}
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-
-⸻
-
-4) src/components/guards/PreventUnsavedChanges.tsx
+src/components/guards/PreventUnsavedChanges.tsx
 
 import type { ReactNode } from 'react';
 import { usePreventUnsavedChanges } from '../../hooks/usePreventUnsavedChanges';
@@ -250,7 +101,7 @@ type PreventUnsavedChangesProps = {
   isDirty: boolean;
   message?: string;
   title?: string;
-  children: ReactNode;
+  children: (args: { confirmNavigate: (action: () => void) => void }) => ReactNode;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -263,17 +114,21 @@ export const PreventUnsavedChanges = ({
   onConfirm,
   onCancel,
 }: PreventUnsavedChangesProps) => {
-  const { isDialogOpen, confirmNavigation, cancelNavigation } =
-    usePreventUnsavedChanges({
-      isDirty,
-      message,
-      onConfirm,
-      onCancel,
-    });
+  const {
+    isDialogOpen,
+    confirmNavigate,
+    confirmNavigation,
+    cancelNavigation,
+  } = usePreventUnsavedChanges({
+    isDirty,
+    message,
+    onConfirm,
+    onCancel,
+  });
 
   return (
     <>
-      {children}
+      {children({ confirmNavigate })}
       <ConfirmDialog
         open={isDialogOpen}
         title={title}
@@ -291,7 +146,9 @@ export const PreventUnsavedChanges = ({
 
 ⸻
 
-5) src/pages/GuardsDemoPage.tsx
+3) Полностью замени файл
+
+src/pages/GuardsDemoPage.tsx
 
 import { useState, type ChangeEvent } from 'react';
 import {
@@ -304,7 +161,7 @@ import {
   Typography,
 } from '@mui/material';
 import { AlertTriangle, Shield } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PreventUnsavedChanges } from '../components/guards/PreventUnsavedChanges';
 
 export const GuardsDemoPage = () => {
@@ -318,49 +175,57 @@ export const GuardsDemoPage = () => {
       isDirty={isDirty}
       message="У вас есть несохраненный текст. Вы действительно хотите уйти?"
     >
-      <Container maxWidth="md" sx={{ py: 4 }}>
-        <Paper sx={{ p: 4 }}>
-          <Box display="flex" alignItems="center" gap={2} mb={3}>
-            <Shield size={32} color="#3f51b5" />
-            <Typography variant="h4">Демо защитников</Typography>
-          </Box>
+      {({ confirmNavigate }) => (
+        <Container maxWidth="md" sx={{ py: 4 }}>
+          <Paper sx={{ p: 4 }}>
+            <Box display="flex" alignItems="center" gap={2} mb={3}>
+              <Shield size={32} color="#3f51b5" />
+              <Typography variant="h4">Демо защитников</Typography>
+            </Box>
 
-          <Alert severity="info" sx={{ mb: 3 }}>
-            <Typography variant="body2">
-              Введите текст и попробуйте уйти со страницы — появится предупреждение.
-            </Typography>
-          </Alert>
-
-          <TextField
-            fullWidth
-            label="Введите что-нибудь"
-            value={text}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-            multiline
-            rows={4}
-            sx={{ mb: 3 }}
-          />
-
-          <Box display="flex" gap={2}>
-            <Button variant="contained" component={Link} to="/">
-              На главную
-            </Button>
-
-            <Button variant="outlined" onClick={() => navigate('/users')}>
-              К пользователям
-            </Button>
-          </Box>
-
-          {isDirty && (
-            <Alert severity="warning" sx={{ mt: 2 }}>
-              <Box display="flex" alignItems="center" gap={1}>
-                <AlertTriangle size={16} />
-                Есть несохраненные изменения!
-              </Box>
+            <Alert severity="info" sx={{ mb: 3 }}>
+              <Typography variant="body2">
+                Введите текст и попробуйте уйти со страницы — появится предупреждение.
+              </Typography>
             </Alert>
-          )}
-        </Paper>
-      </Container>
+
+            <TextField
+              fullWidth
+              label="Введите что-нибудь"
+              value={text}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
+              multiline
+              rows={4}
+              sx={{ mb: 3 }}
+            />
+
+            <Box display="flex" gap={2}>
+              <Button
+                variant="contained"
+                onClick={() => confirmNavigate(() => navigate('/'))}
+              >
+                На главную
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={() => confirmNavigate(() => navigate('/users'))}
+              >
+                К пользователям
+              </Button>
+            </Box>
+
+            {isDirty && (
+              <Alert severity="warning" sx={{ mt: 2 }}>
+                <Box display="flex" alignItems="center" gap={1}>
+                  <AlertTriangle size={16} />
+                  Есть несохраненные изменения!
+                </Box>
+              </Alert>
+            )}
+          </Paper>
+        </Container>
+      )}
     </PreventUnsavedChanges>
   );
 };
@@ -368,198 +233,9 @@ export const GuardsDemoPage = () => {
 
 ⸻
 
-6) src/pages/NotFoundPage.tsx
+4) Полностью замени файл
 
-import { Button, Container, Paper, Typography } from '@mui/material';
-import { AlertCircle, Home } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-
-export const NotFoundPage = () => {
-  const navigate = useNavigate();
-
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Paper sx={{ p: 6, textAlign: 'center' }}>
-        <AlertCircle size={80} color="#f44336" />
-
-        <Typography
-          variant="h1"
-          sx={{ fontSize: '6rem', fontWeight: 'bold', color: '#f44336' }}
-        >
-          404
-        </Typography>
-
-        <Typography variant="h4" gutterBottom>
-          Страница не найдена
-        </Typography>
-
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          paragraph
-          sx={{ mb: 4 }}
-        >
-          Запрашиваемая страница не существует или была перемещена.
-        </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          startIcon={<Home size={20} />}
-          onClick={() => navigate('/')}
-        >
-          На главную
-        </Button>
-      </Paper>
-    </Container>
-  );
-};
-
-
-⸻
-
-7) src/pages/ServerErrorPage.tsx
-
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Paper,
-  Typography,
-} from '@mui/material';
-import { AlertTriangle, Home, RefreshCw } from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-export const ServerErrorPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const error = location.state?.error;
-
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Paper sx={{ p: 6, textAlign: 'center' }}>
-        <AlertTriangle size={80} color="#f44336" />
-
-        <Typography
-          variant="h1"
-          sx={{ fontSize: '6rem', fontWeight: 'bold', color: '#f44336' }}
-        >
-          500
-        </Typography>
-
-        <Typography variant="h4" gutterBottom>
-          Ошибка сервера
-        </Typography>
-
-        <Typography variant="body1" color="text.secondary" paragraph>
-          Произошла внутренняя ошибка сервера. Пожалуйста, попробуйте позже.
-        </Typography>
-
-        {error && (
-          <Alert severity="error" sx={{ mb: 4, textAlign: 'left' }}>
-            <Typography
-              variant="body2"
-              component="pre"
-              sx={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap', m: 0 }}
-            >
-              {JSON.stringify(error, null, 2)}
-            </Typography>
-          </Alert>
-        )}
-
-        <Box display="flex" gap={2} justifyContent="center">
-          <Button
-            variant="contained"
-            startIcon={<Home size={20} />}
-            onClick={() => navigate('/')}
-          >
-            На главную
-          </Button>
-
-          <Button
-            variant="outlined"
-            startIcon={<RefreshCw size={20} />}
-            onClick={() => window.location.reload()}
-          >
-            Обновить
-          </Button>
-        </Box>
-      </Paper>
-    </Container>
-  );
-};
-
-
-⸻
-
-8) src/pages/LoginPage.tsx
-
-import { useEffect } from 'react';
-import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Paper,
-  Typography,
-} from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Lock } from 'lucide-react';
-import { LoginForm } from '../components/LoginForm';
-
-export const LoginPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const registered = location.state?.registered;
-  const from = location.state?.from || '/';
-
-  useEffect(() => {
-    if (registered) {
-      window.history.replaceState({}, document.title);
-    }
-  }, [registered]);
-
-  const handleSuccess = () => {
-    navigate(from, { replace: true });
-  };
-
-  return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Paper sx={{ p: 4 }}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
-          <Lock size={48} color="#3f51b5" />
-          <Typography variant="h4" sx={{ mt: 2 }}>
-            Вход
-          </Typography>
-        </Box>
-
-        {registered && (
-          <Alert severity="success" sx={{ mb: 2 }}>
-            Регистрация успешна! Теперь вы можете войти.
-          </Alert>
-        )}
-
-        <LoginForm onSuccess={handleSuccess} />
-
-        <Box textAlign="center" mt={2}>
-          <Typography variant="body2">
-            Нет аккаунта?{' '}
-            <Button color="primary" onClick={() => navigate('/register')}>
-              Зарегистрироваться
-            </Button>
-          </Typography>
-        </Box>
-      </Paper>
-    </Container>
-  );
-};
-
-
-⸻
-
-9) src/pages/RegisterPage.tsx
+src/pages/RegisterPage.tsx
 
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -667,128 +343,133 @@ export const RegisterPage = () => {
 
   return (
     <PreventUnsavedChanges isDirty={isDirty && !loading}>
-      <Container maxWidth="sm" sx={{ py: 4 }}>
-        <Paper sx={{ p: 4 }}>
-          <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
-            <UserPlus size={48} color="#3f51b5" />
-            <Typography variant="h4" sx={{ mt: 2 }}>
-              Регистрация
-            </Typography>
-          </Box>
+      {({ confirmNavigate }) => (
+        <Container maxWidth="sm" sx={{ py: 4 }}>
+          <Paper sx={{ p: 4 }}>
+            <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
+              <UserPlus size={48} color="#3f51b5" />
+              <Typography variant="h4" sx={{ mt: 2 }}>
+                Регистрация
+              </Typography>
+            </Box>
 
-          {serverError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {serverError}
-            </Alert>
-          )}
+            {serverError && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {serverError}
+              </Alert>
+            )}
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-          >
-            <TextField
-              label="Имя"
-              fullWidth
-              {...register('name', {
-                required: 'Имя обязательно',
-                minLength: {
-                  value: 2,
-                  message: 'Минимум 2 символа',
-                },
-              })}
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              disabled={loading}
-            />
-
-            <TextField
-              label="Логин"
-              fullWidth
-              {...register('login', {
-                required: 'Логин обязателен',
-                minLength: {
-                  value: 3,
-                  message: 'Минимум 3 символа',
-                },
-                validate: (value: string) => {
-                  if (value === 'admin') {
-                    return 'Недопустимый логин пользователя';
-                  }
-                  return true;
-                },
-              })}
-              error={!!errors.login}
-              helperText={errors.login?.message}
-              disabled={loading}
-            />
-
-            <TextField
-              label="Пароль"
-              fullWidth
-              type={showPassword ? 'text' : 'password'}
-              {...register('password', {
-                required: 'Пароль обязателен',
-                minLength: {
-                  value: 3,
-                  message: 'Минимум 3 символа',
-                },
-                maxLength: {
-                  value: 8,
-                  message: 'Максимум 8 символов',
-                },
-                validate: (value: string) => {
-                  if (value === '123') {
-                    return 'Слишком простой пароль';
-                  }
-                  return true;
-                },
-              })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-              disabled={loading}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev: boolean) => !prev)}
-                      edge="end"
-                    >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {passwordValue ? <PasswordStrength password={passwordValue} /> : null}
-
-            <Button
-              type="submit"
-              variant="contained"
-              startIcon={loading ? <ButtonLoader size={20} /> : <UserPlus size={18} />}
-              disabled={!isValid || loading}
+            <Box
+              component="form"
+              onSubmit={handleSubmit(onSubmit)}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
             >
-              {loading ? 'Регистрация...' : 'Зарегистрироваться'}
-            </Button>
-          </Box>
+              <TextField
+                label="Имя"
+                fullWidth
+                {...register('name', {
+                  required: 'Имя обязательно',
+                  minLength: {
+                    value: 2,
+                    message: 'Минимум 2 символа',
+                  },
+                })}
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                disabled={loading}
+              />
 
-          {isDirty && !loading && (
-            <Alert severity="info" sx={{ mt: 2 }}>
-              У вас есть несохраненные изменения
-            </Alert>
-          )}
+              <TextField
+                label="Логин"
+                fullWidth
+                {...register('login', {
+                  required: 'Логин обязателен',
+                  minLength: {
+                    value: 3,
+                    message: 'Минимум 3 символа',
+                  },
+                  validate: (value: string) => {
+                    if (value === 'admin') {
+                      return 'Недопустимый логин пользователя';
+                    }
+                    return true;
+                  },
+                })}
+                error={!!errors.login}
+                helperText={errors.login?.message}
+                disabled={loading}
+              />
 
-          <Box textAlign="center" mt={2}>
-            <Typography variant="body2">
-              Уже есть аккаунт?{' '}
-              <Button color="primary" onClick={() => navigate('/login')}>
-                Войти
+              <TextField
+                label="Пароль"
+                fullWidth
+                type={showPassword ? 'text' : 'password'}
+                {...register('password', {
+                  required: 'Пароль обязателен',
+                  minLength: {
+                    value: 3,
+                    message: 'Минимум 3 символа',
+                  },
+                  maxLength: {
+                    value: 8,
+                    message: 'Максимум 8 символов',
+                  },
+                  validate: (value: string) => {
+                    if (value === '123') {
+                      return 'Слишком простой пароль';
+                    }
+                    return true;
+                  },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                disabled={loading}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword((prev: boolean) => !prev)}
+                        edge="end"
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {passwordValue ? <PasswordStrength password={passwordValue} /> : null}
+
+              <Button
+                type="submit"
+                variant="contained"
+                startIcon={loading ? <ButtonLoader size={20} /> : <UserPlus size={18} />}
+                disabled={!isValid || loading}
+              >
+                {loading ? 'Регистрация...' : 'Зарегистрироваться'}
               </Button>
-            </Typography>
-          </Box>
-        </Paper>
-      </Container>
+            </Box>
+
+            {isDirty && !loading && (
+              <Alert severity="info" sx={{ mt: 2 }}>
+                У вас есть несохраненные изменения
+              </Alert>
+            )}
+
+            <Box textAlign="center" mt={2}>
+              <Typography variant="body2">
+                Уже есть аккаунт?{' '}
+                <Button
+                  color="primary"
+                  onClick={() => confirmNavigate(() => navigate('/login'))}
+                >
+                  Войти
+                </Button>
+              </Typography>
+            </Box>
+          </Paper>
+        </Container>
+      )}
     </PreventUnsavedChanges>
   );
 };
@@ -796,125 +477,9 @@ export const RegisterPage = () => {
 
 ⸻
 
-10) src/App.tsx
+Почему это должно помочь
 
-import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider } from './contexts/AuthContext';
-import { LoadingProvider } from './contexts/LoadingContext';
-import { GlobalLoader } from './components/GlobalLoader';
-import { Header } from './components/Header';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { HomePage } from './pages/HomePage';
-import { UsersPage } from './pages/UsersPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { LoadingDemoPage } from './pages/LoadingDemoPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { ServerErrorPage } from './pages/ServerErrorPage';
-import { GuardsDemoPage } from './pages/GuardsDemoPage';
-import { setLoadingCallback } from './api/client';
-import { useLoading } from './contexts/LoadingContext';
+У тебя ломаются ровно те страницы, где используется защита от несохранённых изменений. Значит нужно убрать нестабильное место и поставить более простую схему.
+Нативное предупреждение при закрытии/обновлении страницы делается через beforeunload, а блокировка внутренних переходов у нас теперь контролируется вручную через confirmNavigate. Это проще и надёжнее для твоего проекта. React Router отдельно отмечает, что useBlocker не покрывает hard reload и cross-origin navigation — для этого как раз нужен другой механизм вроде beforeunload.  ￼
 
-const theme = createTheme({
-  palette: {
-    primary: { main: '#1976d2' },
-  },
-});
-
-const LoadingBridge = () => {
-  const { setLoading } = useLoading();
-
-  useEffect(() => {
-    setLoadingCallback(setLoading);
-  }, [setLoading]);
-
-  return null;
-};
-
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <LoadingProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <LoadingBridge />
-            <GlobalLoader message="Загрузка..." />
-            <Header />
-
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/loading-demo" element={<LoadingDemoPage />} />
-              <Route path="/guards-demo" element={<GuardsDemoPage />} />
-
-              <Route
-                path="/users"
-                element={
-                  <ProtectedRoute>
-                    <UsersPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile/:id"
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route path="/404" element={<NotFoundPage />} />
-              <Route path="/500" element={<ServerErrorPage />} />
-              <Route path="*" element={<Navigate to="/404" replace />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </LoadingProvider>
-    </ThemeProvider>
-  );
-}
-
-export default App;
-
-
-⸻
-
-Что должно быть создано
-
-Создай папку, если её нет:
-
-src/components/guards
-
-И внутри неё файлы:
-	•	ConfirmDialog.tsx
-	•	PreventUnsavedChanges.tsx
-
-⸻
-
-Что не нужно делать
-
-Не нужен файл:
-
-src/components/guards/AuthGuard.tsx
-
-
-⸻
-
-Что проверить после вставки
-
-Должны работать маршруты:
-	•	/users — только для авторизованных
-	•	/profile/:id — только для авторизованных
-	•	/guards-demo — демо защиты от несохранённых изменений
-	•	/404
-	•	/500
-
-Если после вставки будет 1–3 точечные ошибки, пришли мне их списком, и я добью уже остатки.
+Если после этих 4 замен экран всё ещё будет чёрным, тогда пришли текст ошибки из браузерной консоли, и я добью остаток.
