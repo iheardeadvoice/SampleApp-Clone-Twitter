@@ -1,723 +1,88 @@
-Да. Ниже — готовые полные файлы для задания React 8: сортировка, поиск и пагинация с учётом твоего текущего проекта.
+У тебя, скорее всего, MUI Grid новой версии, как уже было с ProfilePage.
+Значит в TableDemoPage нельзя писать так:
 
-⸻
+<Grid item xs={12} md={4}>
 
-1) Новый файл
+Нужно писать так:
 
-src/hooks/useSort.ts
-
-import { useMemo, useState } from 'react';
-
-export type SortDirection = 'asc' | 'desc';
-
-export type SortConfig<T> = {
-  key: keyof T | null;
-  direction: SortDirection;
-};
-
-export const useSort = <T extends Record<string, unknown>>(
-  data: T[],
-  initialConfig?: SortConfig<T>
-) => {
-  const [sortConfig, setSortConfig] = useState<SortConfig<T>>(
-    initialConfig || { key: null, direction: 'asc' }
-  );
-
-  const sortedData = useMemo(() => {
-    if (!sortConfig.key) return data;
-
-    return [...data].sort((a, b) => {
-      const aRaw = a[sortConfig.key];
-      const bRaw = b[sortConfig.key];
-
-      if (typeof aRaw === 'number' && typeof bRaw === 'number') {
-        return sortConfig.direction === 'asc' ? aRaw - bRaw : bRaw - aRaw;
-      }
-
-      const aValue = String(aRaw ?? '').toLowerCase();
-      const bValue = String(bRaw ?? '').toLowerCase();
-
-      return sortConfig.direction === 'asc'
-        ? aValue.localeCompare(bValue)
-        : bValue.localeCompare(aValue);
-    });
-  }, [data, sortConfig]);
-
-  const requestSort = (key: keyof T) => {
-    let direction: SortDirection = 'asc';
-
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-
-    setSortConfig({ key, direction });
-  };
-
-  return {
-    sortedData,
-    sortConfig,
-    requestSort,
-  };
-};
+<Grid size={{ xs: 12, md: 4 }}>
 
 
 ⸻
 
-2) Новый файл
+Как должен выглядеть Grid правильно
 
-src/hooks/usePagination.ts
+Было:
 
-import { useMemo, useState, type ChangeEvent } from 'react';
+<Grid container spacing={3} sx={{ mb: 4 }}>
+  <Grid item xs={12} md={4}>
 
-type UsePaginationProps = {
-  initialPage?: number;
-  initialRowsPerPage?: number;
-  rowsPerPageOptions?: number[];
-};
+Должно быть:
 
-export const usePagination = <T>(
-  data: T[],
-  {
-    initialPage = 0,
-    initialRowsPerPage = 5,
-    rowsPerPageOptions = [5, 10, 25, 50],
-  }: UsePaginationProps = {}
-) => {
-  const [page, setPage] = useState(initialPage);
-  const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
+<Grid container spacing={3} sx={{ mb: 4 }}>
+  <Grid size={{ xs: 12, md: 4 }}>
 
-  const paginatedData = useMemo(() => {
-    const start = page * rowsPerPage;
-    const end = start + rowsPerPage;
-    return data.slice(start, end);
-  }, [data, page, rowsPerPage]);
-
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const resetPagination = () => {
-    setPage(0);
-  };
-
-  const totalCount = data.length;
-  const totalPages = Math.ceil(totalCount / rowsPerPage);
-  const from = totalCount === 0 ? 0 : page * rowsPerPage + 1;
-  const to = Math.min((page + 1) * rowsPerPage, totalCount);
-
-  return {
-    paginatedData,
-    page,
-    rowsPerPage,
-    rowsPerPageOptions,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    resetPagination,
-    totalCount,
-    totalPages,
-    from,
-    to,
-  };
-};
-
+И все такие блоки ниже тоже.
 
 ⸻
 
-3) Новый файл
-
-src/hooks/useSearch.ts
-
-import { useCallback, useMemo, useState } from 'react';
-
-type UseSearchProps<T> = {
-  data: T[];
-  searchFields: (keyof T)[];
-  initialSearch?: string;
-};
-
-export const useSearch = <T extends Record<string, unknown>>({
-  data,
-  searchFields,
-  initialSearch = '',
-}: UseSearchProps<T>) => {
-  const [searchText, setSearchText] = useState(initialSearch);
-
-  const filteredData = useMemo(() => {
-    if (!searchText.trim()) return data;
-
-    const searchLower = searchText.toLowerCase();
-
-    return data.filter((item) =>
-      searchFields.some((field) => {
-        const value = String(item[field] ?? '').toLowerCase();
-        return value.includes(searchLower);
-      })
-    );
-  }, [data, searchFields, searchText]);
-
-  const handleSearch = useCallback((text: string) => {
-    setSearchText(text);
-  }, []);
-
-  const clearSearch = useCallback(() => {
-    setSearchText('');
-  }, []);
-
-  return {
-    searchText,
-    filteredData,
-    handleSearch,
-    clearSearch,
-    setSearchText,
-  };
-};
-
-
-⸻
-
-4) Новый файл
-
-src/components/SearchBar.tsx
-
-import type { ChangeEvent } from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
-import { Search, X } from 'lucide-react';
-
-type SearchBarProps = {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-};
-
-export const SearchBar = ({
-  value,
-  onChange,
-  placeholder = 'Поиск...',
-  disabled = false,
-}: SearchBarProps) => {
-  return (
-    <TextField
-      fullWidth
-      variant="outlined"
-      placeholder={placeholder}
-      value={value}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-      disabled={disabled}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <Search size={20} color="#999" />
-          </InputAdornment>
-        ),
-        endAdornment: value ? (
-          <InputAdornment position="end">
-            <IconButton onClick={() => onChange('')} size="small" edge="end">
-              <X size={18} />
-            </IconButton>
-          </InputAdornment>
-        ) : null,
-      }}
-      sx={{
-        '& .MuiOutlinedInput-root': {
-          borderRadius: 2,
-        },
-      }}
-    />
-  );
-};
-
-
-⸻
-
-5) Новый файл
-
-src/components/SortableTableHeader.tsx
-
-import { TableCell, TableSortLabel } from '@mui/material';
-import { SortDirection } from '../hooks/useSort';
-
-type SortableTableHeaderProps<T> = {
-  field: keyof T;
-  label: string;
-  currentSort: keyof T | null;
-  direction: SortDirection;
-  onSort: (field: keyof T) => void;
-  width?: string | number;
-};
-
-export const SortableTableHeader = <T extends Record<string, unknown>>({
-  field,
-  label,
-  currentSort,
-  direction,
-  onSort,
-  width,
-}: SortableTableHeaderProps<T>) => {
-  return (
-    <TableCell width={width}>
-      <TableSortLabel
-        active={currentSort === field}
-        direction={currentSort === field ? direction : 'asc'}
-        onClick={() => onSort(field)}
-      >
-        {label}
-      </TableSortLabel>
-    </TableCell>
-  );
-};
-
-
-⸻
-
-6) Новый файл
-
-src/components/PaginationControls.tsx
-
-import type { ChangeEvent } from 'react';
-import { TablePagination, Box } from '@mui/material';
-
-type PaginationControlsProps = {
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  rowsPerPageOptions: number[];
-  onPageChange: (event: unknown, newPage: number) => void;
-  onRowsPerPageChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  labelRowsPerPage?: string;
-};
-
-export const PaginationControls = ({
-  count,
-  page,
-  rowsPerPage,
-  rowsPerPageOptions,
-  onPageChange,
-  onRowsPerPageChange,
-  labelRowsPerPage = 'Строк на странице:',
-}: PaginationControlsProps) => {
-  return (
-    <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-      <TablePagination
-        rowsPerPageOptions={rowsPerPageOptions}
-        component="div"
-        count={count}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={onPageChange}
-        onRowsPerPageChange={onRowsPerPageChange}
-        labelRowsPerPage={labelRowsPerPage}
-        labelDisplayedRows={({ from, to, count: total }) => `${from}-${to} из ${total}`}
-        showFirstButton
-        showLastButton
-      />
-    </Box>
-  );
-};
-
-
-⸻
-
-7) Полностью замени файл
-
-src/components/UsersTable.tsx
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  IconButton,
-  Tooltip,
-  Avatar,
-  Box,
-  Chip,
-} from '@mui/material';
-import { Eye, Edit2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { User } from '../types';
-import { useAuth } from '../contexts/AuthContext';
-import { SortableTableHeader } from './SortableTableHeader';
-import { SortConfig } from '../hooks/useSort';
-
-type UsersTableProps = {
-  users: User[];
-  sortConfig: SortConfig<User>;
-  onSort: (field: keyof User) => void;
-};
-
-export const UsersTable = ({ users, sortConfig, onSort }: UsersTableProps) => {
-  const navigate = useNavigate();
-  const { user: currentUser } = useAuth();
-
-  if (users.length === 0) {
-    return (
-      <Typography color="text.secondary" align="center" py={4}>
-        Нет пользователей
-      </Typography>
-    );
-  }
-
-  return (
-    <TableContainer component={Paper} variant="outlined">
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Пользователь</TableCell>
-
-            <SortableTableHeader<User>
-              field="id"
-              label="ID"
-              currentSort={sortConfig.key}
-              direction={sortConfig.direction}
-              onSort={onSort}
-              width={80}
-            />
-
-            <SortableTableHeader<User>
-              field="login"
-              label="Логин"
-              currentSort={sortConfig.key}
-              direction={sortConfig.direction}
-              onSort={onSort}
-            />
-
-            <TableCell align="center" width={120}>
-              Действия
-            </TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id} hover>
-              <TableCell>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Avatar
-                    sx={{
-                      width: 32,
-                      height: 32,
-                      bgcolor:
-                        currentUser?.id === user.id
-                          ? 'primary.main'
-                          : 'secondary.main',
-                    }}
-                  >
-                    {user.login.charAt(0).toUpperCase()}
-                  </Avatar>
-
-                  <Box>
-                    <Typography variant="body1">
-                      {user.name || user.login}
-                    </Typography>
-
-                    {user.name && (
-                      <Typography variant="caption" color="text.secondary">
-                        @{user.login}
-                      </Typography>
-                    )}
-                  </Box>
-
-                  {currentUser?.id === user.id && (
-                    <Chip
-                      label="Это вы"
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                    />
-                  )}
-                </Box>
-              </TableCell>
-
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.login}</TableCell>
-
-              <TableCell align="center">
-                <Tooltip title="Просмотреть профиль">
-                  <IconButton
-                    size="small"
-                    onClick={() => navigate(`/profile/${user.id}`)}
-                    sx={{ mr: 1 }}
-                  >
-                    <Eye size={18} />
-                  </IconButton>
-                </Tooltip>
-
-                {currentUser?.id === user.id && (
-                  <Tooltip title="Редактировать">
-                    <IconButton
-                      size="small"
-                      onClick={() => navigate(`/profile/${user.id}/edit`)}
-                    >
-                      <Edit2 size={18} />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-
-⸻
-
-8) Полностью замени файл
-
-src/hooks/useUsers.ts
-
-import { useEffect, useState } from 'react';
-import { getUsers } from '../api/users';
-import { User } from '../types';
-import { useLoading } from '../contexts/LoadingContext';
-import { useSort } from './useSort';
-import { useSearch } from './useSearch';
-import { usePagination } from './usePagination';
-
-export const useUsers = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const { withLoading } = useLoading();
-
-  const { sortedData, sortConfig, requestSort } = useSort<User>(users, {
-    key: 'id',
-    direction: 'asc',
-  });
-
-  const {
-    searchText,
-    filteredData: searchedUsers,
-    handleSearch,
-    clearSearch,
-  } = useSearch<User>({
-    data: sortedData,
-    searchFields: ['login', 'name', 'id'],
-  });
-
-  const {
-    paginatedData,
-    page,
-    rowsPerPage,
-    rowsPerPageOptions,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    resetPagination,
-    from,
-    to,
-  } = usePagination(searchedUsers, { initialRowsPerPage: 5 });
-
-  useEffect(() => {
-    resetPagination();
-  }, [searchText, resetPagination]);
-
-  const loadUsers = async () => {
-    try {
-      setError(null);
-      const data = await withLoading(getUsers());
-      setUsers(data);
-    } catch (err) {
-      setError('Не удалось загрузить пользователей');
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  return {
-    users: paginatedData,
-    allUsers: users,
-    filteredCount: searchedUsers.length,
-    totalCount: users.length,
-    error,
-    refetch: loadUsers,
-
-    sortConfig,
-    requestSort,
-
-    searchText,
-    handleSearch,
-    clearSearch,
-
-    page,
-    rowsPerPage,
-    rowsPerPageOptions,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    from,
-    to,
-  };
-};
-
-
-⸻
-
-9) Полностью замени файл
-
-src/pages/UsersPage.tsx
-
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Paper,
-  Chip,
-} from '@mui/material';
-import {
-  RefreshCw,
-  Users as UsersIcon,
-  ChevronUp,
-  ChevronDown,
-} from 'lucide-react';
-import { useUsers } from '../hooks/useUsers';
-import { useLoading } from '../contexts/LoadingContext';
-import { useAuth } from '../contexts/AuthContext';
-import { UsersTable } from '../components/UsersTable';
-import { SearchBar } from '../components/SearchBar';
-import { PaginationControls } from '../components/PaginationControls';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { ButtonLoader } from '../components/ButtonLoader';
-
-export const UsersPage = () => {
-  const {
-    users,
-    filteredCount,
-    totalCount,
-    error,
-    refetch,
-    sortConfig,
-    requestSort,
-    searchText,
-    handleSearch,
-    clearSearch,
-    page,
-    rowsPerPage,
-    rowsPerPageOptions,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    from,
-    to,
-  } = useUsers();
-
-  const { isLoading } = useLoading();
-  const { token } = useAuth();
-
-  return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Paper sx={{ p: 3 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Box display="flex" alignItems="center" gap={2} flexWrap="wrap">
-            <UsersIcon size={28} color="#3f51b5" />
-            <Typography variant="h4">Пользователи</Typography>
-
-            <Chip
-              label={`Всего: ${totalCount}`}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-
-            {searchText && (
-              <Chip
-                label={`Найдено: ${filteredCount}`}
-                size="small"
-                color="success"
-                variant="outlined"
-                onDelete={clearSearch}
-              />
-            )}
-          </Box>
-
-          <Button
-            variant="contained"
-            onClick={() => refetch()}
-            disabled={isLoading}
-            startIcon={isLoading ? <ButtonLoader /> : <RefreshCw size={18} />}
-          >
-            {isLoading ? 'Загрузка...' : 'Обновить'}
-          </Button>
+Полностью правильный кусок для TableDemoPage.tsx
+
+Замени блок с карточками на этот:
+
+<Grid container spacing={3} sx={{ mb: 4 }}>
+  <Grid size={{ xs: 12, md: 4 }}>
+    <Card>
+      <CardContent>
+        <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <ArrowUpDown size={20} color="#3f51b5" />
+          <Typography variant="h6">Сортировка</Typography>
         </Box>
+        <Typography variant="body2" color="text.secondary">
+          Нажмите на заголовки столбцов для сортировки.
+          Активный столбец подсвечивается.
+        </Typography>
+      </CardContent>
+    </Card>
+  </Grid>
 
-        <Box mb={3}>
-          <SearchBar
-            value={searchText}
-            onChange={handleSearch}
-            placeholder="Поиск по логину, имени или ID..."
-            disabled={isLoading}
-          />
+  <Grid size={{ xs: 12, md: 4 }}>
+    <Card>
+      <CardContent>
+        <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <Search size={20} color="#3f51b5" />
+          <Typography variant="h6">Поиск</Typography>
         </Box>
+        <Typography variant="body2" color="text.secondary">
+          Поиск по логину, имени или ID.
+          Количество результатов обновляется в реальном времени.
+        </Typography>
+      </CardContent>
+    </Card>
+  </Grid>
 
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} flexWrap="wrap" gap={1}>
-          <Typography variant="body2" color="text.secondary">
-            Показаны записи {from}-{to} из {filteredCount}
-          </Typography>
-
-          {sortConfig.key && (
-            <Chip
-              icon={
-                sortConfig.direction === 'asc' ? (
-                  <ChevronUp size={14} />
-                ) : (
-                  <ChevronDown size={14} />
-                )
-              }
-              label={`Сортировка по ${String(sortConfig.key)} (${sortConfig.direction === 'asc' ? 'возр' : 'убыв'})`}
-              size="small"
-              variant="outlined"
-              onDelete={() => requestSort('id')}
-            />
-          )}
+  <Grid size={{ xs: 12, md: 4 }}>
+    <Card>
+      <CardContent>
+        <Box display="flex" alignItems="center" gap={1} mb={2}>
+          <LayoutList size={20} color="#3f51b5" />
+          <Typography variant="h6">Пагинация</Typography>
         </Box>
-
-        {error && <ErrorMessage message={error} onRetry={refetch} />}
-
-        <UsersTable
-          users={users}
-          sortConfig={sortConfig}
-          onSort={requestSort}
-        />
-
-        {filteredCount > 0 && (
-          <PaginationControls
-            count={filteredCount}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={rowsPerPageOptions}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        )}
-
-        {token && (
-          <Box mt={2} p={2} bgcolor="#f5f5f5" borderRadius={1}>
-            <Typography variant="caption" color="text.secondary">
-              JWT токен активен • Запросы авторизованы
-            </Typography>
-          </Box>
-        )}
-      </Paper>
-    </Container>
-  );
-};
+        <Typography variant="body2" color="text.secondary">
+          Настраиваемое количество строк на странице.
+          Показывает текущий диапазон записей.
+        </Typography>
+      </CardContent>
+    </Card>
+  </Grid>
+</Grid>
 
 
 ⸻
 
-10) Новый файл
+Если хочешь полностью правильный TableDemoPage.tsx
+
+Путь:
 
 src/pages/TableDemoPage.tsx
 
@@ -764,7 +129,7 @@ export const TableDemoPage = () => {
   } = useUsers();
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth={false} sx={{ py: 4, px: { xs: 2, sm: 3, md: 4 } }}>
       <Typography variant="h3" gutterBottom align="center">
         Демо таблицы
       </Typography>
@@ -848,7 +213,14 @@ export const TableDemoPage = () => {
           placeholder="Поиск по таблице..."
         />
 
-        <Box display="flex" justifyContent="space-between" alignItems="center" my={2} flexWrap="wrap" gap={1}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          my={2}
+          flexWrap="wrap"
+          gap={1}
+        >
           <Typography variant="body2" color="text.secondary">
             Показаны {from}-{to} из {filteredCount}
           </Typography>
@@ -887,257 +259,4 @@ export const TableDemoPage = () => {
   );
 };
 
-
-⸻
-
-11) Полностью замени файл
-
-src/App.tsx
-
-import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider } from './contexts/AuthContext';
-import { LoadingProvider } from './contexts/LoadingContext';
-import { GlobalLoader } from './components/GlobalLoader';
-import { Header } from './components/Header';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { HomePage } from './pages/HomePage';
-import { UsersPage } from './pages/UsersPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { EditProfilePage } from './pages/EditProfilePage';
-import { LoginPage } from './pages/LoginPage';
-import { RegisterPage } from './pages/RegisterPage';
-import { LoadingDemoPage } from './pages/LoadingDemoPage';
-import { GuardsDemoPage } from './pages/GuardsDemoPage';
-import { TableDemoPage } from './pages/TableDemoPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { ServerErrorPage } from './pages/ServerErrorPage';
-import { setLoadingCallback } from './api/client';
-import { useLoading } from './contexts/LoadingContext';
-
-const theme = createTheme({
-  palette: {
-    primary: { main: '#1976d2' },
-  },
-});
-
-const LoadingBridge = () => {
-  const { setLoading } = useLoading();
-
-  useEffect(() => {
-    setLoadingCallback(setLoading);
-  }, [setLoading]);
-
-  return null;
-};
-
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <LoadingProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <LoadingBridge />
-            <GlobalLoader message="Загрузка..." />
-            <Header />
-
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/loading-demo" element={<LoadingDemoPage />} />
-              <Route path="/guards-demo" element={<GuardsDemoPage />} />
-              <Route path="/table-demo" element={<TableDemoPage />} />
-
-              <Route
-                path="/users"
-                element={
-                  <ProtectedRoute>
-                    <UsersPage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile/:id"
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route
-                path="/profile/:id/edit"
-                element={
-                  <ProtectedRoute>
-                    <EditProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route path="/404" element={<NotFoundPage />} />
-              <Route path="/500" element={<ServerErrorPage />} />
-              <Route path="*" element={<Navigate to="/404" replace />} />
-            </Routes>
-          </BrowserRouter>
-        </AuthProvider>
-      </LoadingProvider>
-    </ThemeProvider>
-  );
-}
-
-export default App;
-
-
-⸻
-
-12) Полностью замени файл
-
-src/pages/HomePage.tsx
-
-import { Container, Paper, Typography, Box, Button } from '@mui/material';
-import { Home, Users, LogIn, UserPlus, Table2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-
-export const HomePage = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Paper sx={{ p: 6, textAlign: 'center' }}>
-        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
-          <Home size={64} color="#1976d2" />
-        </Box>
-
-        {user ? (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать, {user.login}!
-            </Typography>
-
-            <Typography variant="h5" color="text.secondary" paragraph>
-              ID: {user.id} • {user.name || 'Без имени'}
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Вы авторизованы в системе. Можете перейти к списку пользователей,
-              открыть свой профиль или протестировать демо таблицы.
-            </Typography>
-
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<Users size={20} />}
-                onClick={() => navigate('/users')}
-              >
-                Пользователи
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={() => navigate(`/profile/${user.id}`)}
-              >
-                Мой профиль
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<Table2 size={20} />}
-                onClick={() => navigate('/table-demo')}
-              >
-                Демо таблицы
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Typography variant="h2" gutterBottom>
-              Добро пожаловать!
-            </Typography>
-
-            <Typography variant="h5" color="text.secondary" paragraph>
-              SampleApp на React
-            </Typography>
-
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              Авторизуйтесь или зарегистрируйтесь, чтобы получить доступ к
-              защищённым страницам, профилям пользователей, редактированию
-              данных и демо таблицы.
-            </Typography>
-
-            <Box
-              display="flex"
-              gap={2}
-              justifyContent="center"
-              flexWrap="wrap"
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<LogIn size={20} />}
-                onClick={() => navigate('/login')}
-              >
-                Войти
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<UserPlus size={20} />}
-                onClick={() => navigate('/register')}
-              >
-                Регистрация
-              </Button>
-
-              <Button
-                variant="outlined"
-                size="large"
-                startIcon={<Table2 size={20} />}
-                onClick={() => navigate('/table-demo')}
-              >
-                Демо таблицы
-              </Button>
-            </Box>
-          </>
-        )}
-      </Paper>
-    </Container>
-  );
-};
-
-
-⸻
-
-Что должно появиться после вставки
-
-Новые файлы:
-	•	src/hooks/useSort.ts
-	•	src/hooks/usePagination.ts
-	•	src/hooks/useSearch.ts
-	•	src/components/SearchBar.tsx
-	•	src/components/SortableTableHeader.tsx
-	•	src/components/PaginationControls.tsx
-	•	src/pages/TableDemoPage.tsx
-
-Обновлённые файлы:
-	•	src/components/UsersTable.tsx
-	•	src/hooks/useUsers.ts
-	•	src/pages/UsersPage.tsx
-	•	src/App.tsx
-	•	src/pages/HomePage.tsx
-
-Если после этого вылезут 1–3 ошибки, пришли их списком, и я добью их точечно.
+Если хочешь, я ещё сразу скажу, в каких файлах у тебя может быть такая же ошибка Grid, кроме TableDemoPage.
