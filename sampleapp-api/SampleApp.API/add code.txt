@@ -1,224 +1,115 @@
 
-Значит проблема не в px, а в том, что у тебя Typography с flexGrow: 1, и из-за этого надпись визуально остается не у левого края.
+React 9. Добавление, обновление и удаление пользователей
+IOF edited this page Mar 11, 2026 · 2 revisions
+Sprint 9 на React (CRUD операции)
 
-Нужно переделать Header.tsx так, чтобы:
-	•	SampleApp стоял отдельным блоком слева
-	•	все кнопки и аватар уехали вправо через ml: 'auto'
+Добавляем создание, удаление и обновление пользователей.
+1. Создаем компонент модального окна для добавления пользователя (src/components/AddUserModal.tsx)
 
-Поменяй файл:
-
-src/components/Header.tsx
-
-целиком на этот код:
-
-import { useState, type MouseEvent } from 'react';
+import React, { useState } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
   Button,
-  Menu,
-  MenuItem,
-  Avatar,
   Box,
-  Divider,
+  Alert,
   IconButton,
-  Tooltip,
+  InputAdornment,
+  CircularProgress,
 } from '@mui/material';
-import {
-  Home,
-  Users,
-  LogIn,
-  LogOut,
-  User as UserIcon,
-  Settings,
-  Edit,
-  Shield,
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { UserPlus, Eye, EyeOff, X } from 'lucide-react';
 
-export const Header = () => {
-  const navigate = useNavigate();
-  const { user, logout, token } = useAuth();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+type AddUserModalProps = {
+  open: boolean;
+  onClose: () => void;
+  onSave: (user: { login: string; password: string; name?: string }) => Promise<void>;
+};
 
-  const handleMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+export const AddUserModal = ({ open, onClose, onSave }: AddUserModalProps) => {
+  const [formData, setFormData] = useState({
+    login: '',
+    password: '',
+    name: '',
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.login.trim()) {
+      newErrors.login = 'Логин обязателен';
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = 'Пароль обязателен';
+    }
+    if (formData.password && formData.password.length < 3) {
+      newErrors.password = 'Минимум 3 символа';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: keyof typeof formData) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    // Очищаем ошибку поля при изменении
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
+    if (serverError) {
+      setServerError('');
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validate()) return;
+
+    try {
+      setLoading(true);
+      setServerError('');
+      await onSave(formData);
+      handleClose();
+    } catch (err: any) {
+      setServerError(err.message || 'Ошибка при создании пользователя');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    logout();
-    handleClose();
-    navigate('/');
-  };
-
-  const handleProfile = () => {
-    handleClose();
-    if (user) {
-      navigate(`/profile/${user.id}`);
+    if (!loading) {
+      setFormData({ login: '', password: '', name: '' });
+      setErrors({});
+      setServerError('');
+      onClose();
     }
   };
 
-  const handleEditProfile = () => {
-    handleClose();
-    if (user) {
-      navigate(`/profile/${user.id}/edit`);
-    }
-  };
-
-  const handleSettings = () => {
-    handleClose();
-    navigate('/settings');
-  };
+  const isValid = formData.login.trim() && formData.password.trim() && formData.password.length >= 3;
 
   return (
-    <AppBar position="static">
-      <Toolbar sx={{ minHeight: 64 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexShrink: 0,
-          }}
-        >
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ cursor: 'pointer' }}
-            onClick={() => navigate('/')}
-          >
-            SampleApp
-          </Typography>
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Box display="flex" alignItems="center" gap={1}>
+            <UserPlus size={24} />
+            <span>Создание пользователя</span>
+          </Box>
+          <IconButton onClick={handleClose} size="small" disabled={loading}>
+            <X size={20} />
+          </IconButton>
         </Box>
+      </DialogTitle>
 
-        <Box
-          sx={{
-            ml: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Button
-            color="inherit"
-            onClick={() => navigate('/')}
-            startIcon={<Home size={20} />}
-            sx={{ mr: 1 }}
-          >
-            Главная
-          </Button>
-
-          {user && (
-            <Button
-              color="inherit"
-              onClick={() => navigate('/users')}
-              startIcon={<Users size={20} />}
-              sx={{ mr: 1 }}
-            >
-              Пользователи
-            </Button>
-          )}
-
-          {user ? (
-            <>
-              {token && (
-                <Tooltip title="JWT токен активен">
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 1 }}>
-                    <Shield size={20} color="#4caf50" />
-                  </Box>
-                </Tooltip>
-              )}
-
-              <Tooltip title="Профиль">
-                <IconButton
-                  onClick={handleMenu}
-                  size="small"
-                  sx={{ ml: 1 }}
-                  aria-controls={Boolean(anchorEl) ? 'account-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
-                >
-                  <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
-                    {user.login.charAt(0).toUpperCase()}
-                  </Avatar>
-                </IconButton>
-              </Tooltip>
-
-              <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                PaperProps={{
-                  sx: {
-                    mt: 1.5,
-                    minWidth: 200,
-                    '& .MuiMenuItem-root': {
-                      px: 2,
-                      py: 1,
-                    },
-                  },
-                }}
-              >
-                <Box sx={{ px: 2, py: 1 }}>
-                  <Typography variant="subtitle2" noWrap>
-                    {user.name || user.login}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" noWrap>
-                    @{user.login}
-                  </Typography>
-                </Box>
-
-                <Divider />
-
-                <MenuItem onClick={handleProfile}>
-                  <UserIcon size={16} style={{ marginRight: 12 }} />
-                  Профиль
-                </MenuItem>
-
-                <MenuItem onClick={handleEditProfile}>
-                  <Edit size={16} style={{ marginRight: 12 }} />
-                  Редактировать
-                </MenuItem>
-
-                <MenuItem onClick={handleSettings}>
-                  <Settings size={16} style={{ marginRight: 12 }} />
-                  Настройки
-                </MenuItem>
-
-                <Divider />
-
-                <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
-                  <LogOut size={16} style={{ marginRight: 12 }} />
-                  Выйти
-                </MenuItem>
-              </Menu>
-            </>
-          ) : (
-            <Button
-              color="inherit"
-              onClick={() => navigate('/login')}
-              startIcon={<LogIn size={20} />}
-            >
-              Вход
-            </Button>
-          )}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-};
-
-Почему это сработает:
-	•	SampleApp больше не растягивается через flexGrow
-	•	правая часть меню уходит вправо через ml: 'auto'
-	•	логотип/надпись остается в самом левом краю Toolbar
-
-Если после этого надпись все равно останется по центру, тогда проблема уже не в Header.tsx, а в глобальных стилях, и нужно будет посмотреть index.css или App.css.
+      <DialogContent dividers>
+        <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
+          {serverError && (
+            <Alert severity="error" onClose={() => setServerError(''
