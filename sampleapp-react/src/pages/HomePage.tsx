@@ -1,84 +1,101 @@
-import { Container, Typography, Box, Paper, Avatar, Button } from '@mui/material';
-import { Home, Users, Sparkles, LogIn, UserPlus, Loader2, Shield } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { Container, Paper, Typography, Box, Button } from '@mui/material';
+import { Home, Users, LogIn, UserPlus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export const HomePage = () => {
-    const { user, token } = useAuth();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-    return (
-        <Container maxWidth="md" sx={{ py: 4 }}>
-            <Paper sx={{ p: 4, textAlign: 'center' }}>
-                <Box display="flex" justifyContent="center" gap={2} mb={3}>
-                    <Avatar sx={{ bgcolor: 'primary.main', width: 60, height: 60 }}>
-                        <Home size={30} />
-                    </Avatar>
-                    <Avatar sx={{ bgcolor: 'secondary.main', width: 60, height: 60 }}>
-                        <Users size={30} />
-                    </Avatar>
-                    <Avatar sx={{ bgcolor: 'success.main', width: 60, height: 60 }}>
-                        <Sparkles size={30} />
-                    </Avatar>
-                </Box>
+  return (
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      <Paper sx={{ p: 6, textAlign: 'center' }}>
+        <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
+          <Home size={64} color="#1976d2" />
+        </Box>
 
-                <Typography variant="h2" gutterBottom>
-                    {user ? `Добро пожаловать, ${user.login}!` : 'Добро пожаловать!'}
-                </Typography>
+        {user ? (
+          <>
+            <Typography variant="h2" gutterBottom>
+              Добро пожаловать, {user.login}!
+            </Typography>
 
-                <Typography variant="h5" color="text.secondary" paragraph>
-                    SampleApp на React
-                </Typography>
+            <Typography variant="h5" color="text.secondary" paragraph>
+              ID: {user.id} • {user.name || 'Без имени'}
+            </Typography>
 
-                {!user ? (
-                    <Box sx={{ mt: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
-                        <Button 
-                            variant="contained" 
-                            color="primary"
-                            startIcon={<LogIn size={20} />} 
-                            onClick={() => navigate('/login')}
-                        >
-                            Войти
-                        </Button>
-                        <Button 
-                            variant="outlined" 
-                            color="primary"
-                            startIcon={<UserPlus size={20} />} 
-                            onClick={() => navigate('/register')}
-                        >
-                            Регистрация
-                        </Button>
-                    </Box>
-                ) : (
-                    <>
-                        {token && (
-                            <Box mt={3} p={2} bgcolor="#f5f5f5" borderRadius={1}>
-                                <Typography variant="caption" display="block" color="text.secondary">
-                                    JWT токен активен
-                                </Typography>
-                            </Box>
-                        )}
-                        <Box sx={{ mt: 2, display: 'flex', gap: 2, justifyContent: 'center' }}>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                startIcon={<Loader2 size={20} />}
-                                onClick={() => navigate('/loading-demo')}
-                            >
-                                Демо лоадера
-                            </Button>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                startIcon={<Shield size={20} />}
-                                onClick={() => navigate('/guards-demo')}
-                            >
-                                Демо защитников
-                            </Button>
-                        </Box>
-                    </>
-                )}
-            </Paper>
-        </Container>
-    );
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              Вы авторизованы в системе. Можете перейти к списку пользователей
+              или открыть свой профиль.
+            </Typography>
+
+            <Box
+              display="flex"
+              gap={2}
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<Users size={20} />}
+                onClick={() => navigate('/users')}
+              >
+                Пользователи
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                onClick={() => navigate(`/profile/${user.id}`)}
+              >
+                Мой профиль
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Typography variant="h2" gutterBottom>
+              Добро пожаловать!
+            </Typography>
+
+            <Typography variant="h5" color="text.secondary" paragraph>
+              SampleApp на React
+            </Typography>
+
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              Авторизуйтесь или зарегистрируйтесь, чтобы получить доступ к
+              защищённым страницам, профилям пользователей и редактированию
+              данных.
+            </Typography>
+
+            <Box
+              display="flex"
+              gap={2}
+              justifyContent="center"
+              flexWrap="wrap"
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<LogIn size={20} />}
+                onClick={() => navigate('/login')}
+              >
+                Войти
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<UserPlus size={20} />}
+                onClick={() => navigate('/register')}
+              >
+                Регистрация
+              </Button>
+            </Box>
+          </>
+        )}
+      </Paper>
+    </Container>
+  );
 };

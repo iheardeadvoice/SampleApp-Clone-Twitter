@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SampleApp.API.Dtos;
 using SampleApp.API.Entities;
+using SampleApp.API.Exceptions;
 using SampleApp.API.Interfaces;
 using SampleApp.API.Mappers;
 using SampleApp.API.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Authorization;
 using SampleApp.API.Enums;
-using SampleApp.API.Exceptions;
 
 namespace SampleApp.API.Controllers
 {
@@ -26,12 +26,11 @@ namespace SampleApp.API.Controllers
             _tokenService = tokenService;
         }
 
-        // POST /api/Users/Login
         [HttpPost("Login")]
         [SwaggerOperation(Summary = "Логин по Login/Password", OperationId = "Login")]
         [SwaggerResponse(200, "Успешно", typeof(UserDto))]
         [SwaggerResponse(401, "Неверный пароль")]
-        public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             try
             {
@@ -44,7 +43,7 @@ namespace SampleApp.API.Controllers
             }
         }
 
-        private async Task<ActionResult<UserDto>> CheckPasswordHashAndUpdateToken(LoginDto loginDto, User user)
+        private async Task<IActionResult> CheckPasswordHashAndUpdateToken(LoginDto loginDto, User user)
         {
             using var hmac = new HMACSHA256(user.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -57,18 +56,16 @@ namespace SampleApp.API.Controllers
                 }
             }
 
-            // Обновляем токен при каждом входе
             user.Token = _tokenService.CreateToken(user.Login);
             await _repo.UpdateUserAsync(user);
 
             return Ok(user.ToDto());
         }
 
-        // Создание пользователя
         [HttpPost]
         [SwaggerOperation(Summary = "Создание пользователя", OperationId = "CreateUser")]
         [SwaggerResponse(201, "Создано", typeof(UserDto))]
-        public async Task<ActionResult> CreateUser([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> CreateUser([FromBody] LoginDto loginDto)
         {
             using var hmac = new HMACSHA256();
 
@@ -81,7 +78,6 @@ namespace SampleApp.API.Controllers
                 Token = _tokenService.CreateToken(loginDto.Login)
             };
 
-            // Поддержка ролей
             if (!string.IsNullOrWhiteSpace(loginDto.Role))
             {
                 var roleRaw = loginDto.Role.Trim();
@@ -90,14 +86,13 @@ namespace SampleApp.API.Controllers
                 {
                     user.RoleId = roleIdFromClient;
                 }
-                else if (Enum.TryParse<RoleType>(roleRaw, ignoreCase: true, out var parsedRole))
+                else if (Enum.TryParse(roleRaw, ignoreCase: true, out RoleType parsedRole))
                 {
                     user.RoleId = (int)parsedRole;
                 }
             }
 
             var createdUser = await _repo.CreateUserAsync(user);
-
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser.ToDto());
         }
 
@@ -105,7 +100,7 @@ namespace SampleApp.API.Controllers
         [HttpGet]
         [SwaggerOperation(Summary = "Список пользователей", OperationId = "GetUsers")]
         [SwaggerResponse(200, "OK", typeof(List<UserDto>))]
-        public async Task<ActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             var users = await _repo.GetUsersAsync();
             return Ok(users.Select(u => u.ToDto()));
@@ -116,12 +111,37 @@ namespace SampleApp.API.Controllers
         [SwaggerOperation(Summary = "Пользователь по Id", OperationId = "GetUserById")]
         [SwaggerResponse(200, "OK", typeof(UserDto))]
         [SwaggerResponse(404, "Не найден")]
-        public async Task<ActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id)
         {
             try
             {
                 var user = await _repo.FindUserByIdAsync(id);
                 return Ok(user.ToDto());
+            }
+            catch (NotFoundException)
+            {
+                return NotFound($"Пользователь с id={id} не найден");
+            }
+        }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        [SwaggerOperation(Summary = "Обновление пользователя", OperationId = "UpdateUser")]
+        [SwaggerResponse(200, "Пользователь обновлен", typeof(UserDto))]
+        [SwaggerResponse(404, "Пользователь не найден")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto updateDto)
+        {
+            try
+            {
+                var user = await _repo.FindUserByIdAsync(id);
+
+                user.Name = updateDto.Name;
+                user.Login = updateDto.Login;
+
+                await _repo.EditUserAsync(user, id);
+
+                var updatedUser = await _repo.FindUserByIdAsync(id);
+                return Ok(updatedUser.ToDto());
             }
             catch (NotFoundException)
             {

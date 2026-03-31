@@ -1,13 +1,14 @@
 ﻿using SampleApp.API.Dtos;
 using SampleApp.API.Entities;
 using SampleApp.API.Enums;
+
 namespace SampleApp.API.Mappers;
+
 public static class UserMapper
 {
     public static UserDto ToDto(this User user)
     {
         return new UserDto(
-        
             user.Id,
             user.Login,
             user.Name,
