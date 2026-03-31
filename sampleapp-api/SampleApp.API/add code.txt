@@ -1,485 +1,926 @@
-Да — проблема, скорее всего, в usePreventUnsavedChanges.
-Чёрный экран на двух страницах сразу (/guards-demo и /register) указывает на общий компонент/хук, который падает во время рендера. В твоём случае это именно PreventUnsavedChanges → usePreventUnsavedChanges. useBlocker вообще существует и документирован для Declarative mode тоже, но у тебя сейчас на практике страница падает, значит надо ставить более надёжную реализацию без него.  ￼
 
-Сейчас дам рабочую замену, без useBlocker.
-Она:
-	•	защищает от обновления/закрытия вкладки;
-	•	показывает кастомный диалог при попытке уйти со страницы по кнопке/ссылке, если ты сам вызываешь confirmNavigate;
-	•	не даёт чёрный экран.
+React 7. Профиль пользователя
+IOF edited this page Mar 11, 2026 · 2 revisions
+Sprint 7 на React (Профиль пользователя)
 
-⸻
+Добавляем профиль пользователя с меню в хедере и динамическими маршрутами.
+1. Обновляем API для пользователей (src/api/users.ts)
 
-Что заменить
+import { apiClient } from './client';
+import { User } from '../types';
 
-1) Полностью замени файл
-
-src/hooks/usePreventUnsavedChanges.ts
-
-import { useCallback, useEffect, useState } from 'react';
-
-type UsePreventUnsavedChangesProps = {
-  isDirty: boolean;
-  message?: string;
-  onConfirm?: () => void;
-  onCancel?: () => void;
+export const getUsers = async (): Promise<User[]> => {
+  const response = await apiClient.get<User[]>('/Users');
+  return response.data;
 };
 
-export const usePreventUnsavedChanges = ({
-  isDirty,
-  message = 'У вас есть несохраненные изменения. Вы действительно хотите покинуть страницу?',
-  onConfirm,
-  onCancel,
-}: UsePreventUnsavedChangesProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [pendingAction, setPendingAction] = useState<null | (() => void)>(null);
+export const getUserById = async (id: number): Promise<User> => {
+  const response = await apiClient.get<User>(`/Users/${id}`);
+  return response.data;
+};
 
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (!isDirty) return;
+export const createUser = async (user: Partial<User>) => {
+  const response = await apiClient.post('/Users', user);
+  return response.data;
+};
 
-      event.preventDefault();
-      event.returnValue = message;
-    };
+export const updateUser = async (id: number, user: Partial<User>) => {
+  const response = await apiClient.put(`/Users/${id}`, user);
+  return response.data;
+};
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+export const deleteUser = async (id: number) => {
+  const response = await apiClient.delete(`/Users/${id}`);
+  return response.data;
+};
 
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isDirty, message]);
+2. Обновляем компонент Header с меню профиля (src/components/Header.tsx)
 
-  const confirmNavigate = useCallback(
-    (action: () => void) => {
-      if (!isDirty) {
-        action();
-        return;
-      }
+import React, { useState } from 'react';
+import { 
+  AppBar, Toolbar, Typography, Button, 
+  Menu, MenuItem, Avatar, Box, Divider,
+  IconButton, Tooltip
+} from '@mui/material';
+import { 
+  Home, Users, LogIn, LogOut, 
+  User as UserIcon, Settings, Edit,
+  Shield
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-      setPendingAction(() => action);
-      setIsDialogOpen(true);
-    },
-    [isDirty]
-  );
+export const Header = () => {
+  const navigate = useNavigate();
+  const { user, logout, token } = useAuth();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const confirmNavigation = useCallback(() => {
-    setIsDialogOpen(false);
-    onConfirm?.();
-
-    if (pendingAction) {
-      pendingAction();
-      setPendingAction(null);
-    }
-  }, [onConfirm, pendingAction]);
-
-  const cancelNavigation = useCallback(() => {
-    setIsDialogOpen(false);
-    setPendingAction(null);
-    onCancel?.();
-  }, [onCancel]);
-
-  return {
-    isDialogOpen,
-    message,
-    confirmNavigate,
-    confirmNavigation,
-    cancelNavigation,
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
-};
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-⸻
+  const handleLogout = () => {
+    logout();
+    handleClose();
+    navigate('/');
+  };
 
-2) Полностью замени файл
+  const handleProfile = () => {
+    handleClose();
+    if (user) {
+      navigate(`/profile/${user.id}`);
+    }
+  };
 
-src/components/guards/PreventUnsavedChanges.tsx
+  const handleEditProfile = () => {
+    handleClose();
+    if (user) {
+      navigate(`/profile/${user.id}/edit`);
+    }
+  };
 
-import type { ReactNode } from 'react';
-import { usePreventUnsavedChanges } from '../../hooks/usePreventUnsavedChanges';
-import { ConfirmDialog } from './ConfirmDialog';
-
-type PreventUnsavedChangesProps = {
-  isDirty: boolean;
-  message?: string;
-  title?: string;
-  children: (args: { confirmNavigate: (action: () => void) => void }) => ReactNode;
-  onConfirm?: () => void;
-  onCancel?: () => void;
-};
-
-export const PreventUnsavedChanges = ({
-  isDirty,
-  message = 'У вас есть несохраненные изменения. Вы действительно хотите покинуть страницу?',
-  title = 'Несохраненные изменения',
-  children,
-  onConfirm,
-  onCancel,
-}: PreventUnsavedChangesProps) => {
-  const {
-    isDialogOpen,
-    confirmNavigate,
-    confirmNavigation,
-    cancelNavigation,
-  } = usePreventUnsavedChanges({
-    isDirty,
-    message,
-    onConfirm,
-    onCancel,
-  });
+  const handleSettings = () => {
+    handleClose();
+    navigate('/settings');
+  };
 
   return (
-    <>
-      {children({ confirmNavigate })}
-      <ConfirmDialog
-        open={isDialogOpen}
-        title={title}
-        message={message}
-        confirmText="Покинуть страницу"
-        cancelText="Остаться"
-        onConfirm={confirmNavigation}
-        onCancel={cancelNavigation}
-        severity="warning"
-      />
-    </>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography 
+          variant="h6" 
+          component="div" 
+          sx={{ flexGrow: 1, cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+        >
+          SampleApp
+        </Typography>
+
+        <Button 
+          color="inherit" 
+          onClick={() => navigate('/')} 
+          startIcon={<Home size={20} />}
+          sx={{ mr: 1 }}
+        >
+          Главная
+        </Button>
+
+        {user && (
+          <Button 
+            color="inherit" 
+            onClick={() => navigate('/users')} 
+            startIcon={<Users size={20} />}
+            sx={{ mr: 1 }}
+          >
+            Пользователи
+          </Button>
+        )}
+
+        {user ? (
+          <>
+            {token && (
+              <Tooltip title="JWT токен активен">
+                <Shield size={20} color="#4caf50" style={{ marginRight: 8 }} />
+              </Tooltip>
+            )}
+            
+            <Tooltip title="Профиль">
+              <IconButton
+                onClick={handleMenu}
+                size="small"
+                sx={{ ml: 1 }}
+                aria-controls={Boolean(anchorEl) ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
+              >
+                <Avatar sx={{ width: 32, height: 32, bgcolor: 'secondary.main' }}>
+                  {user.login.charAt(0).toUpperCase()}
+                </Avatar>
+              </IconButton>
+            </Tooltip>
+
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              onClick={handleClose}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              PaperProps={{
+                sx: {
+                  mt: 1.5,
+                  minWidth: 200,
+                  '& .MuiMenuItem-root': {
+                    px: 2,
+                    py: 1,
+                  },
+                },
+              }}
+            >
+              <Box sx={{ px: 2, py: 1 }}>
+                <Typography variant="subtitle2" noWrap>
+                  {user.name || user.login}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" noWrap>
+                  @{user.login}
+                </Typography>
+              </Box>
+              
+              <Divider />
+              
+              <MenuItem onClick={handleProfile}>
+                <UserIcon size={16} style={{ marginRight: 12 }} />
+                Профиль
+              </MenuItem>
+              
+              <MenuItem onClick={handleEditProfile}>
+                <Edit size={16} style={{ marginRight: 12 }} />
+                Редактировать
+              </MenuItem>
+              
+              <MenuItem onClick={handleSettings}>
+                <Settings size={16} style={{ marginRight: 12 }} />
+                Настройки
+              </MenuItem>
+              
+              <Divider />
+              
+              <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
+                <LogOut size={16} style={{ marginRight: 12 }} />
+                Выйти
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Button 
+            color="inherit" 
+            onClick={() => navigate('/login')} 
+            startIcon={<LogIn size={20} />}
+          >
+            Вход
+          </Button>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
+3. Создаем страницу профиля (src/pages/ProfilePage.tsx)
 
-⸻
-
-3) Полностью замени файл
-
-src/pages/GuardsDemoPage.tsx
-
-import { useState, type ChangeEvent } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
-  Alert,
-  Box,
-  Button,
   Container,
   Paper,
-  TextField,
   Typography,
+  Box,
+  Avatar,
+  Chip,
+  CircularProgress,
+  Alert,
+  Button,
+  Divider,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
-import { AlertTriangle, Shield } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { PreventUnsavedChanges } from '../components/guards/PreventUnsavedChanges';
+import {
+  User as UserIcon,
+  Mail,
+  Calendar,
+  Shield,
+  Edit,
+  ArrowLeft,
+  Share2,
+  Star,
+  Award,
+} from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { getUserById } from '../api/users';
+import { User } from '../types';
 
-export const GuardsDemoPage = () => {
-  const [text, setText] = useState('');
+export const ProfilePage = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user: currentUser } = useAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const isDirty = text.trim().length > 0;
+  useEffect(() => {
+    const loadUser = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getUserById(parseInt(id));
+        setUser(data);
+      } catch (err) {
+        setError('Не удалось загрузить профиль пользователя');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, [id]);
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const handleEdit = () => {
+    if (user) {
+      navigate(`/profile/${user.id}/edit`);
+    }
+  };
+
+  const handleShare = () => {
+    // В реальном приложении здесь был бы функционал шаринга
+    alert('Ссылка на профиль скопирована');
+  };
+
+  if (loading) {
+    return (
+      <Container maxWidth="md" sx={{ py: 4, textAlign: 'center' }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
+  if (error || !user) {
+    return (
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error || 'Пользователь не найден'}
+        </Alert>
+        <Button startIcon={<ArrowLeft size={18} />} onClick={handleBack}>
+          Назад
+        </Button>
+      </Container>
+    );
+  }
+
+  const isOwnProfile = currentUser?.id === user.id;
 
   return (
-    <PreventUnsavedChanges
-      isDirty={isDirty}
-      message="У вас есть несохраненный текст. Вы действительно хотите уйти?"
-    >
-      {({ confirmNavigate }) => (
-        <Container maxWidth="md" sx={{ py: 4 }}>
-          <Paper sx={{ p: 4 }}>
-            <Box display="flex" alignItems="center" gap={2} mb={3}>
-              <Shield size={32} color="#3f51b5" />
-              <Typography variant="h4">Демо защитников</Typography>
-            </Box>
+    <Container maxWidth="md" sx={{ py: 4 }}>
+      {/* Кнопка назад */}
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Button startIcon={<ArrowLeft size={18} />} onClick={handleBack}>
+          Назад
+        </Button>
+        <Box>
+          <Tooltip title="Поделиться">
+            <IconButton onClick={handleShare}>
+              <Share2 size={20} />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Box>
 
-            <Alert severity="info" sx={{ mb: 3 }}>
-              <Typography variant="body2">
-                Введите текст и попробуйте уйти со страницы — появится предупреждение.
-              </Typography>
-            </Alert>
+      {/* Основная информация */}
+      <Paper sx={{ p: 4, mb: 3 }}>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Avatar
+            sx={{
+              width: 120,
+              height: 120,
+              bgcolor: isOwnProfile ? 'primary.main' : 'secondary.main',
+              mb: 2,
+              fontSize: '3rem',
+            }}
+          >
+            {user.login.charAt(0).toUpperCase()}
+          </Avatar>
+
+          <Typography variant="h4" gutterBottom>
+            {user.name || user.login}
+          </Typography>
+
+          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+            @{user.login}
+          </Typography>
+
+          <Box display="flex" gap={1} mt={1}>
+            {isOwnProfile && (
+              <Chip
+                icon={<Star size={14} />}
+                label="Это вы"
+                color="primary"
+                size="small"
+              />
+            )}
+            {user.token && (
+              <Chip
+                icon={<Shield size={14} />}
+                label="JWT активен"
+                color="success"
+                size="small"
+              />
+            )}
+          </Box>
+
+          {isOwnProfile && (
+            <Button
+              variant="outlined"
+              startIcon={<Edit size={18} />}
+              onClick={handleEdit}
+              sx={{ mt: 2 }}
+            >
+              Редактировать профиль
+            </Button>
+          )}
+        </Box>
+      </Paper>
+
+      {/* Детальная информация */}
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <UserIcon size={20} color="#3f51b5" />
+                <Typography variant="h6">Основная информация</Typography>
+              </Box>
+
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                    ID:
+                  </Typography>
+                  <Typography variant="body1">{user.id}</Typography>
+                </Box>
+
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                    Логин:
+                  </Typography>
+                  <Typography variant="body1">{user.login}</Typography>
+                </Box>
+
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                    Имя:
+                  </Typography>
+                  <Typography variant="body1">{user.name || 'Не указано'}</Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Box display="flex" alignItems="center" gap={1} mb={2}>
+                <Award size={20} color="#3f51b5" />
+                <Typography variant="h6">Статистика</Typography>
+              </Box>
+
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                    Статус:
+                  </Typography>
+                  <Chip
+                    size="small"
+                    label={user.token ? "Активен" : "Не активен"}
+                    color={user.token ? "success" : "default"}
+                  />
+                </Box>
+
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                    Токен:
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
+                    {user.token ? `${user.token.substring(0, 15)}...` : 'Нет'}
+                  </Typography>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* JWT токен (только для своего профиля) */}
+        {isOwnProfile && currentUser?.token && (
+          <Grid item xs={12}>
+            <Card>
+              <CardContent>
+                <Box display="flex" alignItems="center" gap={1} mb={2}>
+                  <Shield size={20} color="#4caf50" />
+                  <Typography variant="h6">Ваш JWT токен</Typography>
+                </Box>
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    bgcolor: '#f5f5f5',
+                    fontFamily: 'monospace',
+                    fontSize: '0.75rem',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  {currentUser.token}
+                </Paper>
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                  Используется для авторизации запросов к API
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        )}
+      </Grid>
+    </Container>
+  );
+};
+
+4. Создаем страницу редактирования профиля (src/pages/EditProfilePage.tsx)
+
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Paper,
+  Typography,
+  Box,
+  Avatar,
+  TextField,
+  Button,
+  CircularProgress,
+  Alert,
+  Divider,
+  IconButton,
+} from '@mui/material';
+import { ArrowLeft, Save, User as UserIcon } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { getUserById, updateUser } from '../api/users';
+import { User } from '../types';
+import { usePreventUnsavedChanges } from '../hooks/usePreventUnsavedChanges';
+
+export const EditProfilePage = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { user: currentUser } = useAuth();
+  const [user, setUser] = useState<User | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    login: '',
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const isOwnProfile = currentUser?.id === Number(id);
+  const isDirty = 
+    formData.name !== (user?.name || '') || 
+    formData.login !== user?.login;
+
+  usePreventUnsavedChanges({
+    isDirty: isDirty && !saving,
+    message: 'У вас есть несохраненные изменения. Вы действительно хотите покинуть страницу?',
+  });
+
+  useEffect(() => {
+    // Проверяем, что пользователь редактирует свой профиль
+    if (!isOwnProfile) {
+      navigate('/users', { replace: true });
+      return;
+    }
+
+    const loadUser = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const data = await getUserById(parseInt(id));
+        setUser(data);
+        setFormData({
+          name: data.name || '',
+          login: data.login,
+        });
+      } catch (err) {
+        setError('Не удалось загрузить данные профиля');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUser();
+  }, [id, isOwnProfile, navigate]);
+
+  const handleChange = (field: keyof typeof formData) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.login.trim()) {
+      alert('Логин не может быть пустым');
+      return;
+    }
+
+    try {
+      setSaving(true);
+      setError(null);
+
+      await updateUser(Number(id), {
+        name: formData.name,
+        login: formData.login,
+      });
+
+      // Обновляем данные в контексте если нужно
+      if (currentUser) {
+        const updatedUser = { ...currentUser, name: formData.name, login: formData.login };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+      }
+
+      navigate(`/profile/${id}`);
+    } catch (err: any) {
+      const errors = err.response?.data?.errors;
+      if (errors) {
+        const messages = Object.values(errors).flat().join('. ');
+        setError(messages);
+      } else {
+        setError(err.response?.data?.message || 'Ошибка при обновлении профиля');
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Container maxWidth="sm" sx={{ py: 4, textAlign: 'center' }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
+  if (error && !user) {
+    return (
+      <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Alert severity="error">{error}</Alert>
+        <Button startIcon={<ArrowLeft size={18} />} onClick={() => navigate(-1)} sx={{ mt: 2 }}>
+          Назад
+        </Button>
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="sm" sx={{ py: 4 }}>
+      <Button startIcon={<ArrowLeft size={18} />} onClick={() => navigate(-1)} sx={{ mb: 2 }}>
+        Назад
+      </Button>
+
+      <Paper sx={{ p: 4 }}>
+        <Box display="flex" alignItems="center" gap={2} mb={3}>
+          <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
+            <UserIcon size={32} />
+          </Avatar>
+          <Box>
+            <Typography variant="h5">Редактирование профиля</Typography>
+            <Typography variant="body2" color="text.secondary">
+              ID: {user?.id}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Divider sx={{ mb: 3 }} />
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <TextField
+              fullWidth
+              label="Имя"
+              value={formData.name}
+              onChange={handleChange('name')}
+              disabled={saving}
+            />
 
             <TextField
               fullWidth
-              label="Введите что-нибудь"
-              value={text}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-              multiline
-              rows={4}
-              sx={{ mb: 3 }}
+              label="Логин"
+              value={formData.login}
+              onChange={handleChange('login')}
+              disabled={saving}
+              required
             />
 
-            <Box display="flex" gap={2}>
-              <Button
-                variant="contained"
-                onClick={() => confirmNavigate(() => navigate('/'))}
-              >
-                На главную
-              </Button>
-
-              <Button
-                variant="outlined"
-                onClick={() => confirmNavigate(() => navigate('/users'))}
-              >
-                К пользователям
-              </Button>
-            </Box>
-
             {isDirty && (
-              <Alert severity="warning" sx={{ mt: 2 }}>
-                <Box display="flex" alignItems="center" gap={1}>
-                  <AlertTriangle size={16} />
-                  Есть несохраненные изменения!
-                </Box>
+              <Alert severity="info">
+                ✏️ У вас есть несохраненные изменения
               </Alert>
             )}
-          </Paper>
-        </Container>
-      )}
-    </PreventUnsavedChanges>
+
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={<Save size={18} />}
+              disabled={!isDirty || saving}
+              size="large"
+            >
+              {saving ? 'Сохранение...' : 'Сохранить изменения'}
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   );
 };
 
+5. Обновляем таблицу пользователей с ссылками на профили (src/components/UsersTable.tsx)
 
-⸻
-
-4) Полностью замени файл
-
-src/pages/RegisterPage.tsx
-
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  InputAdornment,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Paper,
-  TextField,
   Typography,
+  IconButton,
+  Tooltip,
+  Avatar,
+  Box,
 } from '@mui/material';
-import { Eye, EyeOff, UserPlus } from 'lucide-react';
+import { Eye, Edit2, User as UserIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../types';
 import { useAuth } from '../contexts/AuthContext';
-import { PasswordStrength } from '../components/PasswordStrength';
-import { ButtonLoader } from '../components/ButtonLoader';
-import { PreventUnsavedChanges } from '../components/guards/PreventUnsavedChanges';
 
-type FormData = {
-  login: string;
-  password: string;
-  name: string;
+type UsersTableProps = {
+  users: User[];
 };
 
-export const RegisterPage = () => {
+export const UsersTable = ({ users }: UsersTableProps) => {
   const navigate = useNavigate();
-  const { register: registerUser } = useAuth();
+  const { user: currentUser } = useAuth();
 
-  const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState,
-    clearErrors,
-    setError,
-    reset,
-  } = useForm<FormData>({
-    mode: 'onChange',
-    defaultValues: {
-      login: '',
-      password: '',
-      name: '',
-    },
-  });
-
-  const { errors, isValid, isDirty } = formState;
-  const loginValue = watch('login');
-  const passwordValue = watch('password');
-
-  useEffect(() => {
-    if (loginValue !== 'admin') {
-      clearErrors('login');
-    }
-  }, [loginValue, clearErrors]);
-
-  const onSubmit = async (data: FormData) => {
-    try {
-      setLoading(true);
-      setServerError('');
-
-      await registerUser(data);
-
-      reset();
-      navigate('/login', { state: { registered: true } });
-    } catch (err: any) {
-      const apiErrors = err.response?.data?.errors;
-
-      if (apiErrors) {
-        if (apiErrors.Login?.[0]) {
-          setError('login', {
-            type: 'manual',
-            message: apiErrors.Login[0],
-          });
-        }
-
-        if (apiErrors.Password?.[0]) {
-          setError('password', {
-            type: 'manual',
-            message: apiErrors.Password[0],
-          });
-        }
-
-        if (apiErrors.Name?.[0]) {
-          setError('name', {
-            type: 'manual',
-            message: apiErrors.Name[0],
-          });
-        }
-
-        setServerError('Проверьте правильность заполнения полей');
-      } else {
-        setServerError(err.response?.data?.message || 'Ошибка регистрации');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (users.length === 0) {
+    return (
+      <Typography color="text.secondary" align="center" py={4}>
+        Нет пользователей
+      </Typography>
+    );
+  }
 
   return (
-    <PreventUnsavedChanges isDirty={isDirty && !loading}>
-      {({ confirmNavigate }) => (
-        <Container maxWidth="sm" sx={{ py: 4 }}>
-          <Paper sx={{ p: 4 }}>
-            <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
-              <UserPlus size={48} color="#3f51b5" />
-              <Typography variant="h4" sx={{ mt: 2 }}>
-                Регистрация
-              </Typography>
-            </Box>
-
-            {serverError && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {serverError}
-              </Alert>
-            )}
-
-            <Box
-              component="form"
-              onSubmit={handleSubmit(onSubmit)}
-              sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-            >
-              <TextField
-                label="Имя"
-                fullWidth
-                {...register('name', {
-                  required: 'Имя обязательно',
-                  minLength: {
-                    value: 2,
-                    message: 'Минимум 2 символа',
-                  },
-                })}
-                error={!!errors.name}
-                helperText={errors.name?.message}
-                disabled={loading}
-              />
-
-              <TextField
-                label="Логин"
-                fullWidth
-                {...register('login', {
-                  required: 'Логин обязателен',
-                  minLength: {
-                    value: 3,
-                    message: 'Минимум 3 символа',
-                  },
-                  validate: (value: string) => {
-                    if (value === 'admin') {
-                      return 'Недопустимый логин пользователя';
-                    }
-                    return true;
-                  },
-                })}
-                error={!!errors.login}
-                helperText={errors.login?.message}
-                disabled={loading}
-              />
-
-              <TextField
-                label="Пароль"
-                fullWidth
-                type={showPassword ? 'text' : 'password'}
-                {...register('password', {
-                  required: 'Пароль обязателен',
-                  minLength: {
-                    value: 3,
-                    message: 'Минимум 3 символа',
-                  },
-                  maxLength: {
-                    value: 8,
-                    message: 'Максимум 8 символов',
-                  },
-                  validate: (value: string) => {
-                    if (value === '123') {
-                      return 'Слишком простой пароль';
-                    }
-                    return true;
-                  },
-                })}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                disabled={loading}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => setShowPassword((prev: boolean) => !prev)}
-                        edge="end"
-                      >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              {passwordValue ? <PasswordStrength password={passwordValue} /> : null}
-
-              <Button
-                type="submit"
-                variant="contained"
-                startIcon={loading ? <ButtonLoader size={20} /> : <UserPlus size={18} />}
-                disabled={!isValid || loading}
-              >
-                {loading ? 'Регистрация...' : 'Зарегистрироваться'}
-              </Button>
-            </Box>
-
-            {isDirty && !loading && (
-              <Alert severity="info" sx={{ mt: 2 }}>
-                У вас есть несохраненные изменения
-              </Alert>
-            )}
-
-            <Box textAlign="center" mt={2}>
-              <Typography variant="body2">
-                Уже есть аккаунт?{' '}
-                <Button
-                  color="primary"
-                  onClick={() => confirmNavigate(() => navigate('/login'))}
-                >
-                  Войти
-                </Button>
-              </Typography>
-            </Box>
-          </Paper>
-        </Container>
-      )}
-    </PreventUnsavedChanges>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Пользователь</TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell>Логин</TableCell>
+            <TableCell align="center">Действия</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id} hover>
+              <TableCell>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Avatar
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      bgcolor: currentUser?.id === user.id ? 'primary.main' : 'secondary.main',
+                    }}
+                  >
+                    {user.login.charAt(0).toUpperCase()}
+                  </Avatar>
+                  <Typography>
+                    {user.name || user.login}
+                    {currentUser?.id === user.id && (
+                      <Typography component="span" color="primary" sx={{ ml: 1 }}>
+                        (это вы)
+                      </Typography>
+                    )}
+                  </Typography>
+                </Box>
+              </TableCell>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.login}</TableCell>
+              <TableCell align="center">
+                <Tooltip title="Просмотреть профиль">
+                  <IconButton
+                    size="small"
+                    onClick={() => navigate(`/profile/${user.id}`)}
+                    sx={{ mr: 1 }}
+                  >
+                    <Eye size={18} />
+                  </IconButton>
+                </Tooltip>
+                {currentUser?.id === user.id && (
+                  <Tooltip title="Редактировать">
+                    <IconButton
+                      size="small"
+                      onClick={() => navigate(`/profile/${user.id}/edit`)}
+                    >
+                      <Edit2 size={18} />
+                    </IconButton>
+                  </Tooltip>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
+6. Обновляем App.tsx с новыми маршрутами
 
-⸻
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { AuthProvider } from './contexts/AuthContext';
+import { LoadingProvider } from './contexts/LoadingContext';
+import { GlobalLoader } from './components/GlobalLoader';
+import { AuthGuard } from './components/guards/AuthGuard';
+import { Header } from './components/Header';
+import { HomePage } from './pages/HomePage';
+import { UsersPage } from './pages/UsersPage';
+import { ProfilePage } from './pages/ProfilePage';
+import { EditProfilePage } from './pages/EditProfilePage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { LoadingDemoPage } from './pages/LoadingDemoPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { ServerErrorPage } from './pages/ServerErrorPage';
+import { setLoadingCallback } from './api/client';
+import { useLoading } from './contexts/LoadingContext';
 
-Почему это должно помочь
+const theme = createTheme({
+  palette: {
+    primary: { main: '#3f51b5' },
+  },
+});
 
-У тебя ломаются ровно те страницы, где используется защита от несохранённых изменений. Значит нужно убрать нестабильное место и поставить более простую схему.
-Нативное предупреждение при закрытии/обновлении страницы делается через beforeunload, а блокировка внутренних переходов у нас теперь контролируется вручную через confirmNavigate. Это проще и надёжнее для твоего проекта. React Router отдельно отмечает, что useBlocker не покрывает hard reload и cross-origin navigation — для этого как раз нужен другой механизм вроде beforeunload.  ￼
+const LoadingBridge = () => {
+  const { setLoading } = useLoading();
+  useEffect(() => {
+    setLoadingCallback(setLoading);
+  }, [setLoading]);
+  return null;
+};
 
-Если после этих 4 замен экран всё ещё будет чёрным, тогда пришли текст ошибки из браузерной консоли, и я добью остаток.
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <LoadingProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <LoadingBridge />
+            <GlobalLoader message="Загрузка..." />
+            <Header />
+            <Routes>
+              {/* Публичные маршруты */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/loading-demo" element={<LoadingDemoPage />} />
+              
+              {/* Защищенные маршруты */}
+              <Route path="/users" element={
+                <AuthGuard>
+                  <UsersPage />
+                </AuthGuard>
+              } />
+              
+              <Route path="/profile/:id" element={
+                <AuthGuard>
+                  <ProfilePage />
+                </AuthGuard>
+              } />
+              
+              <Route path="/profile/:id/edit" element={
+                <AuthGuard>
+                  <EditProfilePage />
+                </AuthGuard>
+              } />
+              
+              {/* Маршруты ошибок */}
+              <Route path="/404" element={<NotFoundPage />} />
+              <Route path="/500" element={<ServerErrorPage />} />
+              <Route path="*" element={<Navigate to="/404" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </LoadingProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+
+7. Обновляем HomePage с приветствием пользователя
+
+// В HomePage.tsx добавить:
+import { useAuth } from '../contexts/AuthContext';
+
+// Внутри компонента:
+const { user } = useAuth();
+
+// В JSX заменить приветствие:
+{user ? (
+  <>
+    <Typography variant="h2" gutterBottom>
+      Добро пожаловать, {user.login}!
+    </Typography>
+    <Typography variant="h5" color="text.secondary" paragraph>
+      ID: {user.id} • {user.name || 'Без имени'}
+    </Typography>
+  </>
+) : (
+  <Typography variant="h2" gutterBottom>
+    Добро пожаловать!
+  </Typography>
+)}
+
+Тестирование функциональности
+
+    Меню профиля:
+        Авторизуйтесь → нажмите на аватар в хедере
+        Должны увидеть меню с пунктами "Профиль", "Редактировать", "Выйти"
+
+    Просмотр профиля:
+        Нажмите "Профиль" в меню → откроется страница профиля
+        Проверьте отображение информации и JWT токена (для своего профиля)
+
+    Редактирование профиля:
+        Нажмите "Редактировать" в меню или на странице профиля
+        Измените данные → появится предупреждение о несохраненных изменениях
+        Сохраните → вернетесь на страницу профиля
+
+    Навигация по пользователям:
+        На странице пользователей нажмите на иконку глаза у любого пользователя
+        Откроется его профиль (с ограниченной информацией)
+
+Что получилось:
+✅ Меню профиля - аватар с выпадающим меню ✅ Страница профиля - просмотр информации о пользователе ✅ Редактирование профиля - только для своего профиля ✅ Защита маршрутов - недоступны без авторизации ✅ Защита от потери данных - предупреждение при несохраненных изменениях ✅ Навигация - удобные ссылки между страницами
