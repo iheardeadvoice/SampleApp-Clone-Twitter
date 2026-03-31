@@ -1,24 +1,22 @@
-import React from 'react';
-import { Alert, AlertTitle, Button } from '@mui/material';
-import { RefreshCw } from 'lucide-react';
+import { Alert, Button, Box } from '@mui/material';
 
-type Props = {
-  message: string;
-  onRetry?: () => void;
+type ErrorMessageProps = {
+    message: string;
+    onRetry?: () => void;
 };
 
-export const ErrorMessage = ({ message, onRetry }: Props) => (
-  <Alert
-    severity="error"
-    action={
-      onRetry && (
-        <Button color="inherit" size="small" onClick={onRetry} startIcon={<RefreshCw size={18} />}>
-          Повторить
-        </Button>
-      )
-    }
-  >
-    <AlertTitle>Ошибка</AlertTitle>
-    {message}
-  </Alert>
+export const ErrorMessage = ({ message, onRetry }: ErrorMessageProps) => (
+    <Alert
+        severity="error"
+        action={
+            onRetry && (
+                <Button color="inherit" size="small" onClick={onRetry}>
+                    Повторить
+                </Button>
+            )
+        }
+        sx={{ mb: 2 }}
+    >
+        {message}
+    </Alert>
 );

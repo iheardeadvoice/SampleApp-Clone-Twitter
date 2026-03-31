@@ -40,6 +40,7 @@ namespace SampleApp.API.Repositories
             }
 
             result.Name = user.Name;
+            result.Login = user.Login;
             return Task.FromResult(result);
         }
 
@@ -57,7 +58,6 @@ namespace SampleApp.API.Repositories
 
         public Task<User> FindUserByLoginAsync(string login)
         {
-            // Логина у нас нет, это просто заглушка для задания
             var user = _users.FirstOrDefault(u => u.Login == login);
             if (user == null)
                 throw new Exception($"Нет пользователя с login = {login}");
@@ -66,8 +66,22 @@ namespace SampleApp.API.Repositories
 
         public Task<List<User>> GetUsersAsync()
         {
-            // пока все пользователи, без фильтров
             return Task.FromResult(_users.ToList());
+        }
+
+        // ✅ НОВЫЙ МЕТОД — обновление пользователя (для токена)
+        public Task<User> UpdateUserAsync(User user)
+        {
+            var existing = _users.FirstOrDefault(u => u.Id == user.Id);
+            if (existing == null)
+            {
+                throw new Exception($"Нет пользователя с id = {user.Id}");
+            }
+
+            existing.Token = user.Token;
+            existing.UpdatedAt = DateTime.UtcNow;
+
+            return Task.FromResult(existing);
         }
     }
 }

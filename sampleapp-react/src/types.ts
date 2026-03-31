@@ -2,7 +2,7 @@ export type User = {
     id: number;
     name: string;
     login: string;
-    token?: string;
+    token: string;
 };
 
 export type LoginData = {
@@ -14,4 +14,9 @@ export type RegisterData = {
     login: string;
     password: string;
     name?: string;
+};
+
+export type AuthResponse = {
+    token: string;
+    user: User;
 };

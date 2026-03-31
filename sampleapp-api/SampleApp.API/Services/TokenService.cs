@@ -11,27 +11,35 @@ public class TokenService : ITokenService
 
     public TokenService(IConfiguration config)
     {
-        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenPublicKey"]!));
+        var keyString = config["TokenPublicKey"]!;
+        
+        if (string.IsNullOrEmpty(keyString))
+            throw new InvalidOperationException("TokenPublicKey is missing in appsettings.json");
+        
+        if (keyString.Length < 32)
+            throw new InvalidOperationException("TokenPublicKey must be at least 32 characters long");
+        
+        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
     }
 
     public string CreateToken(string userLogin)
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Name, userLogin)
+            new Claim(ClaimTypes.Name, userLogin),
+            new Claim(ClaimTypes.NameIdentifier, userLogin)
         };
 
-        var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+        var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = creds
-        };
+        var token = new JwtSecurityToken(
+            issuer: null,
+            audience: null,
+            claims: claims,
+            expires: DateTime.UtcNow.AddDays(7),
+            signingCredentials: creds
+        );
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

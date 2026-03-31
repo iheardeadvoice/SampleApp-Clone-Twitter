@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -10,6 +9,47 @@ public static class JwtServices
 {
     public static IServiceCollection AddJwtServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var keyString = configuration["TokenPublicKey"]!;
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ClockSkew = TimeSpan.Zero
+                };
+                
+                // Логирование для отладки
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        Console.WriteLine($"❌ Authentication failed: {context.Exception.Message}");
+                        return Task.CompletedTask;
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        Console.WriteLine($"✅ Token validated for: {context.Principal?.Identity?.Name}");
+                        return Task.CompletedTask;
+                    },
+                    OnChallenge = context =>
+                    {
+                        Console.WriteLine($"⚠️ Challenge: {context.Error}");
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+        services.AddAuthorization();
+        
         services.AddSwaggerGen(c =>
         {
             c.EnableAnnotations();
@@ -22,10 +62,11 @@ public static class JwtServices
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "Authorization using jwt token. Example: \"Bearer {token}\"",
+                Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token",
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
             });
 
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -43,25 +84,6 @@ public static class JwtServices
                 }
             });
         });
-
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = false,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration["TokenPublicKey"]!)
-                    )
-                };
-            });
-
-        services.AddAuthorization();
 
         return services;
     }

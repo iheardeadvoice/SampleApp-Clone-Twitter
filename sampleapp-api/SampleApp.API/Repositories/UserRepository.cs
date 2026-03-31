@@ -3,7 +3,6 @@ using SampleApp.API.Data;
 using SampleApp.API.Entities;
 using SampleApp.API.Exceptions;
 using SampleApp.API.Interfaces;
-using System.Linq;
 
 namespace SampleApp.API.Repositories;
 
@@ -95,6 +94,22 @@ public class UsersRepository : IUserRepository
         return user;
     }
 
-    
+    // ✅ НОВЫЙ МЕТОД — обновление пользователя (для токена)
+    public async Task<User> UpdateUserAsync(User user)
+    {
+        var existing = await _db.Users.FindAsync(user.Id);
+        if (existing is null)
+        {
+            _logger.LogWarning("Обновление: пользователь не найден. Id={Id}", user.Id);
+            throw new NotFoundException($"Нет пользователя с id={user.Id}");
+        }
 
+        existing.Token = user.Token;
+        existing.UpdatedAt = DateTime.UtcNow;
+
+        await _db.SaveChangesAsync();
+
+        _logger.LogInformation("Пользователь обновлён (токен). Id={Id}", user.Id);
+        return existing;
+    }
 }

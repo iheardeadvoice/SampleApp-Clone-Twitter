@@ -4,7 +4,7 @@ import { Box, Button, Alert, TextField, InputAdornment, IconButton } from '@mui/
 import { UserPlus, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { PasswordStrength } from './PasswordStrength';
-import { FormDebug } from './FormDebug';
+import { ButtonLoader } from './ButtonLoader';
 
 type FormData = {
     login: string;
@@ -16,7 +16,6 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     const { register: registerUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [serverError, setServerError] = useState('');
-    const [showDebug, setShowDebug] = useState(import.meta.env.DEV);
     const [showPassword, setShowPassword] = useState(false);
 
     const { register, handleSubmit, watch, formState } = useForm<FormData>({
@@ -28,8 +27,7 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
         },
     });
 
-    const { errors, touchedFields, isValid, isDirty } = formState;
-    const loginValue = watch('login');
+    const { errors, isValid } = formState;
     const passwordValue = watch('password');
 
     const onSubmit = async (data: FormData) => {
@@ -59,7 +57,6 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {serverError && <Alert severity="error">{serverError}</Alert>}
 
-                {/* Имя */}
                 <TextField
                     fullWidth
                     label="Имя"
@@ -69,11 +66,10 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     disabled={loading}
                 />
 
-                {/* Логин */}
                 <TextField
                     fullWidth
                     label="Логин"
-                    {...register('login', { 
+                    {...register('login', {
                         required: 'Логин обязателен',
                         minLength: { value: 3, message: 'Минимум 3 символа' },
                         validate: (value) => {
@@ -87,12 +83,11 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     disabled={loading}
                 />
 
-                {/* Пароль */}
                 <TextField
                     fullWidth
                     label="Пароль"
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password', { 
+                    {...register('password', {
                         required: 'Пароль обязателен',
                         minLength: { value: 3, message: 'Минимум 3 символа' },
                         maxLength: { value: 8, message: 'Максимум 8 символов' },
@@ -116,43 +111,17 @@ export const RegisterForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     }}
                 />
 
-                {/* Индикатор сложности пароля */}
                 <PasswordStrength password={passwordValue} />
-
-                {/* Индикатор несохраненных изменений */}
-                {isDirty && (
-                    <Alert severity="info" sx={{ mt: 1 }}>
-                        ✏️ У вас есть несохраненные изменения
-                    </Alert>
-                )}
 
                 <Button
                     type="submit"
                     variant="contained"
-                    startIcon={<UserPlus size={20} />}
+                    startIcon={loading ? <ButtonLoader /> : <UserPlus size={20} />}
                     disabled={!isValid || loading}
                     sx={{ mt: 1 }}
                 >
                     {loading ? 'Регистрация...' : 'Зарегистрироваться'}
                 </Button>
-
-                {/* Кнопка отладки */}
-                {import.meta.env.DEV && (
-                    <Button variant="text" size="small" onClick={() => setShowDebug(!showDebug)}>
-                        {showDebug ? 'Скрыть отладку' : 'Показать отладку'}
-                    </Button>
-                )}
-
-                {/* Отладочная информация */}
-                {showDebug && (
-                    <FormDebug
-                        values={watch()}
-                        errors={errors}
-                        touched={touchedFields}
-                        isValid={isValid}
-                        isDirty={isDirty}
-                    />
-                )}
             </Box>
         </form>
     );

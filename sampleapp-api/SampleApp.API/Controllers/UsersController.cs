@@ -8,7 +8,8 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
-using SampleApp.API.Enums; // ✅ ДОБАВИЛ
+using SampleApp.API.Enums;
+using SampleApp.API.Exceptions;
 
 namespace SampleApp.API.Controllers
 {
@@ -25,7 +26,6 @@ namespace SampleApp.API.Controllers
             _tokenService = tokenService;
         }
 
-        // ✅ Sprint 4: LOGIN
         // POST /api/Users/Login
         [HttpPost("Login")]
         [SwaggerOperation(Summary = "Логин по Login/Password", OperationId = "Login")]
@@ -33,11 +33,18 @@ namespace SampleApp.API.Controllers
         [SwaggerResponse(401, "Неверный пароль")]
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _repo.FindUserByLoginAsync(loginDto.Login);
-            return CheckPasswordHash(loginDto, user);
+            try
+            {
+                var user = await _repo.FindUserByLoginAsync(loginDto.Login);
+                return await CheckPasswordHashAndUpdateToken(loginDto, user);
+            }
+            catch (NotFoundException)
+            {
+                return Unauthorized("Пользователь не найден");
+            }
         }
 
-        private ActionResult<UserDto> CheckPasswordHash(LoginDto loginDto, User user)
+        private async Task<ActionResult<UserDto>> CheckPasswordHashAndUpdateToken(LoginDto loginDto, User user)
         {
             using var hmac = new HMACSHA256(user.PasswordSalt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -50,10 +57,14 @@ namespace SampleApp.API.Controllers
                 }
             }
 
+            // Обновляем токен при каждом входе
+            user.Token = _tokenService.CreateToken(user.Login);
+            await _repo.UpdateUserAsync(user);
+
             return Ok(user.ToDto());
         }
 
-        // ✅ Создание пользователя (токен сразу сохраняем) + ✅ роль из dto.Role
+        // Создание пользователя
         [HttpPost]
         [SwaggerOperation(Summary = "Создание пользователя", OperationId = "CreateUser")]
         [SwaggerResponse(201, "Создано", typeof(UserDto))]
@@ -68,13 +79,9 @@ namespace SampleApp.API.Controllers
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)),
                 PasswordSalt = hmac.Key,
                 Token = _tokenService.CreateToken(loginDto.Login)
-                // RoleId по умолчанию = 3 (User) останется, если Role не пришёл
             };
 
-            // ✅ ВОТ ЭТО ГЛАВНОЕ: если role пришла — перезаписываем RoleId
-            // Поддержка:
-            // "Admin"/"Manager"/"User" (любой регистр)
-            // "1"/"2"/"3"
+            // Поддержка ролей
             if (!string.IsNullOrWhiteSpace(loginDto.Role))
             {
                 var roleRaw = loginDto.Role.Trim();
@@ -87,7 +94,6 @@ namespace SampleApp.API.Controllers
                 {
                     user.RoleId = (int)parsedRole;
                 }
-                // если не распознали — оставляем дефолт (User=3)
             }
 
             var createdUser = await _repo.CreateUserAsync(user);
@@ -95,7 +101,7 @@ namespace SampleApp.API.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser.ToDto());
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpGet]
         [SwaggerOperation(Summary = "Список пользователей", OperationId = "GetUsers")]
         [SwaggerResponse(200, "OK", typeof(List<UserDto>))]
@@ -105,13 +111,22 @@ namespace SampleApp.API.Controllers
             return Ok(users.Select(u => u.ToDto()));
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Пользователь по Id", OperationId = "GetUserById")]
         [SwaggerResponse(200, "OK", typeof(UserDto))]
+        [SwaggerResponse(404, "Не найден")]
         public async Task<ActionResult> GetUserById(int id)
         {
-            var user = await _repo.FindUserByIdAsync(id);
-            return Ok(user.ToDto());
+            try
+            {
+                var user = await _repo.FindUserByIdAsync(id);
+                return Ok(user.ToDto());
+            }
+            catch (NotFoundException)
+            {
+                return NotFound($"Пользователь с id={id} не найден");
+            }
         }
     }
 }

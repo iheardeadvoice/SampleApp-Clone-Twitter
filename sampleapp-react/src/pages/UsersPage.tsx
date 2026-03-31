@@ -1,77 +1,48 @@
-import { useEffect, useState } from 'react';
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Alert, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { UsersService } from '../services/UsersService';
-import type { User } from '../types';
+import { Container, Typography, Box, Button, Paper, Chip } from '@mui/material';
+import { RefreshCw, Users as UsersIcon } from 'lucide-react';
+import { useUsers } from '../hooks/useUsers';
+import { useLoading } from '../contexts/LoadingContext';
+import { UsersTable } from '../components/UsersTable';
+import { ErrorMessage } from '../components/ErrorMessage';
+import { ButtonLoader } from '../components/ButtonLoader';
 
 export const UsersPage = () => {
-    const { user } = useAuth();
-    const navigate = useNavigate();
-    const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (!user) {
-            navigate('/login');
-            return;
-        }
-
-        const fetchUsers = async () => {
-            try {
-                setLoading(true);
-                const data = await UsersService.getAll(user.token);
-                setUsers(data);
-            } catch (err) {
-                console.error('Failed to fetch users:', err);
-                setError('Не удалось загрузить пользователей');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, [user, navigate]);
-
-    if (!user) return null;
+    const { users, error, refetch, totalCount } = useUsers();
+    const { isLoading } = useLoading();
 
     return (
         <Container maxWidth="lg" sx={{ py: 4 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Пользователи
-            </Typography>
+            <Paper sx={{ p: 3 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                        <UsersIcon size={28} color="#1976d2" />
+                        <Typography variant="h4">
+                            Пользователи {totalCount > 0 && `(${totalCount})`}
+                        </Typography>
+                        {isLoading && (
+                            <Chip
+                                label="Загрузка..."
+                                size="small"
+                                color="primary"
+                                sx={{ ml: 2 }}
+                            />
+                        )}
+                    </Box>
 
-            {loading && (
-                <Box display="flex" justifyContent="center" py={4}>
-                    <CircularProgress />
+                    <Button
+                        variant="contained"
+                        onClick={() => refetch()}
+                        disabled={isLoading}
+                        startIcon={isLoading ? <ButtonLoader /> : <RefreshCw size={18} />}
+                    >
+                        {isLoading ? 'Загрузка...' : 'Обновить'}
+                    </Button>
                 </Box>
-            )}
 
-            {error && <Alert severity="error">{error}</Alert>}
+                {error && <ErrorMessage message={error} onRetry={refetch} />}
 
-            {!loading && !error && (
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>Логин</TableCell>
-                                <TableCell>Имя</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {users.map((userItem) => (
-                                <TableRow key={userItem.id}>
-                                    <TableCell>{userItem.id}</TableCell>
-                                    <TableCell>{userItem.login}</TableCell>
-                                    <TableCell>{userItem.name}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
+                <UsersTable users={users} />
+            </Paper>
         </Container>
     );
 };

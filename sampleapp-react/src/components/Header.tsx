@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Avatar } from '@mui/material';
-import { Home, Users, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { useState } from 'react';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, Avatar, Chip, Box } from '@mui/material';
+import { Home, Users, LogIn, LogOut, User as UserIcon, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Header = () => {
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
+    const { user, logout, token } = useAuth();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,6 +21,13 @@ export const Header = () => {
         logout();
         handleClose();
         navigate('/');
+    };
+
+    const handleProfile = () => {
+        handleClose();
+        if (user) {
+            navigate(`/profile/${user.id}`);
+        }
     };
 
     return (
@@ -42,10 +49,28 @@ export const Header = () => {
 
                 {user ? (
                     <>
+                        {token && (
+                            <Chip
+                                icon={<Shield size={14} />}
+                                label="JWT"
+                                size="small"
+                                sx={{
+                                    mr: 2,
+                                    bgcolor: 'success.main',
+                                    color: 'white',
+                                    '& .MuiChip-icon': { color: 'white' }
+                                }}
+                            />
+                        )}
+
                         <Button color="inherit" onClick={handleMenu} startIcon={<UserIcon size={20} />}>
                             {user.login}
                         </Button>
                         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+                            <MenuItem onClick={handleProfile}>
+                                <UserIcon size={16} style={{ marginRight: 8 }} />
+                                Профиль
+                            </MenuItem>
                             <MenuItem onClick={handleLogout}>
                                 <LogOut size={16} style={{ marginRight: 8 }} />
                                 Выйти

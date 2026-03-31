@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Box, Button, Alert, TextField, InputAdornment, IconButton } from '@mui/material';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { ButtonLoader } from './ButtonLoader';
 
 type FormData = {
     login: string;
@@ -44,9 +45,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 <TextField
                     fullWidth
                     label="Логин"
-                    {...register('login', { 
-                        required: 'Логин обязателен' 
-                    })}
+                    {...register('login', { required: 'Логин обязателен' })}
                     error={!!errors.login}
                     helperText={errors.login?.message}
                     required
@@ -57,7 +56,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     fullWidth
                     label="Пароль"
                     type={showPassword ? 'text' : 'password'}
-                    {...register('password', { 
+                    {...register('password', {
                         required: 'Пароль обязателен',
                         minLength: { value: 3, message: 'Минимум 3 символа' }
                     })}
@@ -79,7 +78,7 @@ export const LoginForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                 <Button
                     type="submit"
                     variant="contained"
-                    startIcon={<LogIn size={20} />}
+                    startIcon={loading ? <ButtonLoader /> : <LogIn size={20} />}
                     disabled={!isValid || loading}
                 >
                     {loading ? 'Вход...' : 'Войти'}
