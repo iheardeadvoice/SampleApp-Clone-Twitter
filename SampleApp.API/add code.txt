@@ -1,511 +1,936 @@
-Ок, делаю **максимально пошагово**: *какой файл → куда → какой код → зачем → что проверить* + **что конкретно делать в DBeaver** (клики/кнопки).
+Да. Ниже **полные `MainActivity.kt`** для каждого задания, уже **со всеми импортами и `@Preview`**.
 
-Я буду идти **ровно в том порядке, как в практике**: Role → миграция → DBeaver Roles → Enum → DTO/Mapper → JSON enum строкой → Micropost → миграции → DBeaver проверка → репо/контроллер → валидация → [Authorize].
-
----
-
-## 0) Перед стартом (чтобы потом не ловить 500/миграции)
-
-1. **PostgreSQL должен быть запущен** (служба).
-2. В проекте **строка подключения** должна вести на твой Postgres:
-
-   * `Host=localhost;Port=5432;Database=SampleApp;Username=postgres;Password=...`
-3. Команды `dotnet ef ...` запускай **из папки проекта API**, где лежит `SampleApp.API.csproj`.
+**Важно:** строку `package ...` поставь **свою**, как в твоём проекте Android Studio.
 
 ---
 
-# Часть 1. Модель Role
+## 1) Счётчик кликов — `MainActivity.kt`
 
-## Шаг 1 — Создай `Role.cs`
+```kotlin
+package com.example.task1
 
-**Где:** `SampleApp.API/Entities/Role.cs` (папка Entities)
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-**Вставь 1-в-1:**
-
-```csharp
-using SampleApp.API.Entities; // если Base в Entities
-// или using SampleApp.API.Models; (зависит где Base)
-
-namespace SampleApp.API.Entities;
-
-public class Role : Base
-{
-    public string Name { get; set; } = string.Empty;
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    CounterScreen()
+                }
+            }
+        }
+    }
 }
-```
 
-✅ **Зачем:** будет таблица `Roles`, где хранятся роли.
+@Composable
+fun CounterScreen() {
+    var count by remember { mutableStateOf(0) }
 
----
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Количество нажатий: $count",
+            style = MaterialTheme.typography.headlineSmall
+        )
 
-## Шаг 2 — Добавь связь 1:M в `User.cs`
+        Spacer(modifier = Modifier.height(16.dp))
 
-**Где:** `SampleApp.API/Entities/User.cs`
-
-Найди класс `User` и добавь в него:
-
-```csharp
-public int RoleId { get; set; }
-public Role? Role { get; set; }
-```
-
-✅ **Зачем:** `RoleId` — внешний ключ на таблицу Roles. `Role` — навигация EF.
-
----
-
-## Шаг 3 — Добавь коллекцию Roles в контекст
-
-**Где:** `SampleApp.API/Data/SampleAppContext.cs` (или как у тебя называется контекст)
-
-Внутри класса контекста добавь:
-
-```csharp
-public DbSet<Role> Roles { get; set; }
-```
-
-И сверху файла (если надо):
-
-```csharp
-using SampleApp.API.Entities;
-```
-
-✅ **Зачем:** чтобы EF создал таблицу `Roles` и мог с ней работать.
-
----
-
-## Шаг 4 — Настрой OnModelCreating (как в практике)
-
-**Где:** `SampleApp.API/Data/SampleAppContext.cs`
-
-Если у тебя уже есть `OnModelCreating` — **добавь внутрь** эти блоки.
-Если нет — **создай метод** и вставь.
-
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    base.OnModelCreating(modelBuilder);
-
-    modelBuilder.Entity<User>(entity =>
-    {
-        entity.HasKey(e => e.Id);
-        entity.HasIndex(e => e.Login).IsUnique();
-        entity.Property(e => e.Login).IsRequired().HasMaxLength(50);
-        entity.Property(e => e.Name).HasMaxLength(100);
-        entity.Property(e => e.PasswordHash).IsRequired();
-        entity.Property(e => e.PasswordSalt).IsRequired();
-        entity.Property(e => e.Token).IsRequired();
-
-        entity.HasOne(u => u.Role).WithMany().HasForeignKey(u => u.RoleId);
-    });
-
-    modelBuilder.Entity<Role>(entity =>
-    {
-        entity.HasKey(e => e.Id);
-        entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
-    });
+        Button(onClick = { count++ }) {
+            Text("Нажать")
+        }
+    }
 }
-```
 
-✅ **Зачем:** EF “и так” может понять, но тут мы:
-
-* фиксируем ограничения,
-* задаём FK связь `Users.RoleId -> Roles.Id`,
-* делаем `Token` Required (как в практике).
-
----
-
-## Шаг 5 — Миграция + применение
-
-Открой терминал **в папке API** (`.../SampleApp.API`) и выполни:
-
-```bash
-dotnet ef migrations add CreateRoles
-dotnet ef database update
-```
-
-✅ **Результат:** в БД должна появиться таблица **Roles**, а в таблице Users колонка **RoleId** и FK.
-
----
-
-# Часть 2. DBeaver — заполнение Roles (это твоя “работа руками”)
-
-## Что должно получиться
-
-Таблица `Roles` должна иметь строки:
-
-| Id | Name    |
-| -- | ------- |
-| 1  | admin   |
-| 2  | manager |
-| 3  | user    |
-
-⚠️ Важно: **Id должны совпадать с enum из практики** (Admin=1 Manager=2 User=3)
-
----
-
-## Как сделать в DBeaver пошагово
-
-1. Открой DBeaver.
-
-2. Слева **Database Navigator** → найди соединение с Postgres (`localhost:5432`).
-
-3. Раскрой:
-
-   * `Databases` → `SampleApp`
-   * `Schemas` → `public`
-   * `Tables` → `Roles`
-
-4. ПКМ по `Roles` → **View Data** → **All Rows** (или “Просмотр данных”).
-
-5. В таблице вверху найди кнопку **+ (Добавить строку)**
-
-   * Обычно это иконка “плюс” или “Insert Row”.
-
-6. Добавь 3 строки:
-
-   * строка 1: `Id=1` `Name=admin`
-   * строка 2: `Id=2` `Name=manager`
-   * строка 3: `Id=3` `Name=user`
-
-7. Нажми **Save** (дискетка) или **Ctrl+S**.
-
-8. Если у тебя выключен автокоммит — сверху появится кнопка **Commit** → нажми **Commit**.
-
-✅ **Проверка:** обнови таблицу (Refresh) — строки должны остаться.
-
----
-
-## Как проверить связь FK в DBeaver (очень полезно)
-
-* Открой `Users` → вкладка “Свойства/Properties” → “Foreign Keys”
-* Там должна быть связь на `Roles(Id)`.
-
----
-
-# Часть 3. Enum RoleType + дефолт RoleId
-
-## Шаг 6 — Создай `Enums/RoleType.cs`
-
-**Где:** `SampleApp.API/Enums/RoleType.cs` (создай папку Enums)
-
-```csharp
-namespace SampleApp.API.Enums;
-
-public enum RoleType
-{
-    User = 3,
-    Admin = 1,
-    Manager = 2,
-}
-```
-
----
-
-## Шаг 7 — В `User.cs` поставить значение по умолчанию
-
-**Где:** `SampleApp.API/Entities/User.cs`
-
-1. Добавь using:
-
-```csharp
-using SampleApp.API.Enums;
-```
-
-2. Замени `RoleId` на:
-
-```csharp
-public int RoleId { get; set; } = (int)RoleType.User;
-```
-
-✅ **Зачем:** когда создаёшь пользователя — если RoleId не передали, будет 3 (user).
-⚠️ Но FK всё равно требует, чтобы в `Roles` реально была строка с `Id=3` (поэтому DBeaver шаг обязателен).
-
----
-
-# Часть 4. UserDto + UserMapper + enum строкой в JSON
-
-## Шаг 8 — Добавь поле Role в `UserDto`
-
-**Где:** `SampleApp.API/Dtos/UserDto.cs`
-
-Добавь:
-
-```csharp
-using SampleApp.API.Enums;
-
-public RoleType Role { get; set; }
-```
-
----
-
-## Шаг 9 — Обнови `UserMapper`
-
-**Где:** `SampleApp.API/Mappers/UserMapper.cs`
-
-Добавь using:
-
-```csharp
-using SampleApp.API.Enums;
-```
-
-В `ToDto`:
-
-```csharp
-Role = (RoleType)user.RoleId,
-```
-
-В `ToEntity`:
-
-```csharp
-RoleId = (int)userDto.Role,
-```
-
----
-
-## Шаг 10 — Сделай чтобы enum в ответе был СТРОКОЙ (а не числом)
-
-Это важная часть: без неё Swagger будет отдавать `role: 3`, а надо `role: "User"`.
-
-### 10.1 Создай файл `Extensions/ControllerServices.cs`
-
-**Где:** `SampleApp.API/Extensions/ControllerServices.cs`
-
-```csharp
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace SampleApp.API.Extensions;
-
-public static class ControllerServices
-{
-    public static IServiceCollection AddControllerServices(this IServiceCollection services)
-    {
-        services
-            .AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                options.JsonSerializerOptions.WriteIndented = true;
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            });
-
-        return services;
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CounterScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            CounterScreen()
+        }
     }
 }
 ```
 
-### 10.2 В `Program.cs` подключи
-
-**Где:** `SampleApp.API/Program.cs`
-
-Найди:
-
-```csharp
-builder.Services.AddControllers();
-```
-
-ЗАМЕНИ на:
-
-```csharp
-builder.Services.AddControllerServices();
-```
-
-И добавь using сверху:
-
-```csharp
-using SampleApp.API.Extensions;
-```
-
-✅ **Проверка:** Swagger → GetUsers → `role` должен стать `"User"` / `"Admin"`.
-
 ---
 
-# Часть 5. Модель Micropost
+## 2) Конвертер валют — `MainActivity.kt`
 
-## Шаг 11 — Создай `Entities/Micropost.cs`
+```kotlin
+package com.example.task2
 
-**Где:** `SampleApp.API/Entities/Micropost.cs`
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import java.util.Locale
 
-```csharp
-namespace SampleApp.API.Entities;
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    CurrencyScreen()
+                }
+            }
+        }
+    }
+}
 
-public class Micropost : Base
-{
-    public string Content { get; set; } = string.Empty;
-    public User? User { get; set; }
-    public int UserId { get; set; }
+@Composable
+fun CurrencyScreen() {
+    var rubles by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
+    val rate = 90.0
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = rubles,
+            onValueChange = { rubles = it },
+            label = { Text("Сумма в рублях") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            val rub = rubles.replace(',', '.').toDoubleOrNull()
+            result = if (rub != null) {
+                val usd = rub / rate
+                "Доллары: ${String.format(Locale.US, "%.2f", usd)}"
+            } else {
+                "Введите корректное число"
+            }
+        }) {
+            Text("Конвертировать")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(result)
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CurrencyScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            CurrencyScreen()
+        }
+    }
 }
 ```
 
 ---
 
-## Шаг 12 — В `User.cs` добавь Microposts
+## 3) Вход в систему — `MainActivity.kt`
 
-**Где:** `SampleApp.API/Entities/User.cs`
+```kotlin
+package com.example.task3
 
-Добавь:
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-```csharp
-public IEnumerable<Micropost>? Microposts { get; set; }
-```
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    LoginScreen()
+                }
+            }
+        }
+    }
+}
 
----
+@Composable
+fun LoginScreen() {
+    var login by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
 
-## Шаг 13 — В контекст добавь DbSet Microposts
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = login,
+            onValueChange = { login = it },
+            label = { Text("Логин") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
-**Где:** `SampleApp.API/Data/SampleAppContext.cs`
+        Spacer(modifier = Modifier.height(12.dp))
 
-Добавь:
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Пароль") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-```csharp
-public DbSet<Micropost> Microposts { get; set; }
-```
+        Spacer(modifier = Modifier.height(16.dp))
 
----
+        Button(onClick = {
+            result = if (login == "admin" && password == "12345") {
+                "Успешно!"
+            } else {
+                "Ошибка!"
+            }
+        }) {
+            Text("Проверить")
+        }
 
-## Шаг 14 — Миграция и update
+        Spacer(modifier = Modifier.height(16.dp))
 
-```bash
-dotnet ef migrations add CreateMicropost
-dotnet ef database update
-```
+        Text(result)
+    }
+}
 
-✅ **DBeaver проверка:** появится таблица `Microposts` (или `Micropost` — зависит от настройки pluralization).
-
----
-
-# Часть 6. DTO Micropost
-
-## Шаг 15 — Создай `Dtos/MicropostDto.cs`
-
-```csharp
-namespace SampleApp.API.Dtos;
-
-public record MicropostDto(string Content, int UserId);
-```
-
-## Шаг 16 — Создай `Dtos/EditMicropostDto.cs`
-
-```csharp
-namespace SampleApp.API.Dtos;
-
-public record EditMicropostDto(string Content);
-```
-
----
-
-# Часть 7. Репозиторий Micropost
-
-## Шаг 17 — Создай `Interfaces/IMicropostRepository.cs`
-
-```csharp
-using SampleApp.API.Entities;
-
-namespace SampleApp.API.Interfaces;
-
-public interface IMicropostRepository
-{
-    Micropost CreateMicropost(Micropost post);
-    List<Micropost> GetMicroposts();
-    Micropost DeleteMicropost(int id);
-    Micropost FindMicropostById(int id);
-    Micropost EditMicropost(Micropost editedMicropost, int id);
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LoginScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            LoginScreen()
+        }
+    }
 }
 ```
 
-## Шаг 18 — Создай `Repositories/MicropostRepository.cs`
-
-Вставь из практики 1-в-1.
-
 ---
 
-## Шаг 19 — Зарегистрируй репозиторий в DI
+## 4) Простой To-Do список — `MainActivity.kt`
 
-**Где:** `Program.cs`
+```kotlin
+package com.example.task4
 
-Добавь:
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-```csharp
-builder.Services.AddScoped<IMicropostRepository, MicropostRepository>();
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    TodoScreen()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TodoScreen() {
+    var taskText by remember { mutableStateOf("") }
+    val tasks = remember { mutableStateListOf<String>() }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp)
+    ) {
+        OutlinedTextField(
+            value = taskText,
+            onValueChange = { taskText = it },
+            label = { Text("Введите задачу") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = {
+                if (taskText.isNotBlank()) {
+                    tasks.add(taskText)
+                    taskText = ""
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Добавить")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(tasks) { task ->
+                Text(text = "• $task")
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun TodoScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            TodoScreen()
+        }
+    }
+}
 ```
 
-(и using для Interfaces/Repositories если надо)
-
 ---
 
-# Часть 8. Контроллер Microposts
+## 5) Отображение введённого текста — `MainActivity.kt`
 
-## Шаг 20 — Создай `Controllers/MicropostsController.cs`
+```kotlin
+package com.example.task5
 
-Вставь контроллер из практики 1-в-1.
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
----
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    LiveTextScreen()
+                }
+            }
+        }
+    }
+}
 
-# Часть 9. Валидация Micropost
+@Composable
+fun LiveTextScreen() {
+    var text by remember { mutableStateOf("") }
 
-## Шаг 21 — Создай `Validations/MicropostValidator.cs`
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Введите текст") },
+            modifier = Modifier.fillMaxWidth()
+        )
 
-Вставь из практики.
+        Spacer(modifier = Modifier.height(16.dp))
 
----
+        Text("Вы ввели: $text")
+    }
+}
 
-# Часть 10. Задание: [Authorize]
-
-## Шаг 22 — Защити MicropostsController
-
-**Где:** `Controllers/MicropostsController.cs`
-
-1. Добавь using:
-
-```csharp
-using Microsoft.AspNetCore.Authorization;
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LiveTextScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            LiveTextScreen()
+        }
+    }
+}
 ```
 
-2. Над классом контроллера добавь:
+---
 
-```csharp
-[Authorize]
+## 6) Кнопка с переключающимся текстом — `MainActivity.kt`
+
+```kotlin
+package com.example.task6
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    ToggleButtonScreen()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ToggleButtonScreen() {
+    var isOn by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { isOn = !isOn }) {
+            Text(if (isOn) "Включено" else "Выключено")
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun ToggleButtonScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            ToggleButtonScreen()
+        }
+    }
+}
 ```
 
-✅ **Что будет:** без токена запросы к Micropost будут 401 Unauthorized (это нормально).
+---
+
+## 7) Проверка чётности числа — `MainActivity.kt`
+
+```kotlin
+package com.example.task7
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    EvenCheckScreen()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun EvenCheckScreen() {
+    var numberText by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = numberText,
+            onValueChange = { numberText = it },
+            label = { Text("Введите число") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            val number = numberText.toIntOrNull()
+            result = if (number != null) {
+                if (number % 2 == 0) "Чётное" else "Нечётное"
+            } else {
+                "Введите корректное число"
+            }
+        }) {
+            Text("Проверить")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(result)
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun EvenCheckScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            EvenCheckScreen()
+        }
+    }
+}
+```
 
 ---
 
-# Часть 11. DBeaver — что проверять дальше (по твоим скринам)
+## 8) Поиск палиндромов — `MainActivity.kt`
 
-Твои скрины показывают:
+```kotlin
+package com.example.task8
 
-* `Users` связана с `Roles` по `RoleId`
-* `Microposts` связана с `Users` по `UserId`
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-## Как проверить это в DBeaver
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    PalindromeScreen()
+                }
+            }
+        }
+    }
+}
 
-1. В `public → Tables`:
+@Composable
+fun PalindromeScreen() {
+    var word by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
 
-   * `Users` → вкладка “Columns”: должны быть `RoleId`, `Login`, `PasswordHash`, `PasswordSalt`, `Token`
-   * `Roles` → `Id`, `Name`
-   * `Microposts` → `Id`, `Content`, `UserId`
-2. В `Users` → “Foreign Keys” → должна быть FK на Roles
-3. В `Microposts` → “Foreign Keys” → должна быть FK на Users
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = word,
+            onValueChange = { word = it },
+            label = { Text("Введите слово") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            val cleanWord = word.trim().lowercase()
+            result = if (cleanWord.isNotEmpty() && cleanWord == cleanWord.reversed()) {
+                "Это палиндром"
+            } else {
+                "Это не палиндром"
+            }
+        }) {
+            Text("Проверить")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(result)
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PalindromeScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            PalindromeScreen()
+        }
+    }
+}
+```
 
 ---
 
-# Самая частая жопа, из-за которой всё ломается
+## 9) Калькулятор сложения — `MainActivity.kt`
 
-1. **Roles не заполнена** → при создании User FK ругается.
-2. **Id ролей не 1/2/3** → enum не совпадает, будет бред.
-3. **Миграция не применена** → таблиц нет / колонки нет.
-4. В Swagger ты создаёшь User, но **RoleId не передаёшь**, а дефолт ещё не поставил → ошибка.
-5. `[Authorize]` поставил, но **токен не выдаёшь/не вставляешь** → 401 (это норма, не ошибка).
+```kotlin
+package com.example.task9
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    SumScreen()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SumScreen() {
+    var number1 by remember { mutableStateOf("") }
+    var number2 by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = number1,
+            onValueChange = { number1 = it },
+            label = { Text("Первое число") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = number2,
+            onValueChange = { number2 = it },
+            label = { Text("Второе число") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            val a = number1.replace(',', '.').toDoubleOrNull()
+            val b = number2.replace(',', '.').toDoubleOrNull()
+
+            result = if (a != null && b != null) {
+                "Сумма: ${a + b}"
+            } else {
+                "Введите корректные числа"
+            }
+        }) {
+            Text("Сложить")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(result)
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun SumScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            SumScreen()
+        }
+    }
+}
+```
 
 ---
 
-## Скажи мне 2 вещи — и я дальше проведу тебя по DBeaver “как по рельсам”
+## 10) Валидация пароля — `MainActivity.kt`
 
-1. **У тебя автокоммит в DBeaver включён?** (если нет — ты добавляешь строки и они “пропадают”)
-2. Скинь скрин:
+```kotlin
+package com.example.task10
 
-   * `Roles` таблица в DBeaver (чтобы я видел, заполнилась ли она и какие Id)
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
-И да — если хочешь, я следующим сообщением дам **только DBeaver часть** супер-подробно (кнопки/меню/где commit), без кода вообще.
- public IEnumerable<Micropost>? Microposts { get; set; }
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    PasswordValidationScreen()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PasswordValidationScreen() {
+    var password by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Введите пароль") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = {
+            val hasDigit = password.any { it.isDigit() }
+            result = if (password.length >= 6 && hasDigit) {
+                "Надёжный"
+            } else {
+                "Слабый"
+            }
+        }) {
+            Text("Проверить")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(result)
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PasswordValidationScreenPreview() {
+    MaterialTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            PasswordValidationScreen()
+        }
+    }
+}
+```
+
+Если хочешь, я могу следующим сообщением собрать тебе **ещё более удобный вариант**:
+**10 отдельных файлов сразу в одном стиле, чтобы ты просто копировал без правок package**.
